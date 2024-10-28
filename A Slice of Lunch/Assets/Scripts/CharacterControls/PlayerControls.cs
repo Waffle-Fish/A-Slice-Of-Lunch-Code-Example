@@ -155,26 +155,12 @@ public class PlayerControls : MonoBehaviour
 
             // Update polygonCollider2D
             PolygonCollider2D newPolyFoodCollider = (PolygonCollider2D)foodCollider.collider;
-            // newPolyFoodCollider = new();
             List<Vector2> newColPoints = new(0);
-            // for (int pointsInd = 0; pointsInd < newPolyFoodCollider.points.Count(); pointsInd++)
-            // {
-            //     if (GetSidePointIsOn(newPolyFoodCollider.points[pointsInd]) != sliceDir) {
-            //         newPolyFoodCollider.points[pointsInd] = sliceEdgePoint_0;
-            //     }
-                
-            // }
             foreach (Vector2 point in newPolyFoodCollider.points)
             {
                 if (GetSidePointIsOn(point) != sliceDir) { newColPoints.Add(point);} 
-                // else {
-                //     if (UnityEngine.Random.Range(0,2) == 0) {
-                //         newColPoints.Add(sliceEdgePoint_0 / transform.localScale.x);
-                //     } else {
-                //         newColPoints.Add(sliceEdgePoint_1 / transform.localScale.x);
-                //     }
-                // }
             }
+
             newColPoints.Add(sliceEdgePoint_0 / transform.localScale.x);
             newColPoints.Add(sliceEdgePoint_1 / transform.localScale.x);
             newPolyFoodCollider.SetPath(0,newColPoints);
@@ -211,6 +197,8 @@ public class PlayerControls : MonoBehaviour
             otherSlice.transform.Translate(perpendicularSlice * separationSpace);
             otherSlice.SetActive(true);
 
+            
+
             // Add to undo stack
             objectsEnabledThisTurn.Add(otherSlice);
         }
@@ -242,7 +230,7 @@ public class PlayerControls : MonoBehaviour
     private SliceDir GetSidePointIsOn(Vector2 point) {
         Vector2 se0 = sliceEdgePoint_0 / transform.localScale.x;
         Vector2 se1 = sliceEdgePoint_1 / transform.localScale.x;
-        float slope = se1.y - se0.y / se1.x - se0.x;
+        float slope = (se1.y - se0.y) / (se1.x - se0.x);
         float yIntercept = se1.y - slope * se1.x;
         float yLine = slope * point.x + yIntercept;
         float yDelta = yLine - point.y;

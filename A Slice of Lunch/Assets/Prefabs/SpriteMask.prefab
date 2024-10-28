@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5356341872346122858}
   - component: {fileID: 4291101014239874897}
-  - component: {fileID: -6229037531147998069}
+  - component: {fileID: 2395026695565330600}
   m_Layer: 2
   m_Name: SpriteMask
   m_TagString: Untagged
@@ -84,7 +84,7 @@ SpriteMask:
   m_BackSortingOrder: -1
   m_IsCustomRangeActive: 0
   m_SpriteSortPoint: 0
---- !u!61 &-6229037531147998069
+--- !u!61 &2395026695565330600
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

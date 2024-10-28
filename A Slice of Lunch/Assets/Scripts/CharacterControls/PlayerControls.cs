@@ -16,6 +16,8 @@ public class PlayerControls : MonoBehaviour
     public bool IsHoldingKnife /*{ get; private set; }*/ = false;
     readonly private Vector3 CHECK_VECTOR = new Vector3(999999, 999999, 999999);
     private List<RaycastHit2D> slicedObjects = new();
+    Vector2 sliceEdgePoint_0;
+    Vector2 sliceEdgePoint_1;
 
     [Header("Slice Indicators")]
     [SerializeField]
@@ -32,6 +34,11 @@ public class PlayerControls : MonoBehaviour
     [Header("Undo")]
     int currentUndoIndex = 0;
     private Stack<List<GameObject>> everyMove = new();
+
+    // [Header("Update PolygonColliders")]
+    enum SliceDir {left, right, on}
+    SliceDir sliceDir;
+
 
     private void Awake() {
         sliceMarking = GetComponent<LineRenderer>();
@@ -122,8 +129,10 @@ public class PlayerControls : MonoBehaviour
             foodPool = parentFood.parent.GetComponent<ObjectPooler>();
 
             // Gets spawn point
-            Vector2 sliceEdgePoint_0 = Physics2D.Raycast(slicePoints[0], (slicePoints[1] - slicePoints[0]).normalized, 100).point;
-            Vector2 sliceEdgePoint_1 = Physics2D.Raycast(slicePoints[1], (slicePoints[0] - slicePoints[1]).normalized, 100).point;
+            sliceEdgePoint_0 = Physics2D.Raycast(slicePoints[0], (slicePoints[1] - slicePoints[0]).normalized, 100).point;
+            sliceEdgePoint_1 = Physics2D.Raycast(slicePoints[1], (slicePoints[0] - slicePoints[1]).normalized, 100).point;
+
+            Debug.DrawLine(sliceEdgePoint_0, sliceEdgePoint_1, Color.black, 10f);
             Vector2 sliceCenter = (sliceEdgePoint_0 + sliceEdgePoint_1) / 2f;
 
             // Rotate mask to be parallel to slice
@@ -132,15 +141,43 @@ public class PlayerControls : MonoBehaviour
             float hypotenuse = Vector2.Distance(slicePoints[0], slicePoints[1]);
             float rotAng = Mathf.Asin(opposite / hypotenuse) * Mathf.Rad2Deg;
 
-            // Picks one side of the slice for the mask to go to
+            // Get perpendicular vector
             Vector2 perpendicularSlice = Vector2.Perpendicular(slicePoints[0]-slicePoints[1]).normalized;
 
             // Spawn Mask
-            GameObject spriteMask = maskPool.GetPooledObject();
-            Vector2 spawnPos = sliceCenter + spriteMask.transform.localScale.x /2f * perpendicularSlice;
-            spriteMask.SetActive(true);
-            spriteMask.transform.SetPositionAndRotation(spawnPos, Quaternion.Euler(0,0,rotAng));
-            objectsEnabledThisTurn.Add(spriteMask);
+            GameObject spriteMaskObj = maskPool.GetPooledObject();
+            SpriteMask spriteMask = spriteMaskObj.GetComponent<SpriteMask>();
+            Vector2 spawnPos = sliceCenter + spriteMaskObj.transform.localScale.x /2f * perpendicularSlice;
+            sliceDir = GetSidePointIsOn(spawnPos);
+            spriteMaskObj.SetActive(true);
+            spriteMaskObj.transform.SetPositionAndRotation(spawnPos, Quaternion.Euler(0,0,rotAng));
+            objectsEnabledThisTurn.Add(spriteMaskObj);
+
+            // Update polygonCollider2D
+            PolygonCollider2D newPolyFoodCollider = (PolygonCollider2D)foodCollider.collider;
+            // newPolyFoodCollider = new();
+            List<Vector2> newColPoints = new(0);
+            // for (int pointsInd = 0; pointsInd < newPolyFoodCollider.points.Count(); pointsInd++)
+            // {
+            //     if (GetSidePointIsOn(newPolyFoodCollider.points[pointsInd]) != sliceDir) {
+            //         newPolyFoodCollider.points[pointsInd] = sliceEdgePoint_0;
+            //     }
+                
+            // }
+            foreach (Vector2 point in newPolyFoodCollider.points)
+            {
+                if (GetSidePointIsOn(point) != sliceDir) { newColPoints.Add(point);} 
+                // else {
+                //     if (UnityEngine.Random.Range(0,2) == 0) {
+                //         newColPoints.Add(sliceEdgePoint_0 / transform.localScale.x);
+                //     } else {
+                //         newColPoints.Add(sliceEdgePoint_1 / transform.localScale.x);
+                //     }
+                // }
+            }
+            newColPoints.Add(sliceEdgePoint_0 / transform.localScale.x);
+            newColPoints.Add(sliceEdgePoint_1 / transform.localScale.x);
+            newPolyFoodCollider.SetPath(0,newColPoints);
 
             // Create other side slice
             GameObject otherSlice = foodPool.GetPooledObject();
@@ -166,13 +203,15 @@ public class PlayerControls : MonoBehaviour
 
             GameObject finalSliceMask = otherSliceMaskPool.GetPooledObject();
             finalSliceMask.SetActive(true);
-            finalSliceMask.transform.SetPositionAndRotation(sliceCenter - spriteMask.transform.localScale.x / 2f * perpendicularSlice,Quaternion.Euler(0,0,rotAng));
+            finalSliceMask.transform.SetPositionAndRotation(sliceCenter - spriteMaskObj.transform.localScale.x / 2f * perpendicularSlice,Quaternion.Euler(0,0,rotAng));
             objectsEnabledThisTurn.Add(finalSliceMask);
 
+            // Separate Slices
             parentFood.Translate(-perpendicularSlice * separationSpace);
             otherSlice.transform.Translate(perpendicularSlice * separationSpace);
             otherSlice.SetActive(true);
 
+            // Add to undo stack
             objectsEnabledThisTurn.Add(otherSlice);
         }
         everyMove.Push(objectsEnabledThisTurn);
@@ -198,5 +237,21 @@ public class PlayerControls : MonoBehaviour
         currentUndoIndex--;
         // disable spritemasks
         // Disable food
+    }
+
+    private SliceDir GetSidePointIsOn(Vector2 point) {
+        Vector2 se0 = sliceEdgePoint_0 / transform.localScale.x;
+        Vector2 se1 = sliceEdgePoint_1 / transform.localScale.x;
+        float slope = se1.y - se0.y / se1.x - se0.x;
+        float yIntercept = se1.y - slope * se1.x;
+        float yLine = slope * point.x + yIntercept;
+        float yDelta = yLine - point.y;
+        if ((yDelta > 0 && slope > 0) || (yDelta < 0 && slope < 0)) return SliceDir.right;
+        else if ((yDelta > 0 && slope < 0) || (yDelta < 0 && slope > 0)) return SliceDir.left;
+        else return SliceDir.on;
+     }
+
+    private void OnDrawGizmos() {
+        Gizmos.color = Color.blue;
     }
 }

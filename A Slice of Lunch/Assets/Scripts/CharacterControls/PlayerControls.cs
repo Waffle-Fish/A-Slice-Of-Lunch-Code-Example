@@ -160,9 +160,20 @@ public class PlayerControls : MonoBehaviour
             {
                 if (GetSidePointIsOn(point) != sliceDir) { newColPoints.Add(point);} 
             }
-
-            newColPoints.Add(sliceEdgePoint_0 / transform.localScale.x);
-            newColPoints.Add(sliceEdgePoint_1 / transform.localScale.x);
+            Vector2 pointOfIntersection = GetTwoLinesIntersectPoint(sliceEdgePoint_0, sliceEdgePoint_1, newPolyFoodCollider.points[^3],newPolyFoodCollider.points[^2]);
+            bool isPointOnFood = newPolyFoodCollider.bounds.Contains(pointOfIntersection);
+            if (newPolyFoodCollider.points[^1] == newPolyFoodCollider.points[^2] && isPointOnFood) {
+                newColPoints.Add(pointOfIntersection);
+                newColPoints.Add(pointOfIntersection);
+                newColPoints.Add(sliceEdgePoint_0);
+                // newColPoints.Add(sliceEdgePoint_0);
+            }
+            else {
+                newColPoints.Add(sliceEdgePoint_0);
+                newColPoints.Add(sliceEdgePoint_1);
+                newColPoints.Add(sliceEdgePoint_1);
+            }
+            
             newPolyFoodCollider.SetPath(0,newColPoints);
 
             // Create other side slice
@@ -227,17 +238,33 @@ public class PlayerControls : MonoBehaviour
         // Disable food
     }
 
+    // This function may break if lossy scale != 1
     private SliceDir GetSidePointIsOn(Vector2 point) {
-        Vector2 se0 = sliceEdgePoint_0 / transform.localScale.x;
-        Vector2 se1 = sliceEdgePoint_1 / transform.localScale.x;
-        float slope = (se1.y - se0.y) / (se1.x - se0.x);
-        float yIntercept = se1.y - slope * se1.x;
-        float yLine = slope * point.x + yIntercept;
+        float slope = (sliceEdgePoint_1.y - sliceEdgePoint_0.y) / (sliceEdgePoint_1.x - sliceEdgePoint_0.x);
+        float yLine = GetSlopeIntercept(sliceEdgePoint_0, sliceEdgePoint_1, point.x);
         float yDelta = yLine - point.y;
         if ((yDelta > 0 && slope > 0) || (yDelta < 0 && slope < 0)) return SliceDir.right;
         else if ((yDelta > 0 && slope < 0) || (yDelta < 0 && slope > 0)) return SliceDir.left;
         else return SliceDir.on;
-     }
+    }
+
+    private float GetSlopeIntercept(Vector2 a, Vector2 b, float x) {
+        float slope = (a.y - b.y) / (a.x - b.x);
+        float yIntercept = a.y - slope * a.x;
+        return slope * x + yIntercept;
+    }
+
+    private Vector2 GetTwoLinesIntersectPoint(Vector2 a1, Vector2 b1, Vector2 a2, Vector2 b2) {
+        float slope1 = (a1.y - b1.y) / (a1.x - b1.x);
+        float yIntercept1 = a1.y - slope1 * a1.x;
+        float slope2 = (a2.y - b2.y) / (a2.x - b2.x);
+        float yIntercept2 = a2.y - slope2 * a2.x;
+        float x = (yIntercept2 - yIntercept1) / (slope1 - slope2);
+        float y = slope1 * x + yIntercept1;
+
+        if (slope1 == slope2) return Vector2.positiveInfinity;
+        return new(x, y);
+    }
 
     private void OnDrawGizmos() {
         Gizmos.color = Color.blue;

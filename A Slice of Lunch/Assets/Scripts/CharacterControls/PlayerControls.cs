@@ -176,7 +176,9 @@ public class PlayerControls : MonoBehaviour
             objectsEnabledThisTurn.Add(spriteMaskObj);
 
             // Update polygonCollider2D
-            PolygonCollider2D newPolyFoodCollider = (PolygonCollider2D)foodCollider.collider;
+            PolygonCollider2D originalFoodCollider = (PolygonCollider2D)foodCollider.collider;
+            Vector2[] originalPoints = originalFoodCollider.points;
+            PolygonCollider2D newPolyFoodCollider = originalFoodCollider;
             originalPolygonColliders.Add(newPolyFoodCollider);
             List<Vector2> newColPoints = new(0);
             foreach (Vector2 point in newPolyFoodCollider.points)
@@ -223,17 +225,17 @@ public class PlayerControls : MonoBehaviour
                 currentMask = maskPool.GetPooledObjectAtIndex(maskIndex);
             }
 
-             // Update other slice polygonCollider2D
+            // Update other slice polygonCollider2D
             PolygonCollider2D newSlicePolyFoodCollider = otherSlice.GetComponentInChildren<PolygonCollider2D>();
             originalPolygonColliders.Add(newSlicePolyFoodCollider);
             if (!newSlicePolyFoodCollider) {
                 throw new System.Exception("Slice doesn't have polygonCollider2D");
             }
             List<Vector2> newSliceColPoints = new(0);
-            foreach (Vector2 point in newSlicePolyFoodCollider.points)
+            foreach (Vector2 point in originalPoints)
             {
                 Tuple<Directions, Directions> side = GetSidePointIsOn(point + (Vector2)foodCollider.transform.parent.position);
-                if (side.Item1 == Directions.left) { newSliceColPoints.Add(point);} 
+                if (side.Item1 == sliceDir.Item1 || side.Item2 == sliceDir.Item2) newSliceColPoints.Add(point);
             }
             pointOfIntersection = GetTwoLinesIntersectPoint(sliceEdgePoint_0, sliceEdgePoint_1, newPolyFoodCollider.points[^3],newPolyFoodCollider.points[^2]);
             isPointOnFood = newPolyFoodCollider.bounds.Contains(pointOfIntersection);

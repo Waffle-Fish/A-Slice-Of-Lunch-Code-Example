@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEditor.EditorTools;
 using UnityEngine;
 
 public class ObjectPooler : MonoBehaviour
@@ -9,6 +10,7 @@ public class ObjectPooler : MonoBehaviour
 
     [SerializeField]
     private int maxObjectCount = 1;
+    [Tooltip("If null will set parent to this object")]
     [SerializeField]
     private Transform parent;
 

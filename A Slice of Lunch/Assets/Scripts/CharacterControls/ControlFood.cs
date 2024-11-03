@@ -11,12 +11,8 @@ public class ControlFood : MonoBehaviour
 
     private void OnMouseDown() {
         if (playerControls.IsHoldingKnife) return;
-        // Vector3 camWorldPos = Camera.main.transform.position;
-        // Collider2D[] overlaps = Physics2D.OverlapPointAll(camWorldPos);
-        // foreach (var col in overlaps)
-        // {
-        //     if (col.GetComponent<SpriteMask>()) return;
-        // }
+        // TODO:
+        // Center food slice to center of mouse, or to where it clicked
         dragging = true;
     }
 

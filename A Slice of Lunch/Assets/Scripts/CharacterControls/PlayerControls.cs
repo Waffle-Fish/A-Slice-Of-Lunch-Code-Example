@@ -1,5 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
+using Unity.Mathematics;
+using UnityEditor.Localization.Plugins.XLIFF.V20;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -12,9 +16,13 @@ public class PlayerControls : MonoBehaviour
     [Header("Slice Variables")]
     // [SerializeField]
     // private GameObject spriteMask;
-    private Vector3[] slicePoints = new Vector3[2];
     public bool IsHoldingKnife /*{ get; private set; }*/ = false;
+    [SerializeField]
+    private int maxSlicesCount = 2;
+    [Tooltip("Number of slices made")]
+    private int currentSlicesLeft = 0;
     readonly private Vector3 CHECK_VECTOR = new Vector3(999999, 999999, 999999);
+    private Vector3[] slicePoints = new Vector3[2];
     private List<RaycastHit2D> slicedObjects = new();
     Vector2 sliceEdgePoint_0;
     Vector2 sliceEdgePoint_1;
@@ -33,11 +41,17 @@ public class PlayerControls : MonoBehaviour
 
     [Header("Undo")]
     int currentUndoIndex = 0;
-    private Stack<List<GameObject>> everyMove = new();
+    private Stack<List<GameObject>> everyMoveGameObject = new();
+    private Stack<List<PolygonCollider2D>> everyMovePolygonColliders = new();
+
+    [Header("HUD")]
+    [SerializeField]
+    private TextMeshProUGUI slicesText;
 
     // [Header("Update PolygonColliders")]
-    enum SliceDir {left, right, on}
-    SliceDir sliceDir;
+    enum Directions {left, right, above, below, on}
+
+    Tuple<Directions, Directions> sliceDir;
 
 
     private void Awake() {
@@ -53,6 +67,7 @@ public class PlayerControls : MonoBehaviour
             endPoints.Add(Instantiate(endPointObj, transform.position, transform.rotation, transform));
         }
         ResetSlicePoints();
+        UpdateCurrentSlicesCount(maxSlicesCount);
     }
 
     void Update()
@@ -96,6 +111,8 @@ public class PlayerControls : MonoBehaviour
     }
 
     private void BeginSlice() {
+        if (currentSlicesLeft == 0) return;
+
         // return if slice starts on food
         Ray clickRay = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit2D hit2D =  Physics2D.GetRayIntersection(clickRay);
@@ -107,16 +124,21 @@ public class PlayerControls : MonoBehaviour
     }
 
     private void FinalizeSlice() {
+        // Base conditions
         if (slicePoints[0] == CHECK_VECTOR) return;
-
+        if (currentSlicesLeft == 0) return;
         slicePoints[1] = mouseWorldPosition;
         slicedObjects = Physics2D.LinecastAll(slicePoints[0], slicePoints[1]).ToList();
         if (slicedObjects.Count == 0) {
             ResetSlicePoints();
             return;
         }
+
+        // Initialize Undo 
         List<GameObject> objectsEnabledThisTurn = new();
+        List<PolygonCollider2D> originalPolygonColliders = new();
         currentUndoIndex++;
+
         foreach (var foodCollider in slicedObjects) {
             // ignores non food in slicedObjects
             if (!foodCollider.transform.CompareTag("Food") ) continue;
@@ -155,27 +177,34 @@ public class PlayerControls : MonoBehaviour
 
             // Update polygonCollider2D
             PolygonCollider2D newPolyFoodCollider = (PolygonCollider2D)foodCollider.collider;
+            originalPolygonColliders.Add(newPolyFoodCollider);
             List<Vector2> newColPoints = new(0);
             foreach (Vector2 point in newPolyFoodCollider.points)
             {
-                if (GetSidePointIsOn(point) != sliceDir) { newColPoints.Add(point);} 
+                Tuple<Directions, Directions> side = GetSidePointIsOn(point);
+                if (side.Item1 != sliceDir.Item1 || side.Item2 != sliceDir.Item2) newColPoints.Add(point);
             }
             Vector2 pointOfIntersection = GetTwoLinesIntersectPoint(sliceEdgePoint_0, sliceEdgePoint_1, newPolyFoodCollider.points[^3],newPolyFoodCollider.points[^2]);
+            Debug.Log("Poi: " + pointOfIntersection);
             bool isPointOnFood = newPolyFoodCollider.bounds.Contains(pointOfIntersection);
             Vector2 parentOffset  = -foodCollider.transform.parent.position;
             if (newPolyFoodCollider.points[^1] == newPolyFoodCollider.points[^2] && isPointOnFood) {
+                if (GetSidePointIsOn(sliceEdgePoint_0).Item1 != sliceDir.Item1)  {
+                    newColPoints.Add(sliceEdgePoint_0 + parentOffset);
+                }
+                else {
+                    newColPoints.Add(sliceEdgePoint_1 + parentOffset);
+                }
                 newColPoints.Add(pointOfIntersection + parentOffset);
                 newColPoints.Add(pointOfIntersection + parentOffset);
-                newColPoints.Add(sliceEdgePoint_0 + parentOffset);
-                // newColPoints.Add(sliceEdgePoint_0);
             }
             else {
                 newColPoints.Add(sliceEdgePoint_0 + parentOffset);
                 newColPoints.Add(sliceEdgePoint_1 + parentOffset);
                 newColPoints.Add(sliceEdgePoint_1 + parentOffset);
             }
-            
             newPolyFoodCollider.SetPath(0,newColPoints);
+           
 
             // Create other side slice
             GameObject otherSlice = foodPool.GetPooledObject();
@@ -199,6 +228,35 @@ public class PlayerControls : MonoBehaviour
                 currentMask = maskPool.GetPooledObjectAtIndex(maskIndex);
             }
 
+             // Update other slice polygonCollider2D
+            PolygonCollider2D newSlicePolyFoodCollider = otherSlice.GetComponentInChildren<PolygonCollider2D>();
+            originalPolygonColliders.Add(newSlicePolyFoodCollider);
+            if (!newSlicePolyFoodCollider) {
+                throw new System.Exception("Slice doesn't have polygonCollider2D");
+            }
+            List<Vector2> newSliceColPoints = new(0);
+            foreach (Vector2 point in newSlicePolyFoodCollider.points)
+            {
+                Tuple<Directions, Directions> side = GetSidePointIsOn(point);
+                if (side.Item1 == Directions.left) { newSliceColPoints.Add(point);} 
+            }
+            pointOfIntersection = GetTwoLinesIntersectPoint(sliceEdgePoint_0, sliceEdgePoint_1, newPolyFoodCollider.points[^3],newPolyFoodCollider.points[^2]);
+            isPointOnFood = newPolyFoodCollider.bounds.Contains(pointOfIntersection);
+            parentOffset  = -foodCollider.transform.parent.position;
+            if (newPolyFoodCollider.points[^1] == newPolyFoodCollider.points[^2] && isPointOnFood) {
+                newSliceColPoints.Add(sliceEdgePoint_1 + parentOffset);
+                newSliceColPoints.Add(pointOfIntersection + parentOffset);
+                newSliceColPoints.Add(pointOfIntersection + parentOffset);
+                // newColPoints.Add(sliceEdgePoint_0);
+            }
+            else {
+                
+                newSliceColPoints.Add(sliceEdgePoint_1 + parentOffset);
+                newSliceColPoints.Add(sliceEdgePoint_0 + parentOffset);
+                newSliceColPoints.Add(sliceEdgePoint_0 + parentOffset);
+            }
+            newSlicePolyFoodCollider.SetPath(0,newSliceColPoints);
+
             GameObject finalSliceMask = otherSliceMaskPool.GetPooledObject();
             finalSliceMask.SetActive(true);
             finalSliceMask.transform.SetPositionAndRotation(sliceCenter - spriteMaskObj.transform.localScale.x / 2f * perpendicularSlice,Quaternion.Euler(0,0,rotAng));
@@ -209,13 +267,13 @@ public class PlayerControls : MonoBehaviour
             otherSlice.transform.Translate(perpendicularSlice * separationSpace);
             otherSlice.SetActive(true);
 
-            
-
             // Add to undo stack
             objectsEnabledThisTurn.Add(otherSlice);
         }
-        everyMove.Push(objectsEnabledThisTurn);
+        everyMoveGameObject.Push(objectsEnabledThisTurn);
+        everyMovePolygonColliders.Push(originalPolygonColliders);
         ResetSlicePoints();
+        UpdateCurrentSlicesCount(-1);
     }
 
     public void HoldKnife() {
@@ -230,23 +288,29 @@ public class PlayerControls : MonoBehaviour
 
     public void UndoSlice() {
         if (currentUndoIndex <= 0) return;
-        foreach (GameObject obj in everyMove.Pop())
+        List<PolygonCollider2D> pcList = everyMovePolygonColliders.Pop();
+        int i = 0;
+        foreach (GameObject obj in everyMoveGameObject.Pop())
         {
+            obj.GetComponentInChildren<PolygonCollider2D>().points = pcList[i].points;
             obj.SetActive(false);
         }
         currentUndoIndex--;
+        UpdateCurrentSlicesCount(1);
         // disable spritemasks
         // Disable food
     }
 
     // This function may break if lossy scale != 1
-    private SliceDir GetSidePointIsOn(Vector2 point) {
+    private Tuple<Directions, Directions> GetSidePointIsOn(Vector2 point) {
         float slope = (sliceEdgePoint_1.y - sliceEdgePoint_0.y) / (sliceEdgePoint_1.x - sliceEdgePoint_0.x);
         float yLine = GetSlopeIntercept(sliceEdgePoint_0, sliceEdgePoint_1, point.x);
         float yDelta = yLine - point.y;
-        if ((yDelta > 0 && slope > 0) || (yDelta < 0 && slope < 0)) return SliceDir.right;
-        else if ((yDelta > 0 && slope < 0) || (yDelta < 0 && slope > 0)) return SliceDir.left;
-        else return SliceDir.on;
+        Directions xDir = Directions.on;
+        Directions yDir = Directions.on;
+        if (yDelta != 0) yDir = (yDelta > 0 ) ? Directions.below : Directions.above;
+        if (slope != 0) xDir = ((slope > 0 && yDir == Directions.above) || (slope < 0 && yDir == Directions.below)) ? Directions.right :Directions.left; 
+        return new(xDir, yDir);
     }
 
     private float GetSlopeIntercept(Vector2 a, Vector2 b, float x) {
@@ -267,7 +331,12 @@ public class PlayerControls : MonoBehaviour
         return new(x, y);
     }
 
-    private void OnDrawGizmos() {
-        Gizmos.color = Color.blue;
+    private void UpdateCurrentSlicesCount(int val) {
+        currentSlicesLeft += val;
+        currentSlicesLeft = math.clamp(currentSlicesLeft, 0, maxSlicesCount);
+        UpdateSlicesText();
+    }
+    private void UpdateSlicesText() {
+        slicesText.text = "Slices left: " + currentSlicesLeft;
     }
 }

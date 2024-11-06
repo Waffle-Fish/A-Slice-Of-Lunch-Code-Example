@@ -6,8 +6,14 @@ using UnityEngine;
 public class TestSFX : MonoBehaviour
 {
     [SerializeField] string sfx;
-    [SerializeField] AudioClip clip;
+    [SerializeField] AudioClip SFXClip;
+    [SerializeField] AudioSource MenuThemeIntro;
+    [SerializeField] AudioSource MenuThemeLoop;
 
+    void Start() {
+        MenuThemeIntro.Play();
+        MenuThemeLoop.PlayDelayed(MenuThemeIntro.clip.length);
+    }
 
     void OnMouseDown(){
         if (AudioManager.Instance == null) {
@@ -15,7 +21,7 @@ public class TestSFX : MonoBehaviour
         }
         else {
             Debug.Log("Sprite Clicked");
-            AudioManager.Instance.PlaySFX(clip);
+            AudioManager.Instance.PlaySFX(SFXClip);
         }
     }
 }

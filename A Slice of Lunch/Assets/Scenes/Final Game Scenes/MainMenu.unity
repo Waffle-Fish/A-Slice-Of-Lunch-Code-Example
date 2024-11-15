@@ -1410,7 +1410,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2667ceeab7822cc49b580a2569cdc72a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildIndex: 2
+  buildIndex: 1
   delay: 0
   timeline: {fileID: 1710917848}
 --- !u!1 &1056104014

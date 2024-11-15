@@ -35,7 +35,7 @@ public class DelayLoadSceneButton : MonoBehaviour
     }
 
     private void LoadSceneCallback() {
-        timeline.gameObject.SetActive(true);
+        if (timeline) timeline.gameObject.SetActive(true);
         sc.LoadScene(buildIndex, delay);
     }
 

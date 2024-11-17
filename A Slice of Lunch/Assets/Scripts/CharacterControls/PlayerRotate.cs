@@ -17,7 +17,15 @@ public class PlayerRotate : MonoBehaviour
     
     private void Update()
     {
-        RotateFood();
+
+    
+        Ray clickRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit2D hit2D =  Physics2D.GetRayIntersection(clickRay);
+        if (hit2D.collider != null && hit2D.collider.CompareTag("Food"))
+        {
+            RotateFood();
+        }
+        
     }
 
     private void RotateFood()
@@ -41,5 +49,6 @@ public class PlayerRotate : MonoBehaviour
                 transform.eulerAngles = new Vector3(0, 0, angle + angleOffset);
             }
         }
+
     }
 }

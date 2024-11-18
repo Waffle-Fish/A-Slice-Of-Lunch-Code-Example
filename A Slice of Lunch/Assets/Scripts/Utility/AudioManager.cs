@@ -23,9 +23,8 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        
+    public void Start() {
+        PlayMusic("LevelTheme");
     }
 
     public void PlayMusic(string name)

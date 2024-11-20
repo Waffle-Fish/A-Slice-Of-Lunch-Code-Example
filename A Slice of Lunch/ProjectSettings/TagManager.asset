@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Food
   - Tool
+  - Magnet
   layers:
   - Default
   - TransparentFX

@@ -1,36 +1,39 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
-public class FoodDetection : MonoBehaviour
+public class WinManager : MonoBehaviour
 {
+    [SerializeField]
+    GameObject foodsObj;
+    List<ControlFood> totalFoodList = new();
+    List<ControlFood> currentFoodList = new();
     private Collider2D container;
-    // Start is called before the first frame update
+
     void Awake()
     {
         container = GetComponent<Collider2D>();
     }
+
     void Start()
     {
-        
+        UpdateTotalFoodList();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
+    private void UpdateTotalFoodList() {
+        totalFoodList.Clear();
+        foodsObj.GetComponentsInChildren<ControlFood>(totalFoodList);
     }
 
     void OnTriggerStay2D(Collider2D col)
     {
-        Debug.Log(col.transform.parent.name + " is fully in box: " + IsFoodInBox(col));
-        //IsFoodInBox(col);
+        // if (!IsFoodInBox(col)) return;
+        Debug.Log(col.name + " is in the box");
+        // if (currentFoodList.)
     }
 
     bool IsFoodInBox(Collider2D col)
     {
-        //if (col is not PolygonCollider2D) {return false;}
-
         //Debug.Log("bounds: "+container.bounds);
         PolygonCollider2D col_p = (PolygonCollider2D) col;
         foreach (Vector2 point in col_p.points)

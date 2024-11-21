@@ -11,8 +11,10 @@ public class TestSFX : MonoBehaviour
     [SerializeField] AudioSource MenuThemeLoop;
 
     void Start() {
-        MenuThemeIntro.Play();
-        MenuThemeLoop.PlayDelayed(MenuThemeIntro.clip.length);
+        // MenuThemeIntro.Play();
+        // MenuThemeLoop.PlayDelayed(MenuThemeIntro.clip.length);
+
+        AudioManager.Instance.PlayMenuTheme();
     }
 
     void OnMouseDown(){

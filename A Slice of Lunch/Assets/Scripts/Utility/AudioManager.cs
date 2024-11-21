@@ -28,7 +28,17 @@ public class AudioManager : MonoBehaviour
     }
 
     public void Start() {
-        PlayMusic(trackToPlay);
+        // PlayMusic(trackToPlay);
+
+        StartCoroutine(PlayMenuTheme());
+    }
+
+    public IEnumerator PlayMenuTheme() {
+        Debug.Log("Play the Main Menu Theme sequence!");
+        PlayMusic("MenuThemeIntro");
+        yield return new WaitForSeconds(musicSource.clip.length);
+        Debug.Log("Play the main loop.");
+        PlayMusic("MenuThemeLoop");
     }
 
     public void PlayMusic(string name)

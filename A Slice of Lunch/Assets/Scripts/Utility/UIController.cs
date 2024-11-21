@@ -2,17 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
+using Unity.VisualScripting;
+using System;
 
 public class UIController : MonoBehaviour
 {
     public Slider _musicSlider, _sfxSlider;
+    public TMP_Text _musicVolumeText, _sfxVolumeText;
 
-    // public IPanel SettingsPanel;
-
-    private bool showSettingsMenu = false;
-
-    public void ToggleSettingsMenu() {
-        // SettingsPanel.SetActive(showSettingsMenu);
+    public void Update() {
+        _musicVolumeText.text = Math.Round(_musicSlider.value, 1).ToString();
+        _sfxVolumeText.text = Math.Round(_sfxSlider.value, 1).ToString();
     }
 
     public void ToggleMusic() {
@@ -24,10 +25,10 @@ public class UIController : MonoBehaviour
     }
 
     public void MusicVolume() {
-        AudioManager.Instance.MusicVolume(_musicSlider.value);
+        AudioManager.Instance.MusicVolume((float) Math.Round(_musicSlider.value, 1));
     }
     
     public void SFXVolume() {
-        AudioManager.Instance.SFXVolume(_sfxSlider.value);
+        AudioManager.Instance.SFXVolume((float) Math.Round(_sfxSlider.value, 1));
     }
 }

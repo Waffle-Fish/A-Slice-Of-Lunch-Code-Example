@@ -5,10 +5,14 @@ using System;
 
 public class AudioManager : MonoBehaviour
 {
-    public static AudioManager Instance;
+    public static AudioManager Instance {get; private set;}
+    [Min(0)]
+    public int trackToPlay;
 
     public Sound[] musicSounds, sfxSounds;
     public AudioSource musicSource, sfxSource;
+
+   
 
     public void Awake()
     { 
@@ -23,14 +27,28 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        
+    public void Start() {
+        PlayMusic(trackToPlay);
     }
 
     public void PlayMusic(string name)
     {
         Sound s = Array.Find(musicSounds, x => x.name == name);
+
+        if (s == null)
+        {
+            Debug.Log("Sound not found");
+        }
+        else
+        {
+            musicSource.clip = s.clip;
+            musicSource.Play();
+        }
+    }
+
+    public void PlayMusic(int ind)
+    {
+        Sound s = musicSounds[ind];
 
         if (s == null)
         {

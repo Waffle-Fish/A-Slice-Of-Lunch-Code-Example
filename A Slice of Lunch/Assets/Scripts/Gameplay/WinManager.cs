@@ -27,9 +27,14 @@ public class WinManager : MonoBehaviour
 
     void OnTriggerStay2D(Collider2D col)
     {
-        // if (!IsFoodInBox(col)) return;
-        Debug.Log(col.name + " is in the box");
+        if (!IsFoodInBox(col)) {}
+        currentFoodList.Add(col.GetComponent<ControlFood>());
+        Debug.Log(col.transform.parent.name + " is in the box");
         // if (currentFoodList.)
+    }
+
+    private void OnTriggerExit2D(Collider2D other) {
+        Debug.Log(other.transform.parent.name + " has left the box");
     }
 
     bool IsFoodInBox(Collider2D col)
@@ -38,7 +43,7 @@ public class WinManager : MonoBehaviour
         PolygonCollider2D col_p = (PolygonCollider2D) col;
         foreach (Vector2 point in col_p.points)
         {
-            Vector3 col_global_point = col.transform.parent.position + (Vector3) point /transform.lossyScale.x;
+            Vector3 col_global_point = col.transform.parent.position + (Vector3) point / transform.lossyScale.x;
             //Debug.Log(point);
             if (!container.bounds.Contains(col_global_point))
             {

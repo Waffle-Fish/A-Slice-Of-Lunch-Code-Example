@@ -37,6 +37,8 @@ public class DelayLoadSceneButton : MonoBehaviour
     private void LoadSceneCallback() {
         timeline.gameObject.SetActive(true);
         sc.LoadScene(buildIndex, delay);
+
+        AudioManager.Instance.UpdateTrack(buildIndex);
     }
 
     private void OnDisable() {

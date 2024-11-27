@@ -124,4 +124,14 @@ public class AudioManager : MonoBehaviour
     public void SFXVolume(float volume) {
         sfxSource.volume = volume;
     }
+
+    public void UpdateTrack(int trackNumber) {
+        if (trackNumber == 0) {
+            StartCoroutine(PlayMenuTheme());
+            Debug.Log("Now Playing the Menu Theme Sequence");
+        } else if (trackNumber == 2) {
+            PlayMusic("LevelTheme");
+            Debug.Log("Now Playing the Level Theme");
+        }
+    }
 }

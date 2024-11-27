@@ -11,6 +11,13 @@ public class UIController : MonoBehaviour
     public Slider _musicSlider, _sfxSlider;
     public TMP_Text _musicVolumeText, _sfxVolumeText;
 
+    public void Start() {
+        _musicSlider.value = PlayerPrefs.GetFloat("musicVolume");
+        _sfxSlider.value = PlayerPrefs.GetFloat("sfxVolume");
+
+        Debug.Log("Loaded volume levels");
+    }
+
     public void Update() {
         _musicVolumeText.text = Math.Round(_musicSlider.value, 1).ToString();
         _sfxVolumeText.text = Math.Round(_sfxSlider.value, 1).ToString();
@@ -25,10 +32,18 @@ public class UIController : MonoBehaviour
     }
 
     public void MusicVolume() {
-        AudioManager.Instance.MusicVolume((float) Math.Round(_musicSlider.value, 1));
+        float musicVolume = (float) Math.Round(_musicSlider.value, 1);
+        AudioManager.Instance.MusicVolume(musicVolume);
+        PlayerPrefs.SetFloat("musicVolume", musicVolume);
+
+        Debug.Log("Saved music volume level");
     }
     
     public void SFXVolume() {
-        AudioManager.Instance.SFXVolume((float) Math.Round(_sfxSlider.value, 1));
+        float sfxVolume = (float) Math.Round(_sfxSlider.value, 1);
+        AudioManager.Instance.SFXVolume(sfxVolume);
+        PlayerPrefs.SetFloat("sfxVolume", sfxVolume);
+
+        Debug.Log("Saved SFX volume level");
     }
 }

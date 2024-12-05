@@ -12,14 +12,19 @@ public class UIController : MonoBehaviour
     public TMP_Text _musicVolumeText, _sfxVolumeText;
     public Button _pauseButton;
     public GameObject _settingsPanel;
-
+    public bool isInGameSettings;
     bool isGamePaused = false;
 
     public void Start() {
-        _musicSlider.value = PlayerPrefs.GetFloat("musicVolume");
-        _sfxSlider.value = PlayerPrefs.GetFloat("sfxVolume");
-        _settingsPanel
-.SetActive(false);
+        if (AudioManager.Instance != null) {
+            _musicSlider.value = PlayerPrefs.GetFloat("musicVolume");
+            _sfxSlider.value = PlayerPrefs.GetFloat("sfxVolume");
+        }
+        
+        if (isInGameSettings == true) {
+            _settingsPanel.SetActive(false);
+            Debug.Log("Deactivated settings panel");
+        }
 
         Debug.Log("Loaded volume levels");
     }
@@ -54,18 +59,20 @@ public class UIController : MonoBehaviour
     }
 
     public void PauseGame() {
+        AudioManager.Instance.PlaySFX("ButtonPop");
         if (!isGamePaused) {
             isGamePaused = true;
             _settingsPanel.SetActive(true);
-            Time.timeScale = 0f;
+            // Time.timeScale = 0f;
 
             Debug.Log("Pause Game");
         } else if (isGamePaused) {
             isGamePaused = false;
             _settingsPanel.SetActive(false);
-            Time.timeScale = 1f;
+            // Time.timeScale = 1f;
 
             Debug.Log("Resume Game");
         }
     }
+
 }

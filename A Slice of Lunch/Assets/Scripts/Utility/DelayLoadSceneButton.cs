@@ -38,7 +38,9 @@ public class DelayLoadSceneButton : MonoBehaviour
         timeline.gameObject.SetActive(true);
         sc.LoadScene(buildIndex, delay);
 
-        AudioManager.Instance.UpdateTrack(buildIndex);
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.PlaySFX("ButtonPop");
+            AudioManager.Instance.UpdateTrack(buildIndex);
     }
 
     private void OnDisable() {

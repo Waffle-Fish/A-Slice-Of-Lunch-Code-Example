@@ -11,8 +11,10 @@ public class WinManager : MonoBehaviour
     GameObject foodsObj;
     [SerializeField]
     TextMeshProUGUI piecesLeftText;
+    [SerializeField]
+    GameObject winButton;
     List<ControlFood> totalFoodList = new();
-    List<ControlFood> currentFoodList = new();
+    List<ControlFood> foodInBox = new();
     private Collider2D container;
 
     void Awake()
@@ -27,16 +29,23 @@ public class WinManager : MonoBehaviour
         UpdateTotalFoodList();
     }
 
+    void Update() {
+        winButton.SetActive(foodInBox.Count == totalFoodList.Count);
+    }
+
     void OnTriggerStay2D(Collider2D col)
     {
         if (!IsFoodInBox(col)) {}
         ControlFood cf = col.GetComponent<ControlFood>();
-        if (currentFoodList.Find(x => x != cf))currentFoodList.Add(cf);
+        if (!foodInBox.Contains(cf)) foodInBox.Add(cf);
+        UpdatePiecestOutsideBox();
         // Debug.Log(col.transform.parent.name + " is in the box");
+        
     }
 
     private void OnTriggerExit2D(Collider2D other) {
-        currentFoodList.Remove(other.GetComponent<ControlFood>());
+        foodInBox.Remove(other.GetComponent<ControlFood>());
+        UpdatePiecestOutsideBox();
         // Debug.Log(other.transform.parent.name + " has left the box");
     }
 
@@ -58,8 +67,12 @@ public class WinManager : MonoBehaviour
 
     public void UpdateTotalFoodList() {
         totalFoodList.Clear();
-        Debug.Log("Update pieces list");
         foodsObj.GetComponentsInChildren<ControlFood>(false,totalFoodList);
-        piecesLeftText.text = $"Pieces outside lunchbox: {totalFoodList.Count - currentFoodList.Count}";
+        UpdatePiecestOutsideBox();
+        
+    }
+
+    private void UpdatePiecestOutsideBox() {
+        piecesLeftText.text = $"Pieces outside lunchbox: {totalFoodList.Count - foodInBox.Count}";
     }
 }

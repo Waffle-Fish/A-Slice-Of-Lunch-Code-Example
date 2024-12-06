@@ -34,10 +34,10 @@ public class AudioManager : MonoBehaviour
     }
 
     public IEnumerator PlayMenuTheme() {
-        Debug.Log("Play the Main Menu Theme sequence!");
+        // Debug.Log("Play the Main Menu Theme sequence!");
         PlayMusic("MenuThemeIntro");
         yield return new WaitForSeconds(musicSource.clip.length);
-        Debug.Log("Play the main loop.");
+        // Debug.Log("Play the main loop.");
         PlayMusic("MenuThemeLoop");
     }
 
@@ -93,6 +93,7 @@ public class AudioManager : MonoBehaviour
         }
         else
         {
+            sfxSource.Stop();
             sfxSource.PlayOneShot(s.clip);
         }
     }
@@ -126,10 +127,11 @@ public class AudioManager : MonoBehaviour
     }
 
     public void UpdateTrack(int trackNumber) {
+        musicSource.Stop();
         if (trackNumber == 0) {
             StartCoroutine(PlayMenuTheme());
             Debug.Log("Now Playing the Menu Theme Sequence");
-        } else if (trackNumber == 2) {
+        } else {
             PlayMusic("LevelTheme");
             Debug.Log("Now Playing the Level Theme");
         }

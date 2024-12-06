@@ -410,11 +410,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6565892117790937903, guid: cdac2e603c579474c83e6139eea225b0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 11.15
+      value: -10.69
       objectReference: {fileID: 0}
     - target: {fileID: 6565892117790937903, guid: cdac2e603c579474c83e6139eea225b0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.09
+      value: -4.47
       objectReference: {fileID: 0}
     - target: {fileID: 6565892117790937903, guid: cdac2e603c579474c83e6139eea225b0, type: 3}
       propertyPath: m_LocalPosition.z
@@ -8189,7 +8189,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsHoldingKnife: 0
-  maxSlicesCount: 2
+  maxSlicesCount: 1
   endPointObj: {fileID: 8115210701779045239, guid: 1dee6dff36e12ca4ba208f398a1d02ad, type: 3}
   endPointPosZ: -50
   slicesText: {fileID: 1987391040}
@@ -8534,10 +8534,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tamagos
       objectReference: {fileID: 0}
-    - target: {fileID: 2024682485550914157, guid: 2ed5e46a0c810fd48aae022144ca7738, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7388266335698221782, guid: 2ed5e46a0c810fd48aae022144ca7738, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -8641,7 +8637,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7321364085180309026, guid: 014c1842e3bc51441a831fe95e99e378, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -8666,7 +8662,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 30, y: -0.65, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalScale: {x: 1.1, y: 1.1, z: 1.1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 130088860}
@@ -8723,15 +8719,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8083447292057343228, guid: d21b7c20ca29b9a409001bcd6aa8e11a, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.5
+      value: 1.1
       objectReference: {fileID: 0}
     - target: {fileID: 8083447292057343228, guid: d21b7c20ca29b9a409001bcd6aa8e11a, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.5
+      value: 1.1
       objectReference: {fileID: 0}
     - target: {fileID: 8083447292057343228, guid: d21b7c20ca29b9a409001bcd6aa8e11a, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1.5
+      value: 1.1
       objectReference: {fileID: 0}
     - target: {fileID: 8083447292057343228, guid: d21b7c20ca29b9a409001bcd6aa8e11a, type: 3}
       propertyPath: m_LocalPosition.x

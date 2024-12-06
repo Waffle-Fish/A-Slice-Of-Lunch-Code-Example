@@ -265,7 +265,7 @@ public class PlayerControls : MonoBehaviour
 
             // Add to undo stack
             objectsEnabledThisTurn.Add(otherSlice);
-            AudioManager.Instance.PlaySFX("Slice");
+            if (AudioManager.Instance) AudioManager.Instance.PlaySFX("Slice");
         }
         everyMoveGameObject.Push(objectsEnabledThisTurn);
         everyMovePolygonColliders.Push(originalPolygonColliders);
@@ -296,6 +296,7 @@ public class PlayerControls : MonoBehaviour
         }
         currentUndoIndex--;
         UpdateCurrentSlicesCount(1);
+        WinManager.Instance.UpdateTotalFoodList();
         // disable spritemasks
         // Disable food
     }

@@ -35,7 +35,7 @@ public class WinManager : MonoBehaviour
 
     void OnTriggerStay2D(Collider2D col)
     {
-        if (!IsFoodInBox(col)) {}
+        // if (!IsFoodInBox(col)) { return; }
         ControlFood cf = col.GetComponent<ControlFood>();
         if (!foodInBox.Contains(cf)) foodInBox.Add(cf);
         UpdatePiecestOutsideBox();
@@ -51,7 +51,7 @@ public class WinManager : MonoBehaviour
 
     bool IsFoodInBox(Collider2D col)
     {
-        //Debug.Log("bounds: "+container.bounds);
+        // Debug.Log("bounds: "+container.bounds);
         PolygonCollider2D col_p = (PolygonCollider2D) col;
         foreach (Vector2 point in col_p.points)
         {

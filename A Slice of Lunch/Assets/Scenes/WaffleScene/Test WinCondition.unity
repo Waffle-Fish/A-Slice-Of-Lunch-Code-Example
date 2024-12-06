@@ -626,9 +626,9 @@ RectTransform:
   m_Children:
   - {fileID: 703157126}
   - {fileID: 1645996162}
+  - {fileID: 199578196}
   - {fileID: 1620057818095643887}
   - {fileID: 135289726}
-  - {fileID: 199578196}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -770,7 +770,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2667ceeab7822cc49b580a2569cdc72a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildIndex: 0
+  buildIndex: 1
   delay: 0
   timeline: {fileID: 782046750}
 --- !u!1 &395322011
@@ -1095,7 +1095,7 @@ GameObject:
   - component: {fileID: 618871462}
   - component: {fileID: 618871461}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1110,8 +1110,8 @@ RectTransform:
   m_GameObject: {fileID: 618871459}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
-  m_ConstrainProportionsScale: 1
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1863819838}
   m_Father: {fileID: 199578196}
@@ -2705,7 +2705,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 5
+      scalar: 3
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -7452,6 +7452,7 @@ GameObject:
   - component: {fileID: 1863819841}
   - component: {fileID: 1863819840}
   - component: {fileID: 1863819839}
+  - component: {fileID: 1863819842}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -7468,8 +7469,8 @@ RectTransform:
   m_GameObject: {fileID: 1863819837}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.1, y: 1.1, z: 1.1}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 618871460}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7560,6 +7561,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1863819837}
   m_CullTransparentMesh: 1
+--- !u!114 &1863819842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1863819837}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2667ceeab7822cc49b580a2569cdc72a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buildIndex: 1
+  delay: 0
+  timeline: {fileID: 782046750}
 --- !u!1 &1870500141
 GameObject:
   m_ObjectHideFlags: 0

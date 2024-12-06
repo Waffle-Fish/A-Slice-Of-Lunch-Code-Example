@@ -268,6 +268,7 @@ public class PlayerControls : MonoBehaviour
         }
         everyMoveGameObject.Push(objectsEnabledThisTurn);
         everyMovePolygonColliders.Push(originalPolygonColliders);
+        WinManager.Instance.UpdateTotalFoodList();
         ResetSlicePoints();
         UpdateCurrentSlicesCount(-1);
     }

@@ -265,6 +265,7 @@ public class PlayerControls : MonoBehaviour
 
             // Add to undo stack
             objectsEnabledThisTurn.Add(otherSlice);
+            AudioManager.Instance.PlaySFX("Slice");
         }
         everyMoveGameObject.Push(objectsEnabledThisTurn);
         everyMovePolygonColliders.Push(originalPolygonColliders);

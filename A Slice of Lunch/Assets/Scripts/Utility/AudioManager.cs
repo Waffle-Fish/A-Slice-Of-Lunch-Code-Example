@@ -28,7 +28,17 @@ public class AudioManager : MonoBehaviour
     }
 
     public void Start() {
-        PlayMusic(trackToPlay);
+        // PlayMusic(trackToPlay);
+
+        StartCoroutine(PlayMenuTheme());
+    }
+
+    public IEnumerator PlayMenuTheme() {
+        Debug.Log("Play the Main Menu Theme sequence!");
+        PlayMusic("MenuThemeIntro");
+        yield return new WaitForSeconds(musicSource.clip.length);
+        Debug.Log("Play the main loop.");
+        PlayMusic("MenuThemeLoop");
     }
 
     public void PlayMusic(string name)
@@ -113,5 +123,15 @@ public class AudioManager : MonoBehaviour
 
     public void SFXVolume(float volume) {
         sfxSource.volume = volume;
+    }
+
+    public void UpdateTrack(int trackNumber) {
+        if (trackNumber == 0) {
+            StartCoroutine(PlayMenuTheme());
+            Debug.Log("Now Playing the Menu Theme Sequence");
+        } else if (trackNumber == 2) {
+            PlayMusic("LevelTheme");
+            Debug.Log("Now Playing the Level Theme");
+        }
     }
 }

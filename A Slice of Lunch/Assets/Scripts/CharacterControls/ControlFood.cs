@@ -7,6 +7,7 @@ using UnityEngine.Rendering;
 public class ControlFood : MonoBehaviour
 {
     bool dragging = false;
+    bool onFood = false;
     PlayerControls playerControls;
     SortingGroup sortingGroup;
     int initialSortingOrder;
@@ -21,6 +22,24 @@ public class ControlFood : MonoBehaviour
         parentTransform = transform.parent;
         originalPosition = parentTransform.position;
         polygonCollider2D = GetComponent<PolygonCollider2D>();
+    }
+
+    private void OnTriggerEnter2D(Collider2D other) {
+        if (other.CompareTag("Food")) {
+            onFood = true;
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D other) {
+        if (other.CompareTag("Food")) {
+            onFood = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other) {
+        if (other.CompareTag("Food")) {
+            onFood = false;
+        }
     }
 
     private void OnMouseDown() {
@@ -42,7 +61,7 @@ public class ControlFood : MonoBehaviour
         {
             if(!resultsTags.TryAdd(item.tag, 1)) resultsTags[item.tag]++;
         }
-        if (resultsTags.ContainsKey("Food") || resultsTags.ContainsKey("Border")) {
+        if (resultsTags.ContainsKey("Border") || onFood) {
             HandleFoodCollision();
         } else {
             originalPosition = parentTransform.position;

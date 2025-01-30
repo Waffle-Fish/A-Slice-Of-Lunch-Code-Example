@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -62,7 +63,7 @@ public class ControlFood : MonoBehaviour
             if(!resultsTags.TryAdd(item.tag, 1)) resultsTags[item.tag]++;
         }
         if (resultsTags.ContainsKey("Border") || onFood) {
-            HandleFoodCollision();
+            StartCoroutine(HandleFoodCollision());
         } else {
             originalPosition = parentTransform.position;
             if (!resultsTags.ContainsKey("Food")) return;
@@ -88,7 +89,16 @@ public class ControlFood : MonoBehaviour
         }
     }
 
-    private void HandleFoodCollision() {
-        parentTransform.position = originalPosition;
+    private IEnumerator HandleFoodCollision() {
+        float numIterations = 50;
+        float totalTime = 0.01f;
+        float timePerIteration = totalTime / numIterations;
+        Vector3 startPos = parentTransform.position;
+        Vector3 endPos = originalPosition;
+        for (float i = 0; i < totalTime; i+= timePerIteration)
+        {
+            parentTransform.position = Vector3.Lerp(startPos, endPos, i / totalTime);
+            yield return new WaitForSeconds(timePerIteration);
+        }
     }
 }

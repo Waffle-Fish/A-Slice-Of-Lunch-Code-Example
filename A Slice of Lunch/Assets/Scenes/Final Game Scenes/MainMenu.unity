@@ -3570,6 +3570,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1814827836403000590, guid: 708ba970117bd264b8f1be0e456bcf38, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: ba7a2176032aedf42a607225c823a990, type: 3}
     - target: {fileID: 5652002356350239585, guid: 708ba970117bd264b8f1be0e456bcf38, type: 3}
       propertyPath: m_Name
       value: EnterInTransition

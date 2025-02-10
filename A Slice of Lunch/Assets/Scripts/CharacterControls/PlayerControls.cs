@@ -150,8 +150,18 @@ public class PlayerControls : MonoBehaviour
             foodPool = parentFood.parent.GetComponent<ObjectPooler>();
 
             // Gets spawn point
-            sliceEdgePoint_0 = Physics2D.Raycast(slicePoints[0], (slicePoints[1] - slicePoints[0]).normalized, 100).point;
-            sliceEdgePoint_1 = Physics2D.Raycast(slicePoints[1], (slicePoints[0] - slicePoints[1]).normalized, 100).point;
+            int originalLayer = foodCollider.collider.gameObject.layer;
+            int sliceLayer = LayerMask.NameToLayer("Slice");
+            int sliceLayerMask = LayerMask.GetMask("Slice");
+            foodCollider.collider.gameObject.layer = sliceLayer;
+            // These points are in world coordinates, not local
+            RaycastHit2D hit0 = Physics2D.Raycast(slicePoints[0], (slicePoints[1] - slicePoints[0]), distance: 100f, layerMask: sliceLayerMask);
+            RaycastHit2D hit1 = Physics2D.Raycast(slicePoints[1], (slicePoints[0] - slicePoints[1]), distance: 100f, layerMask: sliceLayerMask);
+            Debug.DrawLine(slicePoints[0], slicePoints[1], Color.red, 10f);
+            sliceEdgePoint_0 = hit0.point;
+            sliceEdgePoint_1 = hit1.point;
+            Debug.Log("Slice Edge 0: " + sliceEdgePoint_0 + " Slice Edge 1: " + sliceEdgePoint_1);
+            foodCollider.collider.gameObject.layer = originalLayer;
 
             Debug.DrawLine(sliceEdgePoint_0, sliceEdgePoint_1, Color.black, 10f);
             Vector2 sliceCenter = (sliceEdgePoint_0 + sliceEdgePoint_1) / 2f;
@@ -185,20 +195,23 @@ public class PlayerControls : MonoBehaviour
                 Tuple<Directions, Directions> side = GetSidePointIsOn(point + (Vector2)foodCollider.transform.parent.position);
                 if (side.Item1 != sliceDir.Item1 || side.Item2 != sliceDir.Item2) newColPoints.Add(point);
             }
-            Vector2 pointOfIntersection = GetTwoLinesIntersectPoint(sliceEdgePoint_0, sliceEdgePoint_1, newPolyFoodCollider.points[^3],newPolyFoodCollider.points[^2]);
-            Debug.Log("Poi: " + pointOfIntersection);
-            bool isPointOnFood = newPolyFoodCollider.bounds.Contains(pointOfIntersection);
+            // Vector2 pointOfIntersection = GetTwoLinesIntersectPoint(sliceEdgePoint_0, sliceEdgePoint_1, newPolyFoodCollider.points[^3],newPolyFoodCollider.points[^2]);
+            // // Debug.Log("Poi: " + pointOfIntersection);
+            // bool isPointOnFood = newPolyFoodCollider.bounds.Contains(pointOfIntersection);
             Vector2 parentOffset = foodCollider.transform.parent.position; // PolyCol points are local pos
-            if (newPolyFoodCollider.points[^1] == newPolyFoodCollider.points[^2] && isPointOnFood) {
-                newColPoints.Add(sliceEdgePoint_0 - parentOffset);
-                newColPoints.Add(pointOfIntersection - parentOffset);
-                newColPoints.Add(pointOfIntersection - parentOffset);
-            }
-            else {
-                newColPoints.Add(sliceEdgePoint_0 - parentOffset);
-                newColPoints.Add(sliceEdgePoint_1 - parentOffset);
-                newColPoints.Add(sliceEdgePoint_1 - parentOffset);
-            }
+            // if (newPolyFoodCollider.points[^1] == newPolyFoodCollider.points[^2] && isPointOnFood) {
+            //     newColPoints.Add(sliceEdgePoint_0 - parentOffset);
+            //     newColPoints.Add(pointOfIntersection - parentOffset);
+            //     newColPoints.Add(pointOfIntersection - parentOffset);
+            // }
+            // else {
+            //     newColPoints.Add(sliceEdgePoint_0 - parentOffset);
+            //     newColPoints.Add(sliceEdgePoint_1 - parentOffset);
+            //     newColPoints.Add(sliceEdgePoint_1 - parentOffset);
+            // }
+            newColPoints.Add(sliceEdgePoint_0 - parentOffset);
+            newColPoints.Add(sliceEdgePoint_1 - parentOffset);
+            // newColPoints.Add(sliceEdgePoint_1 - parentOffset);
             newPolyFoodCollider.SetPath(0,newColPoints);
            
 
@@ -236,21 +249,24 @@ public class PlayerControls : MonoBehaviour
                 Tuple<Directions, Directions> side = GetSidePointIsOn(point + (Vector2)foodCollider.transform.parent.position);
                 if (side.Item1 == sliceDir.Item1 || side.Item2 == sliceDir.Item2) newSliceColPoints.Add(point);
             }
-            pointOfIntersection = GetTwoLinesIntersectPoint(sliceEdgePoint_0, sliceEdgePoint_1, newPolyFoodCollider.points[^3],newPolyFoodCollider.points[^2]);
-            isPointOnFood = newPolyFoodCollider.bounds.Contains(pointOfIntersection);
-            parentOffset  = -foodCollider.transform.parent.position;
-            if (newPolyFoodCollider.points[^1] == newPolyFoodCollider.points[^2] && isPointOnFood) {
-                newSliceColPoints.Add(sliceEdgePoint_1 + parentOffset);
-                newSliceColPoints.Add(pointOfIntersection + parentOffset);
-                newSliceColPoints.Add(pointOfIntersection + parentOffset);
-                // newColPoints.Add(sliceEdgePoint_0);
-            }
-            else {
+            parentOffset = -foodCollider.transform.parent.position;
+            // pointOfIntersection = GetTwoLinesIntersectPoint(sliceEdgePoint_0, sliceEdgePoint_1, newPolyFoodCollider.points[^3],newPolyFoodCollider.points[^2]);
+            // isPointOnFood = newPolyFoodCollider.bounds.Contains(pointOfIntersection);
+            // if (newPolyFoodCollider.points[^1] == newPolyFoodCollider.points[^2] && isPointOnFood) {
+            //     newSliceColPoints.Add(sliceEdgePoint_1 + parentOffset);
+            //     newSliceColPoints.Add(pointOfIntersection + parentOffset);
+            //     newSliceColPoints.Add(pointOfIntersection + parentOffset);
+            //     // newColPoints.Add(sliceEdgePoint_0);
+            // }
+            // else {
                 
-                newSliceColPoints.Add(sliceEdgePoint_1 + parentOffset);
-                newSliceColPoints.Add(sliceEdgePoint_0 + parentOffset);
-                newSliceColPoints.Add(sliceEdgePoint_0 + parentOffset);
-            }
+            //     newSliceColPoints.Add(sliceEdgePoint_1 + parentOffset);
+            //     newSliceColPoints.Add(sliceEdgePoint_0 + parentOffset);
+            //     newSliceColPoints.Add(sliceEdgePoint_0 + parentOffset);
+            // }
+            newColPoints.Add(sliceEdgePoint_1 - parentOffset);
+            newColPoints.Add(sliceEdgePoint_0 - parentOffset);
+            // newColPoints.Add(sliceEdgePoint_0 - parentOffset);
             newSlicePolyFoodCollider.SetPath(0,newSliceColPoints);
 
             GameObject finalSliceMask = otherSliceMaskPool.GetPooledObject();

@@ -174,6 +174,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ShrimpTempura Pool
       objectReference: {fileID: 0}
+    - target: {fileID: 7321364085180309026, guid: 014c1842e3bc51441a831fe95e99e378, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -1176,13 +1180,25 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 298561411}
     m_Modifications:
+    - target: {fileID: 602883253759569476, guid: f4180f04b10d73c4ea8ea29dcd647c73, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 602883253759569476, guid: f4180f04b10d73c4ea8ea29dcd647c73, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 602883253759569476, guid: f4180f04b10d73c4ea8ea29dcd647c73, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 1037118538631015733, guid: f4180f04b10d73c4ea8ea29dcd647c73, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 11.12
+      value: -12.43
       objectReference: {fileID: 0}
     - target: {fileID: 1037118538631015733, guid: f4180f04b10d73c4ea8ea29dcd647c73, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.99
+      value: 0.22
       objectReference: {fileID: 0}
     - target: {fileID: 1037118538631015733, guid: f4180f04b10d73c4ea8ea29dcd647c73, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1215,6 +1231,10 @@ PrefabInstance:
     - target: {fileID: 1037118538631015733, guid: f4180f04b10d73c4ea8ea29dcd647c73, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1037118538631015733, guid: f4180f04b10d73c4ea8ea29dcd647c73, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3715384504503426513, guid: f4180f04b10d73c4ea8ea29dcd647c73, type: 3}
       propertyPath: m_Constraints
@@ -2404,6 +2424,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Onigiri Pool
       objectReference: {fileID: 0}
+    - target: {fileID: 5685544708154778968, guid: af224943faccc06488183e3a58cc5316, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7003331429847606557, guid: af224943faccc06488183e3a58cc5316, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -3066,9 +3090,9 @@ Transform:
   - {fileID: 1435218027}
   - {fileID: 1946482659}
   - {fileID: 932479838}
+  - {fileID: 22561133}
   - {fileID: 298561411}
   - {fileID: 223711104}
-  - {fileID: 22561133}
   - {fileID: 545312546}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3123,6 +3147,10 @@ PrefabInstance:
     - target: {fileID: 7946384141471745150, guid: 8933c02784762684b89c53dc5f8130a2, type: 3}
       propertyPath: m_Name
       value: Boiled Egg Pool
+      objectReference: {fileID: 0}
+    - target: {fileID: 7946384141471745150, guid: 8933c02784762684b89c53dc5f8130a2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -9204,6 +9232,10 @@ PrefabInstance:
     - target: {fileID: 7037819948253107038, guid: 334b07450b4390f4395d6bc74c21c15b, type: 3}
       propertyPath: m_Name
       value: Katsu Pool
+      objectReference: {fileID: 0}
+    - target: {fileID: 7037819948253107038, guid: 334b07450b4390f4395d6bc74c21c15b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9139398230234696947, guid: 334b07450b4390f4395d6bc74c21c15b, type: 3}
       propertyPath: m_LocalPosition.x

@@ -154,17 +154,15 @@ public class PlayerControls : MonoBehaviour
             int sliceLayer = LayerMask.NameToLayer("Slice");
             int sliceLayerMask = LayerMask.GetMask("Slice");
             foodCollider.collider.gameObject.layer = sliceLayer;
-            // These points are in world coordinates, not local
+                // These points are in world coordinates, not local
             RaycastHit2D hit0 = Physics2D.Raycast(slicePoints[0], (slicePoints[1] - slicePoints[0]), distance: 100f, layerMask: sliceLayerMask);
             RaycastHit2D hit1 = Physics2D.Raycast(slicePoints[1], (slicePoints[0] - slicePoints[1]), distance: 100f, layerMask: sliceLayerMask);
             Debug.DrawLine(slicePoints[0], slicePoints[1], Color.red, 10f);
             sliceEdgePoint_0 = hit0.point;
             sliceEdgePoint_1 = hit1.point;
-            Debug.Log("Slice Edge 0: " + sliceEdgePoint_0 + " Slice Edge 1: " + sliceEdgePoint_1);
             foodCollider.collider.gameObject.layer = originalLayer;
-
-            Debug.DrawLine(sliceEdgePoint_0, sliceEdgePoint_1, Color.black, 10f);
             Vector2 sliceCenter = (sliceEdgePoint_0 + sliceEdgePoint_1) / 2f;
+            Debug.DrawLine(sliceEdgePoint_0, sliceEdgePoint_1, Color.black, 100f);
 
             // Rotate mask to be parallel to slice
             bool rotateFromYAxis = (slicePoints[0].x < slicePoints[1].x && slicePoints[0].y > slicePoints[1].y) || (slicePoints[1].x < slicePoints[0].x && slicePoints[1].y > slicePoints[0].y);
@@ -185,6 +183,7 @@ public class PlayerControls : MonoBehaviour
             objectsEnabledThisTurn.Add(spriteMaskObj);
 
             // Update polygonCollider2D
+            Vector2 parentOffset = foodCollider.transform.parent.position; // PolyCol points are local pos
             PolygonCollider2D originalFoodCollider = (PolygonCollider2D)foodCollider.collider;
             Vector2[] originalPoints = originalFoodCollider.points;
             PolygonCollider2D newPolyFoodCollider = originalFoodCollider;
@@ -192,28 +191,16 @@ public class PlayerControls : MonoBehaviour
             List<Vector2> newColPoints = new(0);
             foreach (Vector2 point in newPolyFoodCollider.points)
             {
-                Tuple<Directions, Directions> side = GetSidePointIsOn(point + (Vector2)foodCollider.transform.parent.position);
+                // points in polycollider are affected by scale, divide by lossyScale to get point in world
+                Vector2 worldPosPoint = point / foodCollider.transform.lossyScale.x + (Vector2)foodCollider.transform.position;
+                Tuple<Directions, Directions> side = GetSidePointIsOn(worldPosPoint);
                 if (side.Item1 != sliceDir.Item1 || side.Item2 != sliceDir.Item2) newColPoints.Add(point);
             }
-            // Vector2 pointOfIntersection = GetTwoLinesIntersectPoint(sliceEdgePoint_0, sliceEdgePoint_1, newPolyFoodCollider.points[^3],newPolyFoodCollider.points[^2]);
-            // // Debug.Log("Poi: " + pointOfIntersection);
-            // bool isPointOnFood = newPolyFoodCollider.bounds.Contains(pointOfIntersection);
-            Vector2 parentOffset = foodCollider.transform.parent.position; // PolyCol points are local pos
-            // if (newPolyFoodCollider.points[^1] == newPolyFoodCollider.points[^2] && isPointOnFood) {
-            //     newColPoints.Add(sliceEdgePoint_0 - parentOffset);
-            //     newColPoints.Add(pointOfIntersection - parentOffset);
-            //     newColPoints.Add(pointOfIntersection - parentOffset);
-            // }
-            // else {
-            //     newColPoints.Add(sliceEdgePoint_0 - parentOffset);
-            //     newColPoints.Add(sliceEdgePoint_1 - parentOffset);
-            //     newColPoints.Add(sliceEdgePoint_1 - parentOffset);
-            // }
-            newColPoints.Add(sliceEdgePoint_0 - parentOffset);
-            newColPoints.Add(sliceEdgePoint_1 - parentOffset);
-            // newColPoints.Add(sliceEdgePoint_1 - parentOffset);
+            
+            Debug.Log("lossyScale: " + foodCollider.transform.lossyScale.x);
+            newColPoints.Add(parentFood.transform.InverseTransformPoint(sliceEdgePoint_0) / foodCollider.transform.lossyScale.x);
+            newColPoints.Add(parentFood.transform.InverseTransformPoint(sliceEdgePoint_1) / foodCollider.transform.lossyScale.x);
             newPolyFoodCollider.SetPath(0,newColPoints);
-           
 
             // Create other side slice
             GameObject otherSlice = foodPool.GetPooledObject();
@@ -246,26 +233,12 @@ public class PlayerControls : MonoBehaviour
             List<Vector2> newSliceColPoints = new(0);
             foreach (Vector2 point in originalPoints)
             {
-                Tuple<Directions, Directions> side = GetSidePointIsOn(point + (Vector2)foodCollider.transform.parent.position);
+                Vector2 worldPosPoint = point / foodCollider.transform.lossyScale.x + (Vector2)foodCollider.transform.position;
+                Tuple<Directions, Directions> side = GetSidePointIsOn(worldPosPoint);
                 if (side.Item1 == sliceDir.Item1 || side.Item2 == sliceDir.Item2) newSliceColPoints.Add(point);
             }
-            parentOffset = -foodCollider.transform.parent.position;
-            // pointOfIntersection = GetTwoLinesIntersectPoint(sliceEdgePoint_0, sliceEdgePoint_1, newPolyFoodCollider.points[^3],newPolyFoodCollider.points[^2]);
-            // isPointOnFood = newPolyFoodCollider.bounds.Contains(pointOfIntersection);
-            // if (newPolyFoodCollider.points[^1] == newPolyFoodCollider.points[^2] && isPointOnFood) {
-            //     newSliceColPoints.Add(sliceEdgePoint_1 + parentOffset);
-            //     newSliceColPoints.Add(pointOfIntersection + parentOffset);
-            //     newSliceColPoints.Add(pointOfIntersection + parentOffset);
-            //     // newColPoints.Add(sliceEdgePoint_0);
-            // }
-            // else {
-                
-            //     newSliceColPoints.Add(sliceEdgePoint_1 + parentOffset);
-            //     newSliceColPoints.Add(sliceEdgePoint_0 + parentOffset);
-            //     newSliceColPoints.Add(sliceEdgePoint_0 + parentOffset);
-            // }
-            newColPoints.Add(sliceEdgePoint_1 - parentOffset);
-            newColPoints.Add(sliceEdgePoint_0 - parentOffset);
+            newSliceColPoints.Add(parentFood.transform.InverseTransformPoint(sliceEdgePoint_0) / foodCollider.transform.lossyScale.x);
+            newSliceColPoints.Add(parentFood.transform.InverseTransformPoint(sliceEdgePoint_1) / foodCollider.transform.lossyScale.x);
             // newColPoints.Add(sliceEdgePoint_0 - parentOffset);
             newSlicePolyFoodCollider.SetPath(0,newSliceColPoints);
 
@@ -275,13 +248,15 @@ public class PlayerControls : MonoBehaviour
             objectsEnabledThisTurn.Add(finalSliceMask);
 
             // Separate Slices
-            parentFood.Translate(-perpendicularSlice * separationSpace);
-            otherSlice.transform.Translate(perpendicularSlice * separationSpace);
+            // parentFood.Translate(-perpendicularSlice * separationSpace);
+            // otherSlice.transform.Translate(perpendicularSlice * separationSpace);
             otherSlice.SetActive(true);
 
             // Add to undo stack
             objectsEnabledThisTurn.Add(otherSlice);
             if (AudioManager.Instance) AudioManager.Instance.PlaySFX("Slice");
+
+            Debug.Log($"{parentFood.name}\nParent Offset: {parentOffset}\nSlice Edge 0: {sliceEdgePoint_0} Slice Edge 1: {sliceEdgePoint_1}\nSum: ({parentFood.transform.InverseTransformPoint(sliceEdgePoint_0)/ foodCollider.transform.lossyScale.x}, {parentFood.transform.InverseTransformPoint(sliceEdgePoint_1)/ foodCollider.transform.lossyScale.x})");
         }
         everyMoveGameObject.Push(objectsEnabledThisTurn);
         everyMovePolygonColliders.Push(originalPolygonColliders);

@@ -13,6 +13,7 @@ public class BoxMenuControls : MonoBehaviour
     RectTransform boxHolder;
     int numBoxes = 0;
     float maxXVal = 0;
+    public bool IsActive {get; private set;} = false;
 
     void Awake()
     {
@@ -25,10 +26,14 @@ public class BoxMenuControls : MonoBehaviour
     }
 
     public void GoLeft() {
+        if(IsActive) return;
+        IsActive = true;
         StartCoroutine(ShiftBox(true));
     }
 
     public void GoRight() {
+        if(IsActive) return;
+        IsActive = true;
         StartCoroutine(ShiftBox(false));
     }
 
@@ -57,5 +62,6 @@ public class BoxMenuControls : MonoBehaviour
             newPos.x = xGoal;
             boxHolder.anchoredPosition = newPos;
         }
+        IsActive = false;
     }
 }

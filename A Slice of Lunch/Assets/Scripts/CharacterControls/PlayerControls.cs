@@ -234,6 +234,7 @@ public class PlayerControls : MonoBehaviour
             foreach (Vector2 point in originalPoints)
             {
                 Vector2 worldPosPoint = point / foodCollider.transform.lossyScale.x + (Vector2)foodCollider.transform.position;
+                if (point != worldPosPoint) Debug.Log($"{parentFood.name} - point:{point + (Vector2)foodCollider.transform.position}\n worldPos:{worldPosPoint}\nlossyScale{foodCollider.transform.lossyScale}");
                 Tuple<Directions, Directions> side = GetSidePointIsOn(worldPosPoint);
                 if (side.Item1 == sliceDir.Item1 || side.Item2 == sliceDir.Item2) newSliceColPoints.Add(point);
             }
@@ -292,10 +293,11 @@ public class PlayerControls : MonoBehaviour
         // Disable food
     }
 
-    // This function may break if lossy scale != 1
     private Tuple<Directions, Directions> GetSidePointIsOn(Vector2 point) {
-        float slope = (sliceEdgePoint_1.y - sliceEdgePoint_0.y) / (sliceEdgePoint_1.x - sliceEdgePoint_0.x);
-        float yLine = GetSlopeIntercept(sliceEdgePoint_0, sliceEdgePoint_1, point.x);
+        // float slope = (sliceEdgePoint_1.y - sliceEdgePoint_0.y) / (sliceEdgePoint_1.x - sliceEdgePoint_0.x);
+        // float yLine = GetSlopeIntercept(sliceEdgePoint_0, sliceEdgePoint_1, point.x);
+        float slope = (slicePoints[1].y - slicePoints[0].y) / (slicePoints[1].x - slicePoints[0].x);
+        float yLine = GetSlopeIntercept(slicePoints[0], slicePoints[1], point.x);
         float yDelta = yLine - point.y;
         Directions xDir = Directions.on;
         Directions yDir = Directions.on;

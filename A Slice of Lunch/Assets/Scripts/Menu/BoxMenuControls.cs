@@ -1,14 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
 
 public class BoxMenuControls : MonoBehaviour
 {
     public float shiftValue;
+    [Tooltip("How long in secs shifting takes")]
+    [SerializeField] float shiftDuration = 1f;
+
     RectTransform boxHolder;
     int numBoxes = 0;
     float maxXVal = 0;
-    // Start is called before the first frame update
 
     void Awake()
     {
@@ -20,25 +24,38 @@ public class BoxMenuControls : MonoBehaviour
         maxXVal = -(numBoxes - 1) * shiftValue;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-
     public void GoLeft() {
-        ShiftBox(true);
+        StartCoroutine(ShiftBox(true));
     }
 
     public void GoRight() {
-        ShiftBox(false);
+        StartCoroutine(ShiftBox(false));
     }
 
     // true = left; false = right
-    private void ShiftBox(bool dir) {
+    private IEnumerator ShiftBox(bool dir) {
+        float xGoal = boxHolder.anchoredPosition.x + (dir ? shiftValue : -shiftValue);
+        xGoal = Mathf.Clamp(xGoal, maxXVal, 0f);
+        float rate = ((dir ? shiftValue : -shiftValue) / shiftDuration) * Time.deltaTime;
         Vector2 newPos = boxHolder.anchoredPosition;
-        newPos.x = Mathf.Clamp((dir) ? newPos.x + shiftValue : newPos.x - shiftValue, maxXVal ,0f);
-        boxHolder.anchoredPosition = newPos;
+        if (dir) {
+            while(boxHolder.anchoredPosition.x < xGoal)
+            {
+                newPos.x += rate;
+                boxHolder.anchoredPosition = newPos;
+                yield return null;
+            }
+            newPos.x = xGoal;
+            boxHolder.anchoredPosition = newPos;
+        } else {
+            while(boxHolder.anchoredPosition.x > xGoal)
+            {
+                newPos.x += rate;
+                boxHolder.anchoredPosition = newPos;
+                yield return null;
+            }
+            newPos.x = xGoal;
+            boxHolder.anchoredPosition = newPos;
+        }
     }
 }

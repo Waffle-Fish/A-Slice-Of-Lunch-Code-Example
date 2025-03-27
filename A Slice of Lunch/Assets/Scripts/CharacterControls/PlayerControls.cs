@@ -249,8 +249,8 @@ public class PlayerControls : MonoBehaviour
             objectsEnabledThisTurn.Add(finalSliceMask);
 
             // Separate Slices
-            // parentFood.Translate(-perpendicularSlice * separationSpace);
-            // otherSlice.transform.Translate(perpendicularSlice * separationSpace);
+            parentFood.Translate(-perpendicularSlice * separationSpace);
+            otherSlice.transform.Translate(perpendicularSlice * separationSpace);
             otherSlice.SetActive(true);
 
             // Add to undo stack

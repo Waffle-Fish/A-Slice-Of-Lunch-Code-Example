@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BoxMenuControls : MonoBehaviour
 {
@@ -21,7 +22,7 @@ public class BoxMenuControls : MonoBehaviour
     }
     void Start()
     {
-        numBoxes = boxHolder.childCount;
+        numBoxes = GetComponentsInChildren<Button>().GetLength(0);
         maxXVal = -(numBoxes - 1) * shiftValue;
     }
 

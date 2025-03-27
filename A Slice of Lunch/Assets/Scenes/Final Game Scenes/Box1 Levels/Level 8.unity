@@ -8935,7 +8935,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsHoldingKnife: 0
-  maxSlicesCount: 1
+  maxSlicesCount: 3
   endPointObj: {fileID: 8115210701779045239, guid: 1dee6dff36e12ca4ba208f398a1d02ad, type: 3}
   endPointPosZ: -50
   slicesText: {fileID: 1987391040}

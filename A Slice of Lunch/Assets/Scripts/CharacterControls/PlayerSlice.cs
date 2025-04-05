@@ -6,15 +6,12 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-// Rename this to SliceControls
-public class PlayerControls : MonoBehaviour
+public class PlayerSlice : MonoBehaviour
 {
     [Header("Detect Object")]
     private Vector3 mouseWorldPosition;
 
     [Header("Slice Variables")]
-    // [SerializeField]
-    // private GameObject spriteMask;
     public bool IsHoldingKnife /*{ get; private set; }*/ = false;
     [SerializeField]
     private int maxSlicesCount = 2;

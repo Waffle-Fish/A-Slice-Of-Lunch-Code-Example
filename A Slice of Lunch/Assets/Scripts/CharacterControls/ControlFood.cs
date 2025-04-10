@@ -9,7 +9,7 @@ public class ControlFood : MonoBehaviour
 {
     bool dragging = false;
     bool onFood = false;
-    PlayerControls playerControls;
+    PlayerSlice playerSlice;
     SortingGroup sortingGroup;
     int initialSortingOrder;
     Transform parentTransform;
@@ -17,7 +17,7 @@ public class ControlFood : MonoBehaviour
     PolygonCollider2D polygonCollider2D;
     
     private void Awake() {
-        playerControls = GameObject.FindWithTag("Player").GetComponent<PlayerControls>();
+        playerSlice = GameObject.FindWithTag("Player").GetComponent<PlayerSlice>();
         sortingGroup = GetComponentInParent<SortingGroup>();
         initialSortingOrder = sortingGroup.sortingOrder;
         parentTransform = transform.parent;
@@ -44,7 +44,7 @@ public class ControlFood : MonoBehaviour
     }
 
     private void OnMouseDown() {
-        if (playerControls.IsHoldingKnife) return;
+        // if (playerSlice.enabled) return;
         // TODO:
         // Center food slice to center of mouse, or to where it clicked
         dragging = true;

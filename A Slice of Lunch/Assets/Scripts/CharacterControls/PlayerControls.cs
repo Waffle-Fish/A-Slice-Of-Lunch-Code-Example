@@ -50,7 +50,7 @@ public class PlayerControls : MonoBehaviour
     // [Header("Update PolygonColliders")]
     enum Directions {left, right, above, below, on}
 
-    Tuple<Directions, Directions> sliceDir;
+    Tuple<Directions, Directions> visibleDir;
 
 
     private void Awake() {
@@ -177,7 +177,7 @@ public class PlayerControls : MonoBehaviour
             GameObject spriteMaskObj = maskPool.GetPooledObject();
             SpriteMask spriteMask = spriteMaskObj.GetComponent<SpriteMask>();
             Vector2 spawnPos = sliceCenter + spriteMaskObj.transform.localScale.x /2f * perpendicularSlice;
-            sliceDir = GetSidePointIsOn(spawnPos);
+            visibleDir = GetSidePointIsOn(spawnPos);
             spriteMaskObj.SetActive(true);
             spriteMaskObj.transform.SetPositionAndRotation(spawnPos, Quaternion.Euler(0,0,rotAng));
             objectsEnabledThisTurn.Add(spriteMaskObj);
@@ -189,13 +189,21 @@ public class PlayerControls : MonoBehaviour
             PolygonCollider2D newPolyFoodCollider = originalFoodCollider;
             originalPolygonColliders.Add(newPolyFoodCollider);
             List<Vector2> newColPoints = new(0);
+
+            List<List<Vector2>> newPointsToAdd = new();
+
             foreach (Vector2 point in newPolyFoodCollider.points)
             {
                 // points in polycollider are affected by scale, divide by lossyScale to get point in world
                 Vector2 worldPosPoint = point / foodCollider.transform.lossyScale.x + (Vector2)foodCollider.transform.position;
                 Tuple<Directions, Directions> side = GetSidePointIsOn(worldPosPoint);
-                if (side.Item1 != sliceDir.Item1 || side.Item2 != sliceDir.Item2) newColPoints.Add(point);
+                if (side.Item1 != visibleDir.Item1 || side.Item2 != visibleDir.Item2) newColPoints.Add(point);
+                else if (newColPoints.Count > 0) {
+                    newPointsToAdd.Add(newColPoints);
+                    newColPoints.Clear();
+                }
             }
+            Debug.Log("Num of sections for slice: " + newPointsToAdd.Count);
             
             Debug.Log("lossyScale: " + foodCollider.transform.lossyScale.x);
             newColPoints.Add(parentFood.transform.InverseTransformPoint(sliceEdgePoint_0) / foodCollider.transform.lossyScale.x);
@@ -236,7 +244,7 @@ public class PlayerControls : MonoBehaviour
                 Vector2 worldPosPoint = point / foodCollider.transform.lossyScale.x + (Vector2)foodCollider.transform.position;
                 if (point != worldPosPoint) Debug.Log($"{parentFood.name} - point:{point + (Vector2)foodCollider.transform.position}\n worldPos:{worldPosPoint}\nlossyScale{foodCollider.transform.lossyScale}");
                 Tuple<Directions, Directions> side = GetSidePointIsOn(worldPosPoint);
-                if (side.Item1 == sliceDir.Item1 || side.Item2 == sliceDir.Item2) newSliceColPoints.Add(point);
+                if (side.Item1 == visibleDir.Item1 || side.Item2 == visibleDir.Item2) newSliceColPoints.Add(point);
             }
             newSliceColPoints.Add(parentFood.transform.InverseTransformPoint(sliceEdgePoint_0) / foodCollider.transform.lossyScale.x);
             newSliceColPoints.Add(parentFood.transform.InverseTransformPoint(sliceEdgePoint_1) / foodCollider.transform.lossyScale.x);

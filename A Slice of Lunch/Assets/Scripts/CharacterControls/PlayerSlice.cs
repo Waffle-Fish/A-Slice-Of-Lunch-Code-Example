@@ -104,7 +104,6 @@ public class PlayerSlice : MonoBehaviour
         Vector3[] sliceEdgePoints = new Vector3[2];
         Transform parentFood = foodCollider.transform.parent;
         
-        
         maskPool = foodCollider.collider.GetComponent<ObjectPooler>();
         foodPool = parentFood.parent.GetComponent<ObjectPooler>();
         
@@ -179,9 +178,9 @@ public class PlayerSlice : MonoBehaviour
         otherSlice.transform.Translate(perpendicularSlice * separationSpace);
         otherSlice.SetActive(true);
     }
-
-    // Sutherland-Hodgam algorithm
+    
     private List<Vector2> GenerateNewSlicePoints(PolygonCollider2D foodCollider, Vector3[] sliceEdgePoints, Tuple<Directions, Directions> sideMaskIsOn){
+        // Sutherland-Hodgam algorithm
         List<Vector2> inputPoints = new(foodCollider.points);
         List<Vector2> outputPoints = new();
 
@@ -191,6 +190,10 @@ public class PlayerSlice : MonoBehaviour
             Vector2 prevPoint = inputPoints[(i-1 < 0) ? ^1 : i-1];
 
             // points in polycollider are affected by scale, divide by lossyScale to get point in world
+            // Vector2 worldPosCurPoint = currentPoint + (Vector2)foodCollider.transform.position;
+            // Vector2 worldPosPrevPoint = prevPoint + (Vector2)foodCollider.transform.position;
+            // Vector2 worldPosCurPoint = currentPoint + (Vector2)foodCollider.transform.position / foodCollider.transform.lossyScale.x;
+            // Vector2 worldPosPrevPoint = prevPoint + (Vector2)foodCollider.transform.position / foodCollider.transform.lossyScale.x;
             Vector2 worldPosCurPoint = currentPoint / foodCollider.transform.lossyScale.x + (Vector2)foodCollider.transform.position;
             Vector2 worldPosPrevPoint = prevPoint / foodCollider.transform.lossyScale.x + (Vector2)foodCollider.transform.position;
             Vector2 newEdgePoint1 = sliceEdgePoints[0] - foodCollider.transform.position;
@@ -204,12 +207,16 @@ public class PlayerSlice : MonoBehaviour
             if (sideCurPointIsOn.Item1 != sideMaskIsOn.Item1 || sideCurPointIsOn.Item2 != sideMaskIsOn.Item2) {
                 if (sidePrevPointIsOn.Item1 == sideMaskIsOn.Item1 || sidePrevPointIsOn.Item2 == sideMaskIsOn.Item2) {
                     outputPoints.Add(intersectingPoint);
+                    // Debug.DrawLine(currentPoint * foodCollider.transform.lossyScale.x + (Vector2)foodCollider.transform.position,prevPoint* foodCollider.transform.lossyScale.x+ (Vector2)foodCollider.transform.position, Color.blue, 100f);
+                    // Debug.DrawLine(worldPosCurPoint,worldPosPrevPoint, Color.blue, 100f);
                 }
                 outputPoints.Add(currentPoint);
             } 
             else if (sidePrevPointIsOn.Item1 != sideMaskIsOn.Item1 || sidePrevPointIsOn.Item2 != sideMaskIsOn.Item2)
             {
                 outputPoints.Add(intersectingPoint);
+                // Debug.DrawLine(currentPoint * foodCollider.transform.lossyScale.x + (Vector2)foodCollider.transform.position,prevPoint* foodCollider.transform.lossyScale.x+ (Vector2)foodCollider.transform.position, Color.blue, 100f);
+                // Debug.DrawLine(worldPosCurPoint,worldPosPrevPoint, Color.blue, 100f);
             }
         }
         return outputPoints;

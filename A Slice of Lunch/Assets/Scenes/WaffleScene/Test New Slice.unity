@@ -1276,8 +1276,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: PlayerControls, Assembly-CSharp
+      - m_Target: {fileID: 8451250705252295703}
+        m_TargetAssemblyTypeName: PlayerSlice, Assembly-CSharp
         m_MethodName: UndoSlice
         m_Mode: 1
         m_Arguments:
@@ -2287,7 +2287,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1723100315
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8925,7 +8925,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0389da86be0eb284082bb7907e8307df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialSlices: 2
+  maxSlices: 2
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

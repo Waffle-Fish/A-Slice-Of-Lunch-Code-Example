@@ -15,6 +15,8 @@ public class ControlFood : MonoBehaviour
     Transform parentTransform;
     Vector3 originalPosition;
     PolygonCollider2D polygonCollider2D;
+
+    Vector3 mouseOffset = Vector3.zero;
     
     private void Awake() {
         playerSlice = GameObject.FindWithTag("Player").GetComponent<PlayerSlice>();
@@ -44,11 +46,10 @@ public class ControlFood : MonoBehaviour
     }
 
     private void OnMouseDown() {
-        // if (playerSlice.enabled) return;
-        // TODO:
-        // Center food slice to center of mouse, or to where it clicked
         dragging = true;
         sortingGroup.sortingOrder = 10000;
+        mouseOffset = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+        mouseOffset.z = 0f;
     }
 
     private void OnMouseUp() {
@@ -81,11 +82,11 @@ public class ControlFood : MonoBehaviour
     }
 
     private void Update() {
+        Debug.Log(Camera.main.ScreenToWorldPoint(Input.mousePosition));
         if (dragging) {
             Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             pos.z = 0f;
-            transform.parent.position = pos;
-            
+            transform.parent.position = pos - mouseOffset;
         }
     }
 

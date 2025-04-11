@@ -174,6 +174,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ShrimpTempura Pool
       objectReference: {fileID: 0}
+    - target: {fileID: 7321364085180309026, guid: 014c1842e3bc51441a831fe95e99e378, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -604,6 +608,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SausageOctopus Pool
       objectReference: {fileID: 0}
+    - target: {fileID: 5674412519626824148, guid: 906c7e68b3b203640a32f1d1226cc746, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -625,6 +633,10 @@ PrefabInstance:
     - target: {fileID: 2086087093789497067, guid: e02d2910721c6d9498310723cbedf336, type: 3}
       propertyPath: m_Name
       value: Rice Pool
+      objectReference: {fileID: 0}
+    - target: {fileID: 2086087093789497067, guid: e02d2910721c6d9498310723cbedf336, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8012687329684091217, guid: e02d2910721c6d9498310723cbedf336, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1051,6 +1063,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tamago Pool
       objectReference: {fileID: 0}
+    - target: {fileID: 2024682485550914157, guid: 2ed5e46a0c810fd48aae022144ca7738, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7388266335698221782, guid: 2ed5e46a0c810fd48aae022144ca7738, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1422,6 +1438,10 @@ PrefabInstance:
     - target: {fileID: 5685544708154778968, guid: af224943faccc06488183e3a58cc5316, type: 3}
       propertyPath: m_Name
       value: Onigiri Pool
+      objectReference: {fileID: 0}
+    - target: {fileID: 5685544708154778968, guid: af224943faccc06488183e3a58cc5316, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7003331429847606557, guid: af224943faccc06488183e3a58cc5316, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2111,6 +2131,10 @@ PrefabInstance:
     - target: {fileID: 7946384141471745150, guid: 8933c02784762684b89c53dc5f8130a2, type: 3}
       propertyPath: m_Name
       value: Boiled Egg Pool
+      objectReference: {fileID: 0}
+    - target: {fileID: 7946384141471745150, guid: 8933c02784762684b89c53dc5f8130a2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -8039,9 +8063,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1329392402}
     m_Modifications:
+    - target: {fileID: 3748582305631984400, guid: 334b07450b4390f4395d6bc74c21c15b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3748582305631984400, guid: 334b07450b4390f4395d6bc74c21c15b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -5
+      objectReference: {fileID: 0}
     - target: {fileID: 7037819948253107038, guid: 334b07450b4390f4395d6bc74c21c15b, type: 3}
       propertyPath: m_Name
       value: Katsu Pool
+      objectReference: {fileID: 0}
+    - target: {fileID: 7353652332905981152, guid: 334b07450b4390f4395d6bc74c21c15b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9139398230234696947, guid: 334b07450b4390f4395d6bc74c21c15b, type: 3}
       propertyPath: m_LocalPosition.x

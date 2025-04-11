@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectToCopy: {fileID: 6355554864912292542}
-  maxObjectCount: 100
+  maxObjectCount: 10
   parent: {fileID: 0}
 --- !u!1001 &5600879922226299272
 PrefabInstance:
@@ -70,11 +70,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 40158233228161393, guid: 479ff3f8eb9ae9e4eadec74c297d751c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 12.9
+      value: -6.4
       objectReference: {fileID: 0}
     - target: {fileID: 40158233228161393, guid: 479ff3f8eb9ae9e4eadec74c297d751c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.3
+      value: -2.8
       objectReference: {fileID: 0}
     - target: {fileID: 40158233228161393, guid: 479ff3f8eb9ae9e4eadec74c297d751c, type: 3}
       propertyPath: m_LocalPosition.z
@@ -146,7 +146,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3833345760931211781, guid: 479ff3f8eb9ae9e4eadec74c297d751c, type: 3}
       propertyPath: m_UseDelaunayMesh
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3833345760931211781, guid: 479ff3f8eb9ae9e4eadec74c297d751c, type: 3}
       propertyPath: m_Points.m_Paths.Array.data[0].Array.data[49].x

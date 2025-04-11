@@ -11,9 +11,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Final Game Scenes/MainMenu.unity
     guid: 4e18bc8079283ac4c813328101c8f27a
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Final Game Scenes/IntroStory.unity
     guid: 91e40c413933fec418fdc05276f58bd4
+  - enabled: 1
+    path: Assets/Scenes/Final Game Scenes/BoxMenu.unity
+    guid: e3d5ef7c988983e48a0b6fb182d5df2e
   - enabled: 1
     path: Assets/Scenes/Final Game Scenes/LevelMenu.unity
     guid: cebe43b1c11f70142bf008338b245cc1

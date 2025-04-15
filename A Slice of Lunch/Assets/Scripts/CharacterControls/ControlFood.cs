@@ -82,7 +82,7 @@ public class ControlFood : MonoBehaviour
     }
 
     private void Update() {
-        Debug.Log(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+        // Debug.Log(Camera.main.ScreenToWorldPoint(Input.mousePosition));
         if (dragging) {
             Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             pos.z = 0f;

@@ -21,17 +21,13 @@ public class PlayerSlice : MonoBehaviour
     private LineRenderer sliceMarking;
     private Vector3 mouseWorldPos;
     enum Directions {left, right, above, below, on}
-    List<List<Vector3>> previousEdgeSlices = new();
 
     [Header("Object Pooling")]
     private ObjectPooler maskPool;
     private ObjectPooler foodPool;
 
-
-    [Header("Undo")]
-    int currentUndoIndex = 0;
-    private Stack<List<GameObject>> everyMoveGameObject = new();
-    private Stack<List<Vector2[]>> everyMovePolygonColliderPoints = new();
+    public static event Action<PreviousTurns> OnSliceFinish;
+    private PreviousTurns movesMadeThisTurn = new();
 
     private void Awake() {
         sliceMarking = GetComponent<LineRenderer>();
@@ -96,17 +92,19 @@ public class PlayerSlice : MonoBehaviour
         // Setup Undo
         List<GameObject> objectsEnabledThisTurn = new();
         List<Vector2[]> savedColliderPoints = new();
-        currentUndoIndex++;
-
         // Process Slice for each piece
         foreach (var foodCollider in slicedObjects) {
             if (!foodCollider.transform.CompareTag("Food")) continue;
             SliceFood(foodCollider, objectsEnabledThisTurn, savedColliderPoints);
         }
-        everyMoveGameObject.Push(objectsEnabledThisTurn);
-        everyMovePolygonColliderPoints.Push(savedColliderPoints);
+        // everyMoveGameObject.Push(objectsEnabledThisTurn);
+        // everyMovePolygonColliderPoints.Push(savedColliderPoints);
+
         // currentSlicesLeft--;
+        OnSliceFinish?.Invoke(movesMadeThisTurn);
         Reset();
+        WinManager.Instance.UpdateTotalFoodList();
+        UpdateCurrentSlicesCount(-1);
     }
 
     private void SliceFood(RaycastHit2D foodCollider, List<GameObject> objectsEnabledThisTurn, List<Vector2[]> savedPolyColState) {
@@ -120,16 +118,14 @@ public class PlayerSlice : MonoBehaviour
         int originalLayer = foodCollider.collider.gameObject.layer;
         int sliceLayer = LayerMask.NameToLayer("Slice");
         int sliceLayerMask = LayerMask.GetMask("Slice");
-
         foodCollider.collider.gameObject.layer = sliceLayer;
 
         sliceEdgePoints[0] = Physics2D.Raycast(sliceEndPoints[0], (sliceEndPoints[1] - sliceEndPoints[0]), distance: 100f, layerMask: sliceLayerMask).point;
         sliceEdgePoints[1] = Physics2D.Raycast(sliceEndPoints[1], (sliceEndPoints[0] - sliceEndPoints[1]), distance: 100f, layerMask: sliceLayerMask).point;
         Vector2 sliceCenter = (sliceEdgePoints[0] + sliceEdgePoints[1]) / 2f;
-        Debug.DrawLine(sliceEdgePoints[0], sliceEdgePoints[1], Color.black, 100f);
         foodCollider.collider.gameObject.layer = originalLayer;
-
-        previousEdgeSlices.Add(sliceEdgePoints.ToList());
+        
+        Debug.DrawLine(sliceEdgePoints[0], sliceEdgePoints[1], Color.black, 100f);
 
         // Rotate mask to be parallel to slice
         bool rotateFromYAxis = (sliceEndPoints[0].x < sliceEndPoints[1].x && sliceEndPoints[0].y > sliceEndPoints[1].y) || (sliceEndPoints[1].x < sliceEndPoints[0].x && sliceEndPoints[1].y > sliceEndPoints[0].y);
@@ -266,8 +262,11 @@ public class PlayerSlice : MonoBehaviour
     private Vector2 GetTwoLinesIntersectPoint(Vector2 line1_A, Vector2 line1_B, Vector2 line2_A, Vector2 line2_B) {
         float slope1 = (line1_A.y - line1_B.y) / (line1_A.x - line1_B.x);
         float yIntercept1 = line1_A.y - slope1 * line1_A.x;
+        
+
         float slope2 = (line2_A.y - line2_B.y) / (line2_A.x - line2_B.x);
         float yIntercept2 = line2_A.y - slope2 * line2_A.x;
+
         float x = (yIntercept2 - yIntercept1) / (slope1 - slope2);
         float y = slope1 * x + yIntercept1;
 
@@ -275,23 +274,7 @@ public class PlayerSlice : MonoBehaviour
         return new(x, y);
     }
 
-    public void UndoSlice() {
-        if (currentUndoIndex <= 0) return;
-        List<Vector2[]> polyColMoveList = everyMovePolygonColliderPoints.Pop();
-        foreach (GameObject obj in everyMoveGameObject.Pop())
-        {
-            // obj = specific sprite mask | obj parent = Sprite Masks | obj parent parent = food
-            obj.transform.parent.parent.GetComponentInChildren<PolygonCollider2D>().points = polyColMoveList[0];
-            obj.SetActive(false);
-        }
-        currentUndoIndex--;
-        UpdateCurrentSlicesCount(1);
-        WinManager.Instance.UpdateTotalFoodList();
-        // disable spritemasks
-        // Disable food
-    }
-
-    private void UpdateCurrentSlicesCount(int val) {
+    public void UpdateCurrentSlicesCount(int val) {
         currentSlicesLeft += val;
         currentSlicesLeft = math.clamp(currentSlicesLeft, 0, maxSlices);
     }

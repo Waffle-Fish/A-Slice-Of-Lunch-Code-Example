@@ -28,7 +28,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0.2588191, w: 0.9659258}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 10000
-  m_Sprite: {fileID: 21300000, guid: bb905f7081c02c14bb85c26d8d88073a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6885b388c6f702942819913a4bb93c3d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bb691ac78d63f449badce27cabb33d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  finger: {fileID: 21300000, guid: bb905f7081c02c14bb85c26d8d88073a, type: 3}
-  fist: {fileID: 21300000, guid: a62c6f8b79ce012419fb72235ee815e3, type: 3}
+  finger: {fileID: 21300000, guid: 6885b388c6f702942819913a4bb93c3d, type: 3}
+  fist: {fileID: 21300000, guid: 6d2fa0346e624c5418d7cab2fe19d2b1, type: 3}
   knife: {fileID: -1280266007, guid: 2dea60b0017b38a4c85e910bf5c9667b, type: 3}
   offset: {x: 1, y: -1, z: 0}

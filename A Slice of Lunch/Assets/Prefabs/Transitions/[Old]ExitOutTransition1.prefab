@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6477548389665237288}
   - component: {fileID: 7691776704007242463}
   m_Layer: 5
-  m_Name: ExitOutTransition1
+  m_Name: '[Old]ExitOutTransition1'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

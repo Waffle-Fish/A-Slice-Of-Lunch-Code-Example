@@ -6,6 +6,7 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+// [DEPRECEATED]
 // Rename this to SliceControls
 public class PlayerControls : MonoBehaviour
 {

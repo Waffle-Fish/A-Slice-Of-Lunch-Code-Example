@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectToCopy: {fileID: 7139695272907688309}
-  maxObjectCount: 100
+  maxObjectCount: 10
   parent: {fileID: 0}
 --- !u!1001 &5832605313106505097
 PrefabInstance:

@@ -22,6 +22,6 @@ public class ProcessWin : MonoBehaviour
 
     IEnumerator ActivateParticles() {
         yield return new WaitForSeconds((float)pd.playableAsset.duration);
-        stars.Play();
+        if(stars) stars.Play();
     }
 }

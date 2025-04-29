@@ -18,10 +18,18 @@ public class ProcessWin : MonoBehaviour
     public void Win() {
         pd.Play();
         StartCoroutine(ActivateParticles());
+
+        StartCoroutine(PlayWinJingle());
     }
 
     IEnumerator ActivateParticles() {
         yield return new WaitForSeconds((float)pd.playableAsset.duration);
         if(stars) stars.Play();
+    }
+
+    IEnumerator PlayWinJingle()
+    {
+        yield return new WaitForSeconds(0.75f);
+        AudioManager.Instance.PlaySFX("WinJingle");
     }
 }

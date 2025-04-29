@@ -50,6 +50,7 @@ public class ControlFood : MonoBehaviour
         sortingGroup.sortingOrder = 10000;
         mouseOffset = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
         mouseOffset.z = 0f;
+        AudioManager.Instance.PlaySFX("FoodSquish");
     }
 
     private void OnMouseUp() {
@@ -79,6 +80,8 @@ public class ControlFood : MonoBehaviour
             }
             parentTransform.GetComponent<SortingGroup>().sortingOrder = maxLayer;
         }
+
+        AudioManager.Instance.PlaySFX("PlaceOnWood");
     }
 
     private void Update() {

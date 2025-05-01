@@ -105,6 +105,8 @@ public class PlayerSlice : MonoBehaviour
         Reset();
         WinManager.Instance.UpdateTotalFoodList();
         UpdateCurrentSlicesCount(-1);
+
+        AudioManager.Instance.PlaySFX("Slice");
     }
 
     private void SliceFood(RaycastHit2D foodCollider, List<GameObject> objectsEnabledThisTurn, List<Vector2[]> savedPolyColState) {

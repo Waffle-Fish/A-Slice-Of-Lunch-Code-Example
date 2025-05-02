@@ -6,8 +6,13 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-// [DEPRECEATED]
-// Rename this to SliceControls
+/**********************************************************************************************
+[DEPRECEATED]
+
+Using Player Slice Instead
+
+
+***********************************************************************************************/
 public class PlayerControls : MonoBehaviour
 {
     [Header("Detect Object")]

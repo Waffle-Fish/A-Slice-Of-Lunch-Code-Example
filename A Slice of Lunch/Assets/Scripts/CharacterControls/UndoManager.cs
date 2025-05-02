@@ -5,6 +5,7 @@ using System;
 public struct SliceObjectData {
     // public GameObject foodObject;
     public GameObject spriteMaskObj;
+    public PolygonCollider2D polygonCollider2D;
     public Vector2[] originalPolyColPoints;
     public float originalSliceZRot;
 }

@@ -306,7 +306,6 @@ public class PlayerSlice : MonoBehaviour
 
         float x;
         float y;
-        // x = (yIntercept2 - yIntercept1) / (slope1 - slope2);
         if (line1_A.x - line1_B.x == 0) {
             x = line1_A.x;
             y = slope2 * x + yIntercept2;

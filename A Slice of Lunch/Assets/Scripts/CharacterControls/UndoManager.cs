@@ -48,7 +48,7 @@ public class UndoManager : MonoBehaviour
         }
         foreach (GameObject foodObj in TurnToUndo.foodsToDisableThisTurn)
         {
-            // Get spriteMasks in foodObj
+            // On Disable food object, disable every spritemasks
             SpriteMask[] foodSpriteMasks = foodObj.GetComponentsInChildren<SpriteMask>();
             foreach (var spriteMask in foodSpriteMasks)
             {

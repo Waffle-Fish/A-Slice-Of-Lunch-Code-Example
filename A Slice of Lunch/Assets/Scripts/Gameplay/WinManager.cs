@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
 
 public class WinManager : MonoBehaviour
@@ -16,9 +17,6 @@ public class WinManager : MonoBehaviour
     List<ControlFood> totalFoodList = new();
     List<ControlFood> foodInBox = new();
     private Collider2D container;
-    ContactFilter2D filter = new();
-    List<Collider2D> results = new();
-    int foodInBoxCount = 0;
 
     void Awake()
     {
@@ -33,26 +31,17 @@ public class WinManager : MonoBehaviour
     }
 
     void Update() {
-        foodInBoxCount = container.OverlapCollider(filter.NoFilter(), results.ToArray());
-        if (foodInBoxCount == totalFoodList.Count) {
-            foreach (Collider2D foodCol in results)
-            {
-                if(foodCol.transform.parent.GetComponent<SortingGroup>().sortingOrder != 0) return;
-            }
-            winButton.SetActive(true);
-        }
+        winButton.SetActive(foodInBox.Count == totalFoodList.Count && !Mouse.current.leftButton.isPressed);
     }
 
     void OnTriggerStay2D(Collider2D col)
     {
-        // if (!IsFoodInBox(col)) { return; }
-        Debug.Log(col.name + " is in the box");
+        // Debug.Log(col.name + " is in the box");
         ControlFood cf = col.GetComponent<ControlFood>();
         if (!foodInBox.Contains(cf)) {
             foodInBox.Add(cf);
             UpdatePiecestOutsideBox();
         }
-        // Debug.Log(col.transform.parent.name + " is in the box");
     }
 
     private void OnTriggerExit2D(Collider2D other) {

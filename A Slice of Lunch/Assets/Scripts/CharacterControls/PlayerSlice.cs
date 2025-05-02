@@ -96,21 +96,15 @@ public class PlayerSlice : MonoBehaviour
         }
 
         // Setup Undo
-        // List<GameObject> objectsEnabledThisTurn = new();
-        // List<Vector2[]> savedColliderPoints = new();
         movesMadeThisTurn.slicesModifiedThisTurn = new();
         movesMadeThisTurn.foodsToDisableThisTurn = new();
 
         // Process Slice for each piece
         foreach (var foodCollider in slicedObjects) {
             if (!foodCollider.transform.CompareTag("Food")) continue;
-            // SliceFood(foodCollider, objectsEnabledThisTurn, savedColliderPoints);
             SliceFood(foodCollider);
         }
-        // everyMoveGameObject.Push(objectsEnabledThisTurn);
-        // everyMovePolygonColliderPoints.Push(savedColliderPoints);
 
-        // currentSlicesLeft--;
         OnSliceFinish?.Invoke(movesMadeThisTurn);
         Reset();
         WinManager.Instance.UpdateTotalFoodList();

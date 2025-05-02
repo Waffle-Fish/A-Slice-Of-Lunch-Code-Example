@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1570766907973394115
 Transform:
   m_ObjectHideFlags: 0
@@ -74,11 +74,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6565892117790937903, guid: cdac2e603c579474c83e6139eea225b0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -14.6
+      value: -31.13
       objectReference: {fileID: 0}
     - target: {fileID: 6565892117790937903, guid: cdac2e603c579474c83e6139eea225b0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -8.7
+      value: -3.7
       objectReference: {fileID: 0}
     - target: {fileID: 6565892117790937903, guid: cdac2e603c579474c83e6139eea225b0, type: 3}
       propertyPath: m_LocalPosition.z
@@ -111,6 +111,14 @@ PrefabInstance:
     - target: {fileID: 6565892117790937903, guid: cdac2e603c579474c83e6139eea225b0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7131392723979094942, guid: cdac2e603c579474c83e6139eea225b0, type: 3}
+      propertyPath: textureForSFX
+      value: FoodCrunch
+      objectReference: {fileID: 0}
+    - target: {fileID: 7131392723979094942, guid: cdac2e603c579474c83e6139eea225b0, type: 3}
+      propertyPath: tableTextureForSFX
+      value: Wood
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

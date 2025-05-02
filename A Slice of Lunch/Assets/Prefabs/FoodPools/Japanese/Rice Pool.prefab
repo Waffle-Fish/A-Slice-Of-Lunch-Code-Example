@@ -70,11 +70,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1037118538631015733, guid: f4180f04b10d73c4ea8ea29dcd647c73, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -7
+      value: -4.4
       objectReference: {fileID: 0}
     - target: {fileID: 1037118538631015733, guid: f4180f04b10d73c4ea8ea29dcd647c73, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.2
+      value: 0.12
       objectReference: {fileID: 0}
     - target: {fileID: 1037118538631015733, guid: f4180f04b10d73c4ea8ea29dcd647c73, type: 3}
       propertyPath: m_LocalPosition.z
@@ -107,6 +107,14 @@ PrefabInstance:
     - target: {fileID: 1037118538631015733, guid: f4180f04b10d73c4ea8ea29dcd647c73, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6218432336789074996, guid: f4180f04b10d73c4ea8ea29dcd647c73, type: 3}
+      propertyPath: textureForSFX
+      value: FoodSquish
+      objectReference: {fileID: 0}
+    - target: {fileID: 6218432336789074996, guid: f4180f04b10d73c4ea8ea29dcd647c73, type: 3}
+      propertyPath: tableTextureForSFX
+      value: Wood
       objectReference: {fileID: 0}
     - target: {fileID: 6474165451070194805, guid: f4180f04b10d73c4ea8ea29dcd647c73, type: 3}
       propertyPath: m_Name

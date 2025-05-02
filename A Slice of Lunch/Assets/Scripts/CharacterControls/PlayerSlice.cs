@@ -14,13 +14,14 @@ public class PlayerSlice : MonoBehaviour
     private int maxSlices = 2;
 
     [Header("Slicing")]
+    [SerializeField][Min(0f)] private float minFoodAreaSize = 1f;
     [Tooltip("Number of slices made")]
     private int currentSlicesLeft = 0;
-
     private Vector3[] sliceEndPoints = new Vector3[2];
     private LineRenderer sliceMarking;
     private Vector3 mouseWorldPos;
     enum Directions {left, right, above, below, on}
+    UndoManager undoManager;
 
     [Header("Object Pooling")]
     private ObjectPooler maskPool;
@@ -33,6 +34,7 @@ public class PlayerSlice : MonoBehaviour
 
     private void Awake() {
         sliceMarking = GetComponent<LineRenderer>();
+        undoManager = GetComponent<UndoManager>();
     }
 
     private void Start() {
@@ -106,14 +108,20 @@ public class PlayerSlice : MonoBehaviour
         }
 
         OnSliceFinish?.Invoke(movesMadeThisTurn);
-        Reset();
         WinManager.Instance.UpdateTotalFoodList();
         UpdateCurrentSlicesCount(-1);
+        Reset();
+        
+        if (!ValidateFoodSizes()) {
+            Debug.Log("A food slice was too small! Canceling slice");
+            undoManager.UndoSlice();
+            return;
+        }
     }
 
     private void SliceFood(RaycastHit2D foodCollider) {
-    // private void SliceFood(RaycastHit2D foodCollider, List<GameObject> objectsEnabledThisTurn, List<Vector2[]> savedPolyColState) {
-        // Variables
+        float separationSpace = 0.05f;
+
         Vector3[] sliceEdgePoints = new Vector3[2];
         Transform parentFood = foodCollider.transform.parent;
         
@@ -122,7 +130,6 @@ public class PlayerSlice : MonoBehaviour
 
         SliceObjectData firstSliceData = new();
         SliceObjectData secondSliceData = new();
-        // firstSliceData.foodObject = parentFood.gameObject;
         
         int originalLayer = foodCollider.collider.gameObject.layer;
         int sliceLayer = LayerMask.NameToLayer("Slice");
@@ -151,14 +158,12 @@ public class PlayerSlice : MonoBehaviour
         Vector2 maskPos = sliceCenter + spriteMaskObj.transform.localScale.x /2f * perpendicularSlice;
         spriteMaskObj.SetActive(true);
         spriteMaskObj.transform.SetPositionAndRotation(maskPos, Quaternion.Euler(0,0,rotAng));
-        // objectsEnabledThisTurn.Add(spriteMaskObj);
         firstSliceData.spriteMaskObj = spriteMaskObj;
         
-
         // Update polygonCollider2D
         PolygonCollider2D originalFoodCollider = (PolygonCollider2D)foodCollider.collider;
-        // savedPolyColState.Add(originalFoodCollider.points);
         firstSliceData.originalPolyColPoints = originalFoodCollider.points;
+        firstSliceData.polygonCollider2D = originalFoodCollider;
         List<Vector2> originalFoodColliderPoints = originalFoodCollider.points.ToList();
         originalFoodCollider.SetPath(0,GenerateNewSlicePoints(originalFoodCollider, sliceEdgePoints, GetSidePointIsOn(maskPos)));
 
@@ -166,20 +171,15 @@ public class PlayerSlice : MonoBehaviour
         GameObject otherSlice = foodPool.GetPooledObject();
         otherSlice.transform.SetPositionAndRotation(parentFood.position,parentFood.rotation);
 
-        // Variables
-        float separationSpace = 0.05f;
+        // Update masks of other slice
         int maskIndex = 0;
         ObjectPooler otherSliceMaskPool = otherSlice.transform.GetChild(0).GetComponent<ObjectPooler>();
         GameObject currentMask = maskPool.GetPooledObjectAtIndex(maskIndex);
-        // secondSliceData.foodObject = otherSlice;
-
-        // Update masks of other slice
         int numMasks = maskPool.GetNumObjectsActive();
         while (maskIndex < numMasks-1) {
             GameObject prevSliceMask = otherSliceMaskPool.GetPooledObject();
             prevSliceMask.SetActive(true);
             prevSliceMask.transform.SetPositionAndRotation(currentMask.transform.position, currentMask.transform.rotation);
-            // objectsEnabledThisTurn.Add(prevSliceMask);
             maskIndex++;
             currentMask = maskPool.GetPooledObjectAtIndex(maskIndex);
         }
@@ -187,14 +187,12 @@ public class PlayerSlice : MonoBehaviour
         finalSliceMask.SetActive(true);
         Vector2 otherSliceSpawnPos = sliceCenter - spriteMaskObj.transform.localScale.x / 2f * perpendicularSlice;
         finalSliceMask.transform.SetPositionAndRotation(otherSliceSpawnPos,Quaternion.Euler(0,0,rotAng));
-        // objectsEnabledThisTurn.Add(finalSliceMask);
         secondSliceData.spriteMaskObj = finalSliceMask;
         
-
         // Update other slice polygonCollider2D
         PolygonCollider2D otherSliceNewFoodCollider = otherSlice.GetComponentInChildren<PolygonCollider2D>();
-        // savedPolyColState.Add(otherSliceNewFoodCollider.points);
         secondSliceData.originalPolyColPoints = otherSliceNewFoodCollider.points;
+        secondSliceData.polygonCollider2D = otherSliceNewFoodCollider;
         otherSliceNewFoodCollider.SetPath(0, originalFoodColliderPoints);
         otherSliceNewFoodCollider.SetPath(0,GenerateNewSlicePoints(otherSliceNewFoodCollider, sliceEdgePoints, GetSidePointIsOn(otherSliceSpawnPos)));
 
@@ -206,6 +204,19 @@ public class PlayerSlice : MonoBehaviour
         movesMadeThisTurn.foodsToDisableThisTurn.Add(otherSlice);
         movesMadeThisTurn.slicesModifiedThisTurn.Add(firstSliceData);
         movesMadeThisTurn.slicesModifiedThisTurn.Add(secondSliceData);
+
+        // Debug.Log(otherSliceNewFoodCollider.transform.parent.name + " " + otherSliceNewFoodCollider.bounds.size.x * otherSliceNewFoodCollider.bounds.size.y);
+    }
+
+    private bool ValidateFoodSizes()
+    {
+        bool FoodIsSmall(Vector3 dimension) { return dimension.x * dimension.y < minFoodAreaSize;}
+        foreach (var sliceData in movesMadeThisTurn.slicesModifiedThisTurn)
+        {
+            Debug.Log(sliceData.spriteMaskObj.transform.parent.name + ": " + sliceData.polygonCollider2D.bounds.size.x * sliceData.polygonCollider2D.bounds.size.y);
+            if (FoodIsSmall(sliceData.polygonCollider2D.bounds.size)) return false;
+        }
+        return true;
     }
     
     private List<Vector2> GenerateNewSlicePoints(PolygonCollider2D foodCollider, Vector3[] sliceEdgePoints, Tuple<Directions, Directions> sideMaskIsOn){

@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67922ab0c0a437948a6ac53facf1d3ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectToCopy: {fileID: 7139695272907688309}
+  objectToCopy: {fileID: 3739351793150600444, guid: b62661ce039ec4e4c94569975920699d, type: 3}
   maxObjectCount: 10
   parent: {fileID: 0}
 --- !u!1001 &5832605313106505097
@@ -120,10 +120,5 @@ PrefabInstance:
 --- !u!4 &2601707692386244251 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8424701073969756946, guid: b62661ce039ec4e4c94569975920699d, type: 3}
-  m_PrefabInstance: {fileID: 5832605313106505097}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &7139695272907688309 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3739351793150600444, guid: b62661ce039ec4e4c94569975920699d, type: 3}
   m_PrefabInstance: {fileID: 5832605313106505097}
   m_PrefabAsset: {fileID: 0}

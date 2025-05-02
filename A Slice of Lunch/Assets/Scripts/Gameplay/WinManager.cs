@@ -72,6 +72,6 @@ public class WinManager : MonoBehaviour
     }
 
     private void UpdatePiecestOutsideBox() {
-        piecesLeftText.text = $"Pieces outside lunchbox: {totalFoodList.Count - foodInBox.Count}";
+        // piecesLeftText.text = $"Pieces outside lunchbox: {totalFoodList.Count - foodInBox.Count}";
     }
 }

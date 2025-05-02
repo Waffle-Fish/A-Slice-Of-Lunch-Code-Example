@@ -27,6 +27,7 @@ public class PlayerSlice : MonoBehaviour
     private ObjectPooler foodPool;
 
     public static event Action<TurnActions> OnSliceFinish;
+    public static event Action<int> OnSliceCountChange;
     private TurnActions movesMadeThisTurn = new();
     private List<GameObject> foodsToDisableThisTurn;
 
@@ -41,6 +42,8 @@ public class PlayerSlice : MonoBehaviour
         currentSlicesLeft = maxSlices;
         movesMadeThisTurn.slicesModifiedThisTurn = new();
         movesMadeThisTurn.foodsToDisableThisTurn = new();
+
+        OnSliceCountChange?.Invoke(currentSlicesLeft);
     }
 
     private void Update() {
@@ -233,7 +236,7 @@ public class PlayerSlice : MonoBehaviour
             Tuple<Directions, Directions> sideCurPointIsOn = GetSidePointIsOn(worldPosCurPoint);
             Tuple<Directions, Directions> sidePrevPointIsOn = GetSidePointIsOn(worldPosPrevPoint);
             if (sideCurPointIsOn.Item1 != sideMaskIsOn.Item1 || sideCurPointIsOn.Item2 != sideMaskIsOn.Item2) {
-                if (sidePrevPointIsOn.Item1 == sideMaskIsOn.Item1 || sidePrevPointIsOn.Item2 == sideMaskIsOn.Item2) {
+                if ((sidePrevPointIsOn.Item1 == sideMaskIsOn.Item1 && sidePrevPointIsOn.Item1 != Directions.on) || (sidePrevPointIsOn.Item2 == sideMaskIsOn.Item2 && sidePrevPointIsOn.Item2 != Directions.on)) {
                     outputPoints.Add(intersectingPoint);
                 }
                 outputPoints.Add(currentPoint);
@@ -265,11 +268,24 @@ public class PlayerSlice : MonoBehaviour
     }
 
     private Tuple<Directions, Directions> GetSidePointIsOn(Vector2 point) {
-        float slope = (sliceEndPoints[1].y - sliceEndPoints[0].y) / (sliceEndPoints[1].x - sliceEndPoints[0].x);
-        float yLine = GetSlopeIntercept(sliceEndPoints[0], sliceEndPoints[1], point.x);
-        float yDelta = yLine - point.y;
         Directions xDir = Directions.on;
         Directions yDir = Directions.on;
+
+        float numerator = sliceEndPoints[1].y - sliceEndPoints[0].y;
+        float denominator = sliceEndPoints[1].x - sliceEndPoints[0].x;
+        if (Mathf.Approximately(numerator,0)) {
+            yDir = (point.y > sliceEndPoints[0].y) ? Directions.above : Directions.below;
+            return new(xDir, yDir);
+        }
+
+        if (Mathf.Approximately(denominator,0)) {
+            xDir = (point.x > sliceEndPoints[0].x) ? Directions.right : Directions.left;
+            return new(xDir, yDir);
+        }
+
+        float slope = numerator / denominator;
+        float yLine = GetSlopeIntercept(sliceEndPoints[0], sliceEndPoints[1], point.x);
+        float yDelta = yLine - point.y;
         if (yDelta != 0) yDir = (yDelta > 0 ) ? Directions.below : Directions.above;
         if (slope != 0) xDir = ((slope > 0 && yDir == Directions.above) || (slope < 0 && yDir == Directions.below)) ? Directions.right :Directions.left; 
         return new(xDir, yDir);
@@ -284,20 +300,30 @@ public class PlayerSlice : MonoBehaviour
     private Vector2 GetTwoLinesIntersectPoint(Vector2 line1_A, Vector2 line1_B, Vector2 line2_A, Vector2 line2_B) {
         float slope1 = (line1_A.y - line1_B.y) / (line1_A.x - line1_B.x);
         float yIntercept1 = line1_A.y - slope1 * line1_A.x;
-        
 
         float slope2 = (line2_A.y - line2_B.y) / (line2_A.x - line2_B.x);
         float yIntercept2 = line2_A.y - slope2 * line2_A.x;
 
-        float x = (yIntercept2 - yIntercept1) / (slope1 - slope2);
-        float y = slope1 * x + yIntercept1;
-
-        if (slope1 == slope2) return Vector2.positiveInfinity;
+        float x;
+        float y;
+        // x = (yIntercept2 - yIntercept1) / (slope1 - slope2);
+        if (line1_A.x - line1_B.x == 0) {
+            x = line1_A.x;
+            y = slope2 * x + yIntercept2;
+        } else if (line2_A.x - line2_B.x == 0) {
+            x = line2_A.x;
+            y = slope1 * x + yIntercept1;
+        }
+        else {
+            x = (yIntercept2 - yIntercept1) / (slope1 - slope2);
+            y = slope1 * x + yIntercept1;
+        }
         return new(x, y);
     }
 
     public void UpdateCurrentSlicesCount(int val) {
         currentSlicesLeft += val;
         currentSlicesLeft = math.clamp(currentSlicesLeft, 0, maxSlices);
+        OnSliceCountChange?.Invoke(currentSlicesLeft);
     }
 }

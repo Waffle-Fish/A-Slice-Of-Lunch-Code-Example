@@ -32,11 +32,12 @@ public class PlayerSlice : MonoBehaviour
     private TurnActions movesMadeThisTurn = new();
     private List<GameObject> foodsToDisableThisTurn;
 
-    
+    private PlayerInputActions inputActions;
 
     private void Awake() {
         sliceMarking = GetComponent<LineRenderer>();
         undoManager = GetComponent<UndoManager>();
+        inputActions = new();
     }
 
     private void Start() {
@@ -50,16 +51,27 @@ public class PlayerSlice : MonoBehaviour
         OnSliceCountChange?.Invoke(currentSlicesLeft);
     }
 
+    private void OnEnable() {
+        inputActions.Player.Enable();
+    }
+
+    void OnDisable()
+    {
+        inputActions.Player.Disable();
+    }
+
     private void Update() {
         mouseWorldPos = Camera.main.ScreenToWorldPoint(Mouse.current.position.value);
-        DetectRightClick();
+        DetectLeftClick();
         DisplaySliceMarkings();
     }
 
-    private void DetectRightClick()
+    private void DetectLeftClick()
     {
-        if (Mouse.current.leftButton.wasPressedThisFrame) BeginSlice();
-        if (Mouse.current.leftButton.wasReleasedThisFrame) FinalizeSlice();
+        // if (Mouse.current.leftButton.wasPressedThisFrame) BeginSlice();
+        // if (Mouse.current.leftButton.wasReleasedThisFrame) FinalizeSlice();
+        if (inputActions.Player.LeftClick.WasPressedThisFrame()) BeginSlice();
+        if (inputActions.Player.LeftClick.WasReleasedThisFrame()) FinalizeSlice();
     }
 
     private void BeginSlice() {

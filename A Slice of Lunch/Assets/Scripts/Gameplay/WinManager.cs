@@ -31,7 +31,7 @@ public class WinManager : MonoBehaviour
     }
 
     void Update() {
-        winButton.SetActive(foodInBox.Count == totalFoodList.Count && !Mouse.current.leftButton.isPressed);
+        winButton.SetActive(foodInBox.Count == totalFoodList.Count);
     }
 
     void OnTriggerStay2D(Collider2D col)

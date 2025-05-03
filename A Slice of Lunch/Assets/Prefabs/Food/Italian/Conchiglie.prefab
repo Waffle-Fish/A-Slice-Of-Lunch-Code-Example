@@ -255,6 +255,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0fda002891a0d946af0c85f2f6a1b4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  textureForSFX: 
+  tableTextureForSFX: 
 --- !u!114 &4675578073093272869
 MonoBehaviour:
   m_ObjectHideFlags: 0

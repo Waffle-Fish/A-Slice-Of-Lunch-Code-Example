@@ -23,10 +23,12 @@ public class UndoManager : MonoBehaviour
 
     private void OnEnable() {
         PlayerSlice.OnSliceFinish += UpdateTurns;
+        UndoButton.OnUndoButtonPressed += UndoSlice;
     }
 
     private void OnDisable() {    
         PlayerSlice.OnSliceFinish -= UpdateTurns;
+        UndoButton.OnUndoButtonPressed -= UndoSlice;
     }
 
     private void UpdateTurns(TurnActions currentTurn)
@@ -60,4 +62,6 @@ public class UndoManager : MonoBehaviour
         playerSlice.UpdateCurrentSlicesCount(1);
         WinManager.Instance.UpdateTotalFoodList();
     }
+
+
 }

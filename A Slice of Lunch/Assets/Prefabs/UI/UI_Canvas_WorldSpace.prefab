@@ -254,6 +254,7 @@ GameObject:
   - component: {fileID: 8434041538219639009}
   - component: {fileID: 4547376011608608067}
   - component: {fileID: 1212512091279872033}
+  - component: {fileID: 4689463306667826261}
   m_Layer: 5
   m_Name: PauseButton
   m_TagString: Untagged
@@ -487,6 +488,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   alphaHitTestMinimumThreshold: 0.5
+--- !u!114 &4689463306667826261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2530342147269898868}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2667ceeab7822cc49b580a2569cdc72a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buildIndex: 2
+  delay: 0
+  timeline: {fileID: 0}
 --- !u!1 &5031068409275729315
 GameObject:
   m_ObjectHideFlags: 0
@@ -907,6 +923,7 @@ GameObject:
   - component: {fileID: 6762245865763869816}
   - component: {fileID: 3924440415519100085}
   - component: {fileID: 8278326127527774640}
+  - component: {fileID: 7845423764695778896}
   m_Layer: 5
   m_Name: UndoButton
   m_TagString: Untagged
@@ -1014,19 +1031,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6687091903267405199}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UndoManager, Assembly-CSharp
-        m_MethodName: UndoSlice
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!82 &6762245865763869816
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1152,3 +1157,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   alphaHitTestMinimumThreshold: 0.5
+--- !u!114 &7845423764695778896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8913045052894959671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd22bb0d0854e74429aa178ca965ee8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

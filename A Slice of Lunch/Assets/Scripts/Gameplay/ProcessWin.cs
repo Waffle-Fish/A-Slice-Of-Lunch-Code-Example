@@ -16,6 +16,7 @@ public class ProcessWin : MonoBehaviour
     }
 
     public void Win() {
+        Debug.Log("Trying to process win");
         pd.Play();
         StartCoroutine(ActivateParticles());
 

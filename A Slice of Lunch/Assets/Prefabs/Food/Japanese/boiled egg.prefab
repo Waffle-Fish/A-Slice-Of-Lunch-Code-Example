@@ -194,7 +194,7 @@ PolygonCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -328,6 +328,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0fda002891a0d946af0c85f2f6a1b4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  textureForSFX: 
+  tableTextureForSFX: 
 --- !u!114 &6597862118472929221
 MonoBehaviour:
   m_ObjectHideFlags: 0

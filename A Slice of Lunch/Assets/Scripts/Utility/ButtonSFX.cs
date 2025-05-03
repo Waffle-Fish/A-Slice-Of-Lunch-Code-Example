@@ -19,13 +19,13 @@ public class ButtonSFX : MonoBehaviour, IPointerClickHandler, IPointerEnterHandl
     {
         if (clickSFXS.Count == 0) return;
         //audioSource.PlayOneShot(clickSFXS[Random.Range(0, clickSFXS.Count)]);
-        AudioManager.Instance.PlaySFX("ButtonHover");
+        AudioManager.Instance.PlaySFX(clickSFXS[Random.Range(0, clickSFXS.Count)]);
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (hoverSFXS.Count == 0) return;
         //audioSource.PlayOneShot(hoverSFXS[Random.Range(0, hoverSFXS.Count)]);
-        AudioManager.Instance.PlaySFX("ButtonPop");
+        AudioManager.Instance.PlaySFX(hoverSFXS[Random.Range(0, hoverSFXS.Count)]);
     }
 }

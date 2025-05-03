@@ -32,6 +32,8 @@ public class PlayerSlice : MonoBehaviour
     private TurnActions movesMadeThisTurn = new();
     private List<GameObject> foodsToDisableThisTurn;
 
+    
+
     private void Awake() {
         sliceMarking = GetComponent<LineRenderer>();
         undoManager = GetComponent<UndoManager>();

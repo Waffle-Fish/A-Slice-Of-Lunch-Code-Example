@@ -56,8 +56,8 @@ public class PlayerSlice : MonoBehaviour
 
     private void DetectRightClick()
     {
-        if (Mouse.current.rightButton.wasPressedThisFrame) BeginSlice();
-        if (Mouse.current.rightButton.wasReleasedThisFrame) FinalizeSlice();
+        if (Mouse.current.leftButton.wasPressedThisFrame) BeginSlice();
+        if (Mouse.current.leftButton.wasReleasedThisFrame) FinalizeSlice();
     }
 
     private void BeginSlice() {

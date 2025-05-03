@@ -8,6 +8,9 @@ public class CustomMouse_Level : MonoBehaviour {
     [SerializeField] Vector3 offset = Vector3.zero;
     SpriteRenderer spriteRenderer;
 
+    enum HandState {Point, Grab, Knife}
+    HandState currentHand = HandState.Point;
+
     private void Start() {
         Cursor.visible = false;
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -15,12 +18,25 @@ public class CustomMouse_Level : MonoBehaviour {
     }
 
     private void Update() {
-        if (Mouse.current.rightButton.wasPressedThisFrame) {spriteRenderer.sprite = knife;}
-        else if (Mouse.current.rightButton.isPressed) {spriteRenderer.sprite = knife;}
-        else if (Mouse.current.leftButton.isPressed) {spriteRenderer.sprite = fist;}
-        else { spriteRenderer.sprite = finger; }
+        // if (Mouse.current.rightButton.wasPressedThisFrame) {spriteRenderer.sprite = knife;}
+        // else if (Mouse.current.rightButton.isPressed) {spriteRenderer.sprite = knife;}
+        // else if (Mouse.current.leftButton.isPressed) {spriteRenderer.sprite = fist;}
+        // else { spriteRenderer.sprite = finger; }
+        // transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition) + ((spriteRenderer.sprite == knife) ? Vector3.zero : offset);
+        Collider2D overlapCol = Physics2D.OverlapPoint(Camera.main.ScreenToWorldPoint(Input.mousePosition) + ((spriteRenderer.sprite == knife) ? Vector3.zero : offset));
+        if (Mouse.current.leftButton.wasPressedThisFrame) {
+            if(overlapCol && overlapCol.CompareTag("Food")) { currentHand = HandState.Grab; }
+            else { currentHand = HandState.Knife; }
+        } 
+        if (Mouse.current.leftButton.wasReleasedThisFrame) { currentHand = HandState.Point; }
+
+        spriteRenderer.sprite = currentHand switch
+        {
+            HandState.Grab => fist,
+            HandState.Knife => knife,
+            _ => finger,
+        };
+
         transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition) + ((spriteRenderer.sprite == knife) ? Vector3.zero : offset);
     }
-
-
 }

@@ -117,6 +117,8 @@ public class PlayerSlice : MonoBehaviour
             undoManager.UndoSlice();
             return;
         }
+
+        AudioManager.Instance.PlaySFX("Slice");
     }
 
     private void SliceFood(RaycastHit2D foodCollider) {

@@ -28,9 +28,16 @@ public class AudioManager : MonoBehaviour
     }
 
     public void Start() {
-        // PlayMusic(trackToPlay);
-
-        StartCoroutine(PlayMenuTheme());
+        if (trackToPlay > 0 || trackToPlay < musicSounds.Length)
+        {
+            Debug.Log("Play given track");
+            PlayMusic(trackToPlay);
+        }
+        else
+        {
+            Debug.Log("Play menu track");
+            StartCoroutine(PlayMenuTheme());
+        }
     }
 
     public IEnumerator PlayMenuTheme() {

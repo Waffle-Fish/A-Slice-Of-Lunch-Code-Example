@@ -7,6 +7,9 @@ using UnityEngine.Rendering;
 
 public class ControlFood : MonoBehaviour
 {
+    [SerializeField] string textureForSFX = "";
+    [SerializeField] string tableTextureForSFX = "";
+
     bool dragging = false;
     bool onFood = false;
     PlayerSlice playerSlice;
@@ -45,11 +48,25 @@ public class ControlFood : MonoBehaviour
         }
     }
 
-    private void OnMouseDown() {
+    private void OnMouseDown()
+    {
         dragging = true;
         sortingGroup.sortingOrder = 10000;
         mouseOffset = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
         mouseOffset.z = 0f;
+        PlayGrabSFX();
+    }
+
+    private void PlayGrabSFX()
+    {
+        if (textureForSFX == "FoodCrunch")
+        {
+            AudioManager.Instance.PlaySFX("FoodCrunch");
+        }
+        else if (textureForSFX == "FoodSquish")
+        {
+            AudioManager.Instance.PlaySFX("FoodSquish");
+        }
     }
 
     private void OnMouseUp() {
@@ -78,6 +95,20 @@ public class ControlFood : MonoBehaviour
                 if (itemLayer > maxLayer) maxLayer = itemLayer + 1;
             }
             parentTransform.GetComponent<SortingGroup>().sortingOrder = maxLayer;
+        }
+
+        PlayDropSFX();
+    }
+
+    private void PlayDropSFX()
+    {
+        if (tableTextureForSFX == "Wood")
+        {
+            AudioManager.Instance.PlaySFX("PlaceOnWood");
+        }
+        else
+        {
+            AudioManager.Instance.PlaySFX("PlaceOnWood");
         }
     }
 

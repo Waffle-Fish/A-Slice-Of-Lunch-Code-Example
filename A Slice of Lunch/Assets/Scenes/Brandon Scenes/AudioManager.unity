@@ -1201,6 +1201,9 @@ MonoBehaviour:
   _sfxSlider: {fileID: 1800894876}
   _musicVolumeText: {fileID: 918789793}
   _sfxVolumeText: {fileID: 1268383372}
+  _pauseButton: {fileID: 0}
+  _settingsPanel: {fileID: 0}
+  isInGameSettings: 0
 --- !u!114 &1122746066
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2841,6 +2844,18 @@ PrefabInstance:
     - target: {fileID: 5150821011014824834, guid: 695f283c7051fd14bb09ba3583ad043e, type: 3}
       propertyPath: m_PlayOnAwake
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9051969956684062512, guid: 695f283c7051fd14bb09ba3583ad043e, type: 3}
+      propertyPath: sfxSounds.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 9051969956684062512, guid: 695f283c7051fd14bb09ba3583ad043e, type: 3}
+      propertyPath: sfxSounds.Array.data[3].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 59d6fd01f02181e418a16772f17e4320, type: 3}
+    - target: {fileID: 9051969956684062512, guid: 695f283c7051fd14bb09ba3583ad043e, type: 3}
+      propertyPath: sfxSounds.Array.data[3].name
+      value: FoodPickup
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

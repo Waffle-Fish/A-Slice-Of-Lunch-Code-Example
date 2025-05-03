@@ -13,6 +13,9 @@ public class SceneController : MonoBehaviour
 
     public void LoadScene(int buildIndex) {
         SceneManager.LoadScene(buildIndex);
+
+        // Update the music track
+        // AudioManager.Instance.PlayMusic(buildIndex);  
     }
 
     public void LoadScene(int buildIndex, float delay) {

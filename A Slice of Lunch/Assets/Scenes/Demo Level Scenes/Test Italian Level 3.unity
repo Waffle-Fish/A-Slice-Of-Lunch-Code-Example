@@ -8088,7 +8088,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0389da86be0eb284082bb7907e8307df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSlices: 100
+  maxSlices: 2
   minFoodAreaSize: 2
 --- !u!114 &8451250705252295704
 MonoBehaviour:

@@ -70,23 +70,31 @@ public class PlayerSlice : MonoBehaviour
     {
         // if (Mouse.current.leftButton.wasPressedThisFrame) BeginSlice();
         // if (Mouse.current.leftButton.wasReleasedThisFrame) FinalizeSlice();
-        if (inputActions.Player.LeftClick.WasPressedThisFrame()) BeginSlice();
-        if (inputActions.Player.LeftClick.WasReleasedThisFrame()) FinalizeSlice();
+        if (inputActions.Player.LeftClick.WasPressedThisFrame()) BeginSlice(false);
+        if (inputActions.Player.LeftClick.WasReleasedThisFrame()) FinalizeSlice(false);
+        if (inputActions.Player.TouchPress.WasPressedThisFrame()) BeginSlice(true);
+        if (inputActions.Player.TouchPress.WasReleasedThisFrame()) FinalizeSlice(true);
     }
 
-    private void BeginSlice() {
+    private void BeginSlice(bool touch) {
         if (currentSlicesLeft == 0) return;
 
         // return if slice starts on food
-        Ray clickRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Ray clickRay;
+        if (touch) {
+            clickRay = Camera.main.ScreenPointToRay(inputActions.Player.TouchPosition.ReadValue<Vector2>());
+        }
+        else {
+            clickRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+        }
         Debug.DrawRay(clickRay.origin, clickRay.direction, Color.cyan, 100f);
         RaycastHit2D hit2D = Physics2D.GetRayIntersection(clickRay);
         if (hit2D.collider != null && (hit2D.collider.CompareTag("Food") || hit2D.collider.CompareTag("NoSlice"))) return;
 
-        sliceEndPoints[0] = mouseWorldPos;
+        sliceEndPoints[0] = mouseWorldPos; 
     }
 
-    private void FinalizeSlice() {
+    private void FinalizeSlice(bool touch) {
         // Variables
         List<RaycastHit2D> slicedObjects = new();
         
@@ -95,7 +103,14 @@ public class PlayerSlice : MonoBehaviour
         if (sliceEndPoints[0] == INVALID_VECTOR) return;
         if (currentSlicesLeft == 0) return;
         
-        Ray clickRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Ray clickRay;
+        if (touch) {
+            clickRay = Camera.main.ScreenPointToRay(inputActions.Player.TouchPosition.ReadValue<Vector2>());
+        }
+        else {
+            clickRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+        }
+        
         Debug.DrawRay(clickRay.origin, clickRay.direction, Color.cyan, 100f);
         RaycastHit2D hit2D = Physics2D.GetRayIntersection(clickRay);
         if (hit2D.collider != null && (hit2D.collider.CompareTag("Food") || hit2D.collider.CompareTag("NoSlice"))) {

@@ -472,9 +472,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clickSFXS:
-  - {fileID: 8300000, guid: 82909283d66de6248a165dae725ddf7d, type: 3}
+  - {fileID: 8300000, guid: 33cdc0e30d93bd148ae16be850f91346, type: 3}
   hoverSFXS:
-  - {fileID: 8300000, guid: 22859a80e7328974c9f6b30e0e9d3a71, type: 3}
+  - {fileID: 8300000, guid: e27ef9fd929c9b141b265ac317cb913c, type: 3}
 --- !u!114 &1212512091279872033
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -884,9 +884,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clickSFXS:
-  - {fileID: 8300000, guid: 82909283d66de6248a165dae725ddf7d, type: 3}
+  - {fileID: 8300000, guid: 33cdc0e30d93bd148ae16be850f91346, type: 3}
   hoverSFXS:
-  - {fileID: 8300000, guid: 22859a80e7328974c9f6b30e0e9d3a71, type: 3}
+  - {fileID: 8300000, guid: e27ef9fd929c9b141b265ac317cb913c, type: 3}
 --- !u!95 &1058143819550132666
 Animator:
   serializedVersion: 5
@@ -1141,9 +1141,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clickSFXS:
-  - {fileID: 8300000, guid: 82909283d66de6248a165dae725ddf7d, type: 3}
+  - {fileID: 8300000, guid: 33cdc0e30d93bd148ae16be850f91346, type: 3}
   hoverSFXS:
-  - {fileID: 8300000, guid: 22859a80e7328974c9f6b30e0e9d3a71, type: 3}
+  - {fileID: 8300000, guid: e27ef9fd929c9b141b265ac317cb913c, type: 3}
 --- !u!114 &8278326127527774640
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -44,12 +44,30 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""TouchPosition"",
+                    ""type"": ""Value"",
+                    ""id"": ""12059ef5-056d-4219-a0ea-c295009a25e6"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""TouchPress"",
+                    ""type"": ""Button"",
+                    ""id"": ""2142050d-73ad-4bf6-9db0-dcd7b39532e5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
                 {
                     ""name"": """",
-                    ""id"": ""c54f4ba4-862b-4095-9285-9b4b2d0222d0"",
+                    ""id"": ""650f7897-9c5b-4acf-a670-115a4cf70d43"",
                     ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -68,6 +86,28 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""RightClick"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1297a639-b9aa-44ae-90c5-4858e66b7c9a"",
+                    ""path"": ""<Touchscreen>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""TouchPosition"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a6db05bc-835a-45d4-9783-1bf49a2af2a5"",
+                    ""path"": ""<Touchscreen>/Press"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""TouchPress"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -78,6 +118,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_LeftClick = m_Player.FindAction("LeftClick", throwIfNotFound: true);
         m_Player_RightClick = m_Player.FindAction("RightClick", throwIfNotFound: true);
+        m_Player_TouchPosition = m_Player.FindAction("TouchPosition", throwIfNotFound: true);
+        m_Player_TouchPress = m_Player.FindAction("TouchPress", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -141,12 +183,16 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_LeftClick;
     private readonly InputAction m_Player_RightClick;
+    private readonly InputAction m_Player_TouchPosition;
+    private readonly InputAction m_Player_TouchPress;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
         public PlayerActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @LeftClick => m_Wrapper.m_Player_LeftClick;
         public InputAction @RightClick => m_Wrapper.m_Player_RightClick;
+        public InputAction @TouchPosition => m_Wrapper.m_Player_TouchPosition;
+        public InputAction @TouchPress => m_Wrapper.m_Player_TouchPress;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -162,6 +208,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @RightClick.started += instance.OnRightClick;
             @RightClick.performed += instance.OnRightClick;
             @RightClick.canceled += instance.OnRightClick;
+            @TouchPosition.started += instance.OnTouchPosition;
+            @TouchPosition.performed += instance.OnTouchPosition;
+            @TouchPosition.canceled += instance.OnTouchPosition;
+            @TouchPress.started += instance.OnTouchPress;
+            @TouchPress.performed += instance.OnTouchPress;
+            @TouchPress.canceled += instance.OnTouchPress;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -172,6 +224,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @RightClick.started -= instance.OnRightClick;
             @RightClick.performed -= instance.OnRightClick;
             @RightClick.canceled -= instance.OnRightClick;
+            @TouchPosition.started -= instance.OnTouchPosition;
+            @TouchPosition.performed -= instance.OnTouchPosition;
+            @TouchPosition.canceled -= instance.OnTouchPosition;
+            @TouchPress.started -= instance.OnTouchPress;
+            @TouchPress.performed -= instance.OnTouchPress;
+            @TouchPress.canceled -= instance.OnTouchPress;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -193,5 +251,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     {
         void OnLeftClick(InputAction.CallbackContext context);
         void OnRightClick(InputAction.CallbackContext context);
+        void OnTouchPosition(InputAction.CallbackContext context);
+        void OnTouchPress(InputAction.CallbackContext context);
     }
 }

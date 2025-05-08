@@ -32,9 +32,12 @@ public class PlayerSlice : MonoBehaviour
     private TurnActions movesMadeThisTurn = new();
     private List<GameObject> foodsToDisableThisTurn;
 
+    private PlayerInputActions inputActions;
+
     private void Awake() {
         sliceMarking = GetComponent<LineRenderer>();
         undoManager = GetComponent<UndoManager>();
+        inputActions = new();
     }
 
     private void Start() {
@@ -48,31 +51,50 @@ public class PlayerSlice : MonoBehaviour
         OnSliceCountChange?.Invoke(currentSlicesLeft);
     }
 
+    private void OnEnable() {
+        inputActions.Player.Enable();
+    }
+
+    void OnDisable()
+    {
+        inputActions.Player.Disable();
+    }
+
     private void Update() {
         mouseWorldPos = Camera.main.ScreenToWorldPoint(Mouse.current.position.value);
-        DetectRightClick();
+        DetectLeftClick();
         DisplaySliceMarkings();
     }
 
-    private void DetectRightClick()
+    private void DetectLeftClick()
     {
-        if (Mouse.current.rightButton.wasPressedThisFrame) BeginSlice();
-        if (Mouse.current.rightButton.wasReleasedThisFrame) FinalizeSlice();
+        // if (Mouse.current.leftButton.wasPressedThisFrame) BeginSlice();
+        // if (Mouse.current.leftButton.wasReleasedThisFrame) FinalizeSlice();
+        if (inputActions.Player.LeftClick.WasPressedThisFrame()) BeginSlice(false);
+        if (inputActions.Player.LeftClick.WasReleasedThisFrame()) FinalizeSlice(false);
+        if (inputActions.Player.TouchPress.WasPressedThisFrame()) BeginSlice(true);
+        if (inputActions.Player.TouchPress.WasReleasedThisFrame()) FinalizeSlice(true);
     }
 
-    private void BeginSlice() {
+    private void BeginSlice(bool touch) {
         if (currentSlicesLeft == 0) return;
 
         // return if slice starts on food
-        Ray clickRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Ray clickRay;
+        if (touch) {
+            clickRay = Camera.main.ScreenPointToRay(inputActions.Player.TouchPosition.ReadValue<Vector2>());
+        }
+        else {
+            clickRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+        }
         Debug.DrawRay(clickRay.origin, clickRay.direction, Color.cyan, 100f);
         RaycastHit2D hit2D = Physics2D.GetRayIntersection(clickRay);
         if (hit2D.collider != null && (hit2D.collider.CompareTag("Food") || hit2D.collider.CompareTag("NoSlice"))) return;
 
-        sliceEndPoints[0] = mouseWorldPos;
+        sliceEndPoints[0] = mouseWorldPos; 
     }
 
-    private void FinalizeSlice() {
+    private void FinalizeSlice(bool touch) {
         // Variables
         List<RaycastHit2D> slicedObjects = new();
         
@@ -81,7 +103,14 @@ public class PlayerSlice : MonoBehaviour
         if (sliceEndPoints[0] == INVALID_VECTOR) return;
         if (currentSlicesLeft == 0) return;
         
-        Ray clickRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Ray clickRay;
+        if (touch) {
+            clickRay = Camera.main.ScreenPointToRay(inputActions.Player.TouchPosition.ReadValue<Vector2>());
+        }
+        else {
+            clickRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+        }
+        
         Debug.DrawRay(clickRay.origin, clickRay.direction, Color.cyan, 100f);
         RaycastHit2D hit2D = Physics2D.GetRayIntersection(clickRay);
         if (hit2D.collider != null && (hit2D.collider.CompareTag("Food") || hit2D.collider.CompareTag("NoSlice"))) {

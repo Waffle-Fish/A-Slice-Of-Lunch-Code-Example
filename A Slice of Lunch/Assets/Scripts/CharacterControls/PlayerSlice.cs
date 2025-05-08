@@ -53,18 +53,20 @@ public class PlayerSlice : MonoBehaviour
 
     private void Update() {
         mouseWorldPos = Camera.main.ScreenToWorldPoint(PlayerInputManager.Instance.MousePos);
-        DetectLeftClick();
+        DetectRightClick();
         DisplaySliceMarkings();
     }
 
     private void DetectLeftClick()
     {
-        // if (Mouse.current.leftButton.wasPressedThisFrame) BeginSlice();
-        // if (Mouse.current.leftButton.wasReleasedThisFrame) FinalizeSlice();
         if (playerActions.LeftClick.WasPressedThisFrame()) BeginSlice();
         if (playerActions.LeftClick.WasReleasedThisFrame()) FinalizeSlice();
-        // if (playerActions.TouchPress.WasPressedThisFrame()) BeginSlice(true);
-        // if (playerActions.TouchPress.WasReleasedThisFrame()) FinalizeSlice(true);
+    }
+
+    private void DetectRightClick()
+    {
+        if (playerActions.RightClick.WasPressedThisFrame()) BeginSlice();
+        if (playerActions.RightClick.WasReleasedThisFrame()) FinalizeSlice();
     }
 
     private void BeginSlice() {

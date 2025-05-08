@@ -38,9 +38,7 @@ public class PlayerMoveFood : MonoBehaviour
         playerActions.LeftClick.canceled -= ReleaseFood;
     }
 
-    private void Start() {
-        playerActions = PlayerInputManager.Instance.PlayerActions;
-    }
+    
 
     private void Update() {
         if (dragging) {

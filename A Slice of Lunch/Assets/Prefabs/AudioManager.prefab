@@ -48,21 +48,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trackToPlay: 0
   musicSounds:
-  - name: LevelTheme
-    clip: {fileID: 8300000, guid: b18bb7b6f1ef8c241abd113fcf59ee2e, type: 3}
+  - name: MenuTheme
+    clip: {fileID: 8300000, guid: aed9d5b709d8d5f45a3e278a32ffa960, type: 3}
   - name: MenuThemeIntro
     clip: {fileID: 8300000, guid: 6a127a147cb7cf54f8b5274a5f332435, type: 3}
   - name: MenuThemeLoop
     clip: {fileID: 8300000, guid: b08325daf5c1a794ab2d49b7a1bfbefa, type: 3}
-  - name: LotsOfNoodles
+  - name: UpbeatJapan
+    clip: {fileID: 8300000, guid: b18bb7b6f1ef8c241abd113fcf59ee2e, type: 3}
+  - name: UpbeatNoodles
     clip: {fileID: 8300000, guid: 60c60bf43eb95924c92d522e79d754da, type: 3}
-  - name: MamaMia
+  - name: DownbeatNoodles
     clip: {fileID: 8300000, guid: 41892a02e8e5d3c448ba49686a234e5b, type: 3}
   sfxSounds:
   - name: ButtonPop
-    clip: {fileID: 8300000, guid: f3038c69f7df19d4385184d862aeee52, type: 3}
-  - name: ButtonSnap
-    clip: {fileID: 8300000, guid: d7cffcc9e86908f4fb3bc9389ac98662, type: 3}
+    clip: {fileID: 8300000, guid: 33cdc0e30d93bd148ae16be850f91346, type: 3}
+  - name: ButtonHover
+    clip: {fileID: 8300000, guid: e27ef9fd929c9b141b265ac317cb913c, type: 3}
   - name: Slice
     clip: {fileID: 8300000, guid: 59d6fd01f02181e418a16772f17e4320, type: 3}
   - name: PlaceOnWood

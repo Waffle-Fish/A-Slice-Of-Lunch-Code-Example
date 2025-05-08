@@ -174,15 +174,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 9051969956684062512, guid: 695f283c7051fd14bb09ba3583ad043e, type: 3}
-      propertyPath: trackToPlay
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 695f283c7051fd14bb09ba3583ad043e, type: 3}
+--- !u!114 &49354880 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9051969956684062512, guid: 695f283c7051fd14bb09ba3583ad043e, type: 3}
+  m_PrefabInstance: {fileID: 49354879}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f834038f150b4964ca33044aac5244d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &67332410 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9124424278509207637, guid: fb0e2ad204dd79649a637f8b3c046c06, type: 3}
@@ -7812,13 +7819,57 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1017363040748228040, guid: 97063aaa2c68709498e3b26f8f29555d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1017363040748228040, guid: 97063aaa2c68709498e3b26f8f29555d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1017363040748228040, guid: 97063aaa2c68709498e3b26f8f29555d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1765762099}
+    - target: {fileID: 1017363040748228040, guid: 97063aaa2c68709498e3b26f8f29555d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 49354880}
+    - target: {fileID: 1017363040748228040, guid: 97063aaa2c68709498e3b26f8f29555d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1017363040748228040, guid: 97063aaa2c68709498e3b26f8f29555d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: PlaySFX
+      objectReference: {fileID: 0}
+    - target: {fileID: 1017363040748228040, guid: 97063aaa2c68709498e3b26f8f29555d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: AudioManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1017363040748228040, guid: 97063aaa2c68709498e3b26f8f29555d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 1696506436783147861, guid: 97063aaa2c68709498e3b26f8f29555d, type: 3}
       propertyPath: m_Name
       value: Canvas_WorldSpace
       objectReference: {fileID: 0}
+    - target: {fileID: 3924440415519100085, guid: 97063aaa2c68709498e3b26f8f29555d, type: 3}
+      propertyPath: clickSFXS.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 33cdc0e30d93bd148ae16be850f91346, type: 3}
+    - target: {fileID: 3924440415519100085, guid: 97063aaa2c68709498e3b26f8f29555d, type: 3}
+      propertyPath: hoverSFXS.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: e27ef9fd929c9b141b265ac317cb913c, type: 3}
+    - target: {fileID: 4547376011608608067, guid: 97063aaa2c68709498e3b26f8f29555d, type: 3}
+      propertyPath: clickSFXS.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 33cdc0e30d93bd148ae16be850f91346, type: 3}
+    - target: {fileID: 4547376011608608067, guid: 97063aaa2c68709498e3b26f8f29555d, type: 3}
+      propertyPath: hoverSFXS.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: e27ef9fd929c9b141b265ac317cb913c, type: 3}
     - target: {fileID: 4689463306667826261, guid: 97063aaa2c68709498e3b26f8f29555d, type: 3}
       propertyPath: timeline
       value: 
@@ -7903,6 +7954,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6068403681171922236, guid: 97063aaa2c68709498e3b26f8f29555d, type: 3}
+      propertyPath: clickSFXS.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 33cdc0e30d93bd148ae16be850f91346, type: 3}
+    - target: {fileID: 6068403681171922236, guid: 97063aaa2c68709498e3b26f8f29555d, type: 3}
+      propertyPath: hoverSFXS.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: e27ef9fd929c9b141b265ac317cb913c, type: 3}
     - target: {fileID: 8464356426590323989, guid: 97063aaa2c68709498e3b26f8f29555d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 

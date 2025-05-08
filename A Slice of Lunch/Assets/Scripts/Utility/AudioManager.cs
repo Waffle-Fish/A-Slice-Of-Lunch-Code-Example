@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.SceneManagement;
 
 public class AudioManager : MonoBehaviour
 {
@@ -25,6 +26,16 @@ public class AudioManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += UpdateTrack;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= UpdateTrack;
     }
 
     public void Start() {
@@ -117,30 +128,70 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void ToggelMusic() {
+    public void ToggelMusic() 
+    {
         musicSource.mute = !musicSource.mute;
     }
 
-    public void ToggleSFX() {
+    public void ToggleSFX() 
+    {
         sfxSource.mute = !sfxSource.mute;
     }
 
-    public void MusicVolume(float volume) {
+    public void MusicVolume(float volume) 
+    {
         musicSource.volume = volume;
     }
 
-    public void SFXVolume(float volume) {
+    public void SFXVolume(float volume) 
+    {
         sfxSource.volume = volume;
     }
 
-    public void UpdateTrack(int trackNumber) {
-        musicSource.Stop();
-        if (trackNumber == 0) {
-            StartCoroutine(PlayMenuTheme());
-            Debug.Log("Now Playing the Menu Theme Sequence");
-        } else {
-            PlayMusic("LevelTheme");
-            Debug.Log("Now Playing the Level Theme");
+    // Play level sound track based on the level's build index
+    public void UpdateTrack(Scene scene, LoadSceneMode mode) 
+    {
+        string currentScene = scene.name;
+        int currentLevel = (int)currentScene[currentScene.Length - 1];
+
+        Debug.Log("For playing the level music: Current Scene '" + currentScene + "'.");
+
+        // Set the case to the first five letters of the cuisine
+        // Ex: America --> case "Ameri":
+        switch (currentScene.Substring(0, 5))
+        {
+            case "Italy":
+                if (currentLevel > 0 && currentLevel < 5 && !CheckIfTrackIsAlreadyPlaying("UpbeatNoodles"))
+                    PlayMusic("UpbeatNoodles");
+                else if (!CheckIfTrackIsAlreadyPlaying("DownbeatNoodles"))
+                    PlayMusic("DownbeatNoodles");
+                Debug.Log("Playing Italy Music!");
+                break;
+            case "Japan":
+                if (!CheckIfTrackIsAlreadyPlaying("UpbeatJapan"))
+                    PlayMusic("UpbeatJapan");
+                Debug.Log("Playing Japan Music!");
+                break;
+            default:
+                if (!CheckIfTrackIsAlreadyPlaying("MenuTheme"))
+                    PlayMusic("MenuTheme");
+                Debug.Log("Default to playing menu theme music");
+                break;
         }
+
+
+        //musicSource.Stop();
+        //if (trackNumber == 0) {
+        //    StartCoroutine(PlayMenuTheme());
+        //    Debug.Log("Now Playing the Menu Theme Sequence");
+        //} else {
+        //    PlayMusic("LevelTheme");
+        //    Debug.Log("Now Playing the Level Theme");
+        //}
+    }
+
+    private bool CheckIfTrackIsAlreadyPlaying(string track)
+    {
+        return musicSource.clip.name == track;
     }
 }

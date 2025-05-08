@@ -41,5 +41,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Demo Level Scenes/Test Italian Level 3.unity
     guid: 805552df38b535b4b996ee47f9a99320
+  - enabled: 1
+    path: Assets/Scenes/WaffleScene/Test Level.unity
+    guid: cde9a35f1f3117a42939a3c910af3909
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: b11723649509e7141af56cabf1532cd4, type: 2}

@@ -55,7 +55,7 @@ public class PlayerMoveFood : MonoBehaviour
         foodCol = Physics2D.OverlapPoint(Camera.main.ScreenToWorldPoint(PlayerInputManager.Instance.MousePos));
         if (!(foodCol && foodCol.CompareTag("Food"))) return;
 
-        Debug.Log(foodCol.transform.parent.name + " is being picked up");
+        // Debug.Log(foodCol.transform.parent.name + " is being picked up");
         StopCoroutine(nameof(HandleFoodCollision));
         dragging = true;
 
@@ -86,7 +86,7 @@ public class PlayerMoveFood : MonoBehaviour
             if(!resultsTags.TryAdd(item.tag, 1)) resultsTags[item.tag]++;
         }
         if (resultsTags.ContainsKey("Border") || resultsTags.ContainsKey("Food")) {
-            Debug.Log("On Food");
+            // Debug.Log("On Food");
             StartCoroutine(HandleFoodCollision());
         } else {
             // originalPosition = parentTransform.position;
@@ -121,7 +121,7 @@ public class PlayerMoveFood : MonoBehaviour
         Vector3 endPos = foodPreviousPosition;
         for (float i = 0; i < totalIterations; ++i)
         {
-            Debug.Log("Handling Food Collision!");
+            // Debug.Log("Handling Food Collision!");
             foodCol.transform.parent.position = Vector3.Lerp(startPos, endPos, i * timePerIteration / totalTime);
             yield return new WaitForSeconds(timePerIteration);
         }

@@ -15,6 +15,6 @@ public class CustomMouse_UI : MonoBehaviour
     }
 
     private void Update() {
-        rectTransform.position = Input.mousePosition;
+        rectTransform.position = PlayerInputManager.Instance.MousePos;
     }
 }

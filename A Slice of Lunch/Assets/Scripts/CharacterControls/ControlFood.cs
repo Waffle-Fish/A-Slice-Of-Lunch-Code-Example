@@ -1,33 +1,20 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-public class ControlFood : MonoBehaviour
+public class ControlFood : MonoBehaviour /*, IPointerDownHandler, IPointerUpHandler*/
 {
-    [SerializeField] string textureForSFX = "";
-    [SerializeField] string tableTextureForSFX = "";
+    [SerializeField] string textureSFX = "";
+    [SerializeField] string tableTextureSFX = "";
 
-    bool dragging = false;
     bool onFood = false;
-    PlayerSlice playerSlice;
-    SortingGroup sortingGroup;
-    int initialSortingOrder;
     Transform parentTransform;
     Vector3 originalPosition;
-    PolygonCollider2D polygonCollider2D;
-
-    Vector3 mouseOffset = Vector3.zero;
     
     private void Awake() {
-        playerSlice = GameObject.FindWithTag("Player").GetComponent<PlayerSlice>();
-        sortingGroup = GetComponentInParent<SortingGroup>();
-        initialSortingOrder = sortingGroup.sortingOrder;
         parentTransform = transform.parent;
         originalPosition = parentTransform.position;
-        polygonCollider2D = GetComponent<PolygonCollider2D>();
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
@@ -48,79 +35,6 @@ public class ControlFood : MonoBehaviour
         }
     }
 
-    private void OnMouseDown()
-    {
-        dragging = true;
-        sortingGroup.sortingOrder = 10000;
-        mouseOffset = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
-        mouseOffset.z = 0f;
-        PlayGrabSFX();
-    }
-
-    private void PlayGrabSFX()
-    {
-        if (textureForSFX == "FoodCrunch")
-        {
-            AudioManager.Instance.PlaySFX("FoodCrunch");
-        }
-        else if (textureForSFX == "FoodSquish")
-        {
-            AudioManager.Instance.PlaySFX("FoodSquish");
-        }
-    }
-
-    private void OnMouseUp() {
-        dragging = false;
-        sortingGroup.sortingOrder = initialSortingOrder;
-        ContactFilter2D contactFilter2D = new();
-        List<Collider2D> results = new();
-        Dictionary<string, int> resultsTags = new();
-        polygonCollider2D.OverlapCollider(contactFilter2D, results);
-        foreach (var item in results)
-        {
-            if(!resultsTags.TryAdd(item.tag, 1)) resultsTags[item.tag]++;
-        }
-        if (resultsTags.ContainsKey("Border") || onFood) {
-            StartCoroutine(HandleFoodCollision());
-        } else {
-            originalPosition = parentTransform.position;
-            if (!resultsTags.ContainsKey("Food")) return;
-
-            // Put the food on top of the other food
-            // Doesnt work
-            int maxLayer = parentTransform.GetComponent<SortingGroup>().sortingOrder;
-            foreach (var item in results)
-            {
-                int itemLayer = item.transform.parent.GetComponent<SortingGroup>().sortingOrder;
-                if (itemLayer > maxLayer) maxLayer = itemLayer + 1;
-            }
-            parentTransform.GetComponent<SortingGroup>().sortingOrder = maxLayer;
-        }
-
-        PlayDropSFX();
-    }
-
-    private void PlayDropSFX()
-    {
-        if (tableTextureForSFX == "Wood")
-        {
-            AudioManager.Instance.PlaySFX("PlaceOnWood");
-        }
-        else
-        {
-            AudioManager.Instance.PlaySFX("PlaceOnWood");
-        }
-    }
-
-    private void Update() {
-        // Debug.Log(Camera.main.ScreenToWorldPoint(Input.mousePosition));
-        if (dragging) {
-            Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            pos.z = 0f;
-            transform.parent.position = pos - mouseOffset;
-        }
-    }
-
     private IEnumerator HandleFoodCollision() {
         float numIterations = 50;
         float totalTime = 0.01f;
@@ -131,6 +45,30 @@ public class ControlFood : MonoBehaviour
         {
             parentTransform.position = Vector3.Lerp(startPos, endPos, i / totalTime);
             yield return new WaitForSeconds(timePerIteration);
+        }
+    }
+
+    public void PlayGrabSFX()
+    {
+        if (textureSFX == "FoodCrunch")
+        {
+            AudioManager.Instance.PlaySFX("FoodCrunch");
+        }
+        else if (textureSFX == "FoodSquish")
+        {
+            AudioManager.Instance.PlaySFX("FoodSquish");
+        }
+    }
+
+    public void PlayDropSFX()
+    {
+        if (tableTextureSFX == "Wood")
+        {
+            AudioManager.Instance.PlaySFX("PlaceOnWood");
+        }
+        else
+        {
+            AudioManager.Instance.PlaySFX("PlaceOnWood");
         }
     }
 }

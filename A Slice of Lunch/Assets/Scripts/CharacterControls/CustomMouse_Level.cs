@@ -11,26 +11,17 @@ public class CustomMouse_Level : MonoBehaviour {
     enum HandState {Point, Grab, Knife}
     HandState currentHand = HandState.Point;
 
-    private PlayerInputActions inputActions;
+    private PlayerInputActions.PlayerActions playerActions;
 
     private void Awake() {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        inputActions = new();
     }
+
     private void Start() {
         Cursor.visible = false;
         spriteRenderer.sprite = finger;
+        playerActions = PlayerInputManager.Instance.PlayerActions;
     }
-
-    private void OnEnable() {
-        inputActions.Enable();
-    }
-
-    void OnDisable()
-    {
-        inputActions.Disable();
-    }
-
 
     private void Update() {
         // if (Mouse.current.rightButton.wasPressedThisFrame) {spriteRenderer.sprite = knife;}
@@ -38,12 +29,13 @@ public class CustomMouse_Level : MonoBehaviour {
         // else if (Mouse.current.leftButton.isPressed) {spriteRenderer.sprite = fist;}
         // else { spriteRenderer.sprite = finger; }
         // transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition) + ((spriteRenderer.sprite == knife) ? Vector3.zero : offset);
-        Collider2D overlapCol = Physics2D.OverlapPoint(Camera.main.ScreenToWorldPoint(Input.mousePosition) + ((spriteRenderer.sprite == knife) ? Vector3.zero : offset));
-        if (inputActions.Player.LeftClick.WasPressedThisFrame()) {
+        Vector2 mousePos = playerActions.MousePosition.ReadValue<Vector2>();
+        Collider2D overlapCol = Physics2D.OverlapPoint(Camera.main.ScreenToWorldPoint(mousePos) + ((spriteRenderer.sprite == knife) ? Vector3.zero : offset));
+        if (playerActions.LeftClick.WasPressedThisFrame()) {
             if(overlapCol && overlapCol.CompareTag("Food")) { currentHand = HandState.Grab; }
             else { currentHand = HandState.Knife; }
         } 
-        if (inputActions.Player.LeftClick.WasReleasedThisFrame()) { currentHand = HandState.Point; }
+        if (playerActions.LeftClick.WasReleasedThisFrame()) { currentHand = HandState.Point; }
 
         spriteRenderer.sprite = currentHand switch
         {
@@ -52,6 +44,6 @@ public class CustomMouse_Level : MonoBehaviour {
             _ => finger,
         };
 
-        transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition) + ((spriteRenderer.sprite == knife) ? Vector3.zero : offset);
+        transform.position = Camera.main.ScreenToWorldPoint(mousePos) + ((spriteRenderer.sprite == knife) ? Vector3.zero : offset);
     }
 }

@@ -14,8 +14,10 @@ public class WinManager : MonoBehaviour
     TextMeshProUGUI piecesLeftText;
     [SerializeField]
     GameObject winButton;
-    List<ControlFood> totalFoodList = new();
-    List<ControlFood> foodInBox = new();
+    // List<ControlFood> totalFoodList = new();
+    // List<ControlFood> foodInBox = new();
+    List<PolygonCollider2D> totalFoodList = new();
+    List<PolygonCollider2D> foodInBox = new();
     private Collider2D container;
 
     void Awake()
@@ -37,15 +39,15 @@ public class WinManager : MonoBehaviour
     void OnTriggerStay2D(Collider2D col)
     {
         // Debug.Log(col.name + " is in the box");
-        ControlFood cf = col.GetComponent<ControlFood>();
-        if (!foodInBox.Contains(cf)) {
-            foodInBox.Add(cf);
+        PolygonCollider2D foodCol = col.GetComponent<PolygonCollider2D>();
+        if (!foodInBox.Contains(foodCol)) {
+            foodInBox.Add(foodCol);
             UpdatePiecestOutsideBox();
         }
     }
 
     private void OnTriggerExit2D(Collider2D other) {
-        foodInBox.Remove(other.GetComponent<ControlFood>());
+        foodInBox.Remove(other.GetComponent<PolygonCollider2D>());
         UpdatePiecestOutsideBox();
         // Debug.Log(other.transform.parent.name + " has left the box");
     }
@@ -68,9 +70,9 @@ public class WinManager : MonoBehaviour
 
     public void UpdateTotalFoodList() {
         totalFoodList.Clear();
-        foodsObj.GetComponentsInChildren<ControlFood>(false,totalFoodList);
-        UpdatePiecestOutsideBox();
-        
+        // foodsObj.GetComponentsInChildren<ControlFood>(false,totalFoodList);
+        foodsObj.GetComponentsInChildren<PolygonCollider2D>(false,totalFoodList);
+        // UpdatePiecestOutsideBox();
     }
 
     private void UpdatePiecestOutsideBox() {

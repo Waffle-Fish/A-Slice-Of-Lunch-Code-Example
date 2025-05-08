@@ -625,6 +625,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: tamago
       objectReference: {fileID: 0}
+    - target: {fileID: 2663547929631934026, guid: 479ff3f8eb9ae9e4eadec74c297d751c, type: 3}
+      propertyPath: textureForSFX
+      value: FoodSquish
+      objectReference: {fileID: 0}
+    - target: {fileID: 2663547929631934026, guid: 479ff3f8eb9ae9e4eadec74c297d751c, type: 3}
+      propertyPath: tableTextureForSFX
+      value: Wood
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1164,7 +1172,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5492779578049413131, guid: ff5a8626c0e510a429b034bd14638472, type: 3}
       propertyPath: textureForSFX
-      value: FoodSquish
+      value: FoodRice
       objectReference: {fileID: 0}
     - target: {fileID: 5492779578049413131, guid: ff5a8626c0e510a429b034bd14638472, type: 3}
       propertyPath: tableTextureForSFX
@@ -1962,6 +1970,14 @@ PrefabInstance:
     - target: {fileID: 1551813210614586166, guid: 479ff3f8eb9ae9e4eadec74c297d751c, type: 3}
       propertyPath: m_Name
       value: tamago (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2663547929631934026, guid: 479ff3f8eb9ae9e4eadec74c297d751c, type: 3}
+      propertyPath: textureForSFX
+      value: FoodSquish
+      objectReference: {fileID: 0}
+    - target: {fileID: 2663547929631934026, guid: 479ff3f8eb9ae9e4eadec74c297d751c, type: 3}
+      propertyPath: tableTextureForSFX
+      value: Wood
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7072,7 +7088,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6218432336789074996, guid: f4180f04b10d73c4ea8ea29dcd647c73, type: 3}
       propertyPath: textureForSFX
-      value: FoodSquish
+      value: FoodRice
       objectReference: {fileID: 0}
     - target: {fileID: 6218432336789074996, guid: f4180f04b10d73c4ea8ea29dcd647c73, type: 3}
       propertyPath: tableTextureForSFX

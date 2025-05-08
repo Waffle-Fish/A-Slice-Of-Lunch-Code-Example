@@ -72,6 +72,14 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7605534211212557156, guid: aad816f72b497e34e8c2b57e4b54bbb3, type: 3}
+      propertyPath: textureForSFX
+      value: FoodCrunch
+      objectReference: {fileID: 0}
+    - target: {fileID: 7605534211212557156, guid: aad816f72b497e34e8c2b57e4b54bbb3, type: 3}
+      propertyPath: tableTextureForSFX
+      value: Wood
+      objectReference: {fileID: 0}
     - target: {fileID: 9097055981448223172, guid: aad816f72b497e34e8c2b57e4b54bbb3, type: 3}
       propertyPath: m_LocalPosition.x
       value: -23.3

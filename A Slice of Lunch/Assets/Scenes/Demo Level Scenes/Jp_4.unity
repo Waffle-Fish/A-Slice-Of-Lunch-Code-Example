@@ -6903,7 +6903,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6218432336789074996, guid: f4180f04b10d73c4ea8ea29dcd647c73, type: 3}
       propertyPath: textureForSFX
-      value: FoodSquish
+      value: FoodRice
       objectReference: {fileID: 0}
     - target: {fileID: 6218432336789074996, guid: f4180f04b10d73c4ea8ea29dcd647c73, type: 3}
       propertyPath: tableTextureForSFX

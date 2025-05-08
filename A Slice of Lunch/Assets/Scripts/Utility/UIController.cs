@@ -54,7 +54,7 @@ public class UIController : MonoBehaviour
         float sfxVolume = (float) Math.Round(_sfxSlider.value, 1);
         AudioManager.Instance.SFXVolume(sfxVolume);
         PlayerPrefs.SetFloat("sfxVolume", sfxVolume);
-        AudioManager.Instance.PlaySFX("Slice");
+        // AudioManager.Instance.PlaySFX("Slice");
         Debug.Log("Saved SFX volume level");
     }
 

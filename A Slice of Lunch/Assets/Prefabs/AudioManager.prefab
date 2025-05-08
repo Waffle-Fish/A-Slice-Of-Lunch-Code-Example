@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f834038f150b4964ca33044aac5244d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trackToPlay: 3
+  trackToPlay: 0
   musicSounds:
   - name: LevelTheme
     clip: {fileID: 8300000, guid: b18bb7b6f1ef8c241abd113fcf59ee2e, type: 3}
@@ -70,7 +70,9 @@ MonoBehaviour:
   - name: FoodSquish
     clip: {fileID: 8300000, guid: cc520d5e270e034468bf917e44527d06, type: 3}
   - name: FoodCrunch
-    clip: {fileID: 8300000, guid: e2b9f43552617d740954836dcc04f4a6, type: 3}
+    clip: {fileID: 8300000, guid: 7c9af0e4e84929b45b4b8a45a570b28c, type: 3}
+  - name: FoodRice
+    clip: {fileID: 8300000, guid: f0481355074d8f64dbe91e25b87f8576, type: 3}
   - name: WinJingle
     clip: {fileID: 8300000, guid: ca99cb1b5e86aad48b352759892ef836, type: 3}
   musicSource: {fileID: 5150821011014824834}

@@ -134,10 +134,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: AudioManager
       objectReference: {fileID: 0}
-    - target: {fileID: 1353158566624992488, guid: 695f283c7051fd14bb09ba3583ad043e, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1532083980586046885, guid: 695f283c7051fd14bb09ba3583ad043e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -176,10 +172,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1532083980586046885, guid: 695f283c7051fd14bb09ba3583ad043e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9051969956684062512, guid: 695f283c7051fd14bb09ba3583ad043e, type: 3}
-      propertyPath: trackToPlay
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -400,6 +392,10 @@ PrefabInstance:
     - target: {fileID: 1570766907973394115, guid: 014c1842e3bc51441a831fe95e99e378, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4496668892055565411, guid: 014c1842e3bc51441a831fe95e99e378, type: 3}
+      propertyPath: textureForSFX
+      value: FoodCrunch
       objectReference: {fileID: 0}
     - target: {fileID: 7321364085180309026, guid: 014c1842e3bc51441a831fe95e99e378, type: 3}
       propertyPath: m_Name
@@ -899,22 +895,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Onigiri Pool
       objectReference: {fileID: 0}
-    - target: {fileID: 5685544708154778968, guid: af224943faccc06488183e3a58cc5316, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5721069778116673359, guid: af224943faccc06488183e3a58cc5316, type: 3}
-      propertyPath: maxObjectCount
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 5891189829120508860, guid: af224943faccc06488183e3a58cc5316, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -3.46
-      objectReference: {fileID: 0}
-    - target: {fileID: 5891189829120508860, guid: af224943faccc06488183e3a58cc5316, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -9.17
-      objectReference: {fileID: 0}
     - target: {fileID: 7003331429847606557, guid: af224943faccc06488183e3a58cc5316, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -954,18 +934,6 @@ PrefabInstance:
     - target: {fileID: 7003331429847606557, guid: af224943faccc06488183e3a58cc5316, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9084430653451754291, guid: af224943faccc06488183e3a58cc5316, type: 3}
-      propertyPath: objectToCopy
-      value: 
-      objectReference: {fileID: 7444637641095059575, guid: ff5a8626c0e510a429b034bd14638472, type: 3}
-    - target: {fileID: 9084430653451754291, guid: af224943faccc06488183e3a58cc5316, type: 3}
-      propertyPath: maxObjectCount
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 9212633419118785700, guid: af224943faccc06488183e3a58cc5316, type: 3}
-      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[49].y
-      value: 2.361198
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

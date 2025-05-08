@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectToCopy: {fileID: 7444637641095059575, guid: ff5a8626c0e510a429b034bd14638472, type: 3}
-  maxObjectCount: 10
+  maxObjectCount: 20
   parent: {fileID: 0}
 --- !u!1001 &6531034458841674564
 PrefabInstance:
@@ -58,11 +58,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 820588424448225528, guid: ff5a8626c0e510a429b034bd14638472, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -25.91
+      value: -3.46
       objectReference: {fileID: 0}
     - target: {fileID: 820588424448225528, guid: ff5a8626c0e510a429b034bd14638472, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -6.4
+      value: -9.17
       objectReference: {fileID: 0}
     - target: {fileID: 820588424448225528, guid: ff5a8626c0e510a429b034bd14638472, type: 3}
       propertyPath: m_LocalPosition.z
@@ -96,9 +96,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2700818872589633504, guid: ff5a8626c0e510a429b034bd14638472, type: 3}
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[49].y
+      value: 2.361198
+      objectReference: {fileID: 0}
     - target: {fileID: 5492779578049413131, guid: ff5a8626c0e510a429b034bd14638472, type: 3}
       propertyPath: textureForSFX
-      value: FoodSquish
+      value: FoodRice
       objectReference: {fileID: 0}
     - target: {fileID: 5492779578049413131, guid: ff5a8626c0e510a429b034bd14638472, type: 3}
       propertyPath: tableTextureForSFX

@@ -59,13 +59,20 @@ public class ControlFood : MonoBehaviour
 
     private void PlayGrabSFX()
     {
-        if (textureForSFX == "FoodCrunch")
+        switch(textureForSFX)
         {
-            AudioManager.Instance.PlaySFX("FoodCrunch");
-        }
-        else if (textureForSFX == "FoodSquish")
-        {
-            AudioManager.Instance.PlaySFX("FoodSquish");
+            case "FoodCrunch":
+                AudioManager.Instance.PlaySFX("FoodCrunch");
+                break;
+            case "FoodSquish":
+                AudioManager.Instance.PlaySFX("FoodSquish");
+                break;
+            case "FoodRice":
+                AudioManager.Instance.PlaySFX("FoodRice");
+                break;
+            default:
+                AudioManager.Instance.PlaySFX("FoodRice");
+                break;
         }
     }
 

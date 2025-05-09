@@ -6,9 +6,6 @@ using UnityEngine.Rendering;
 
 public class PlayerMoveFood : MonoBehaviour
 {
-    [SerializeField] string textureSFX = "";
-    [SerializeField] string tableTextureSFX = "";
-
     bool dragging = false;
     bool onFood = false;
     PlayerSlice playerSlice;
@@ -38,8 +35,6 @@ public class PlayerMoveFood : MonoBehaviour
         playerActions.LeftClick.canceled -= ReleaseFood;
     }
 
-    
-
     private void Update() {
         if (dragging) {
             Vector3 pos = Camera.main.ScreenToWorldPoint(PlayerInputManager.Instance.MousePos);
@@ -64,7 +59,7 @@ public class PlayerMoveFood : MonoBehaviour
         mouseOffset = Camera.main.ScreenToWorldPoint(PlayerInputManager.Instance.MousePos) - foodCol.transform.position;
         mouseOffset.z = 0f;
 
-        PlayGrabSFX();
+        PlayGrabSFX(foodCol.GetComponent<ControlFood>().TextureSFX);
     }
 
     private void ReleaseFood(UnityEngine.InputSystem.InputAction.CallbackContext context)
@@ -101,7 +96,7 @@ public class PlayerMoveFood : MonoBehaviour
             parentTransform.GetComponent<SortingGroup>().sortingOrder = maxLayer;
         }
 
-        PlayDropSFX();
+        PlayDropSFX(foodCol.GetComponent<ControlFood>().TableTextureSFX);
     }
 
     private void ResetHandleCollisionVariables() {
@@ -125,7 +120,7 @@ public class PlayerMoveFood : MonoBehaviour
         }
     }
 
-    private void PlayGrabSFX()
+    private void PlayGrabSFX(string textureSFX)
     {
         if (textureSFX == "FoodCrunch")
         {
@@ -135,9 +130,12 @@ public class PlayerMoveFood : MonoBehaviour
         {
             AudioManager.Instance.PlaySFX("FoodSquish");
         }
+        else {
+            return;
+        }
     }
 
-    private void PlayDropSFX()
+    private void PlayDropSFX(string tableTextureSFX)
     {
         if (tableTextureSFX == "Wood")
         {

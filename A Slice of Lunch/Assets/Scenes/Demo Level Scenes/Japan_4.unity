@@ -378,6 +378,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tamago Pool
       objectReference: {fileID: 0}
+    - target: {fileID: 2024682485550914157, guid: 2ed5e46a0c810fd48aae022144ca7738, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7388266335698221782, guid: 2ed5e46a0c810fd48aae022144ca7738, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -6879,6 +6883,10 @@ PrefabInstance:
     - target: {fileID: 4138380798867498186, guid: d24eff34e7e8e1b4382d28ec3f7efd10, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4341607243295470270, guid: d24eff34e7e8e1b4382d28ec3f7efd10, type: 3}
+      propertyPath: maxSlices
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

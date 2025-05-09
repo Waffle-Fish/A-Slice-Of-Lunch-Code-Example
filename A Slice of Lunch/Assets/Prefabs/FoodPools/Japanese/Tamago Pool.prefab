@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7388266335698221782
 Transform:
   m_ObjectHideFlags: 0
@@ -163,6 +163,14 @@ PrefabInstance:
     - target: {fileID: 3833345760931211781, guid: 479ff3f8eb9ae9e4eadec74c297d751c, type: 3}
       propertyPath: m_Points.m_Paths.Array.data[0].Array.data[49].y
       value: 2.0449998
+      objectReference: {fileID: 0}
+    - target: {fileID: 4199977413377589372, guid: 479ff3f8eb9ae9e4eadec74c297d751c, type: 3}
+      propertyPath: TextureSFX
+      value: FoodSquish
+      objectReference: {fileID: 0}
+    - target: {fileID: 4199977413377589372, guid: 479ff3f8eb9ae9e4eadec74c297d751c, type: 3}
+      propertyPath: TableTextureSFX
+      value: Wood
       objectReference: {fileID: 0}
     - target: {fileID: 4945796725294028007, guid: 479ff3f8eb9ae9e4eadec74c297d751c, type: 3}
       propertyPath: m_LocalScale.x

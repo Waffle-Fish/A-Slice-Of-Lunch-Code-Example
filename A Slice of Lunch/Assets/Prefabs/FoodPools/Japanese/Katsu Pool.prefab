@@ -60,6 +60,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: katsu
       objectReference: {fileID: 0}
+    - target: {fileID: 2623946325969311374, guid: aad816f72b497e34e8c2b57e4b54bbb3, type: 3}
+      propertyPath: TextureSFX
+      value: FoodCrunch
+      objectReference: {fileID: 0}
+    - target: {fileID: 2623946325969311374, guid: aad816f72b497e34e8c2b57e4b54bbb3, type: 3}
+      propertyPath: TableTextureSFX
+      value: Wood
+      objectReference: {fileID: 0}
     - target: {fileID: 3186283943368812084, guid: aad816f72b497e34e8c2b57e4b54bbb3, type: 3}
       propertyPath: m_LocalScale.x
       value: 1

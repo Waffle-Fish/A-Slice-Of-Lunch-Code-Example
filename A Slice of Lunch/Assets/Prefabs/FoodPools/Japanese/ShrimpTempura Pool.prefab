@@ -113,8 +113,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7131392723979094942, guid: cdac2e603c579474c83e6139eea225b0, type: 3}
+      propertyPath: TextureSFX
+      value: FoodCrunch
+      objectReference: {fileID: 0}
+    - target: {fileID: 7131392723979094942, guid: cdac2e603c579474c83e6139eea225b0, type: 3}
       propertyPath: textureForSFX
       value: FoodCrunch
+      objectReference: {fileID: 0}
+    - target: {fileID: 7131392723979094942, guid: cdac2e603c579474c83e6139eea225b0, type: 3}
+      propertyPath: TableTextureSFX
+      value: Wood
       objectReference: {fileID: 0}
     - target: {fileID: 7131392723979094942, guid: cdac2e603c579474c83e6139eea225b0, type: 3}
       propertyPath: tableTextureForSFX

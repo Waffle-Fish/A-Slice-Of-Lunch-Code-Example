@@ -174,24 +174,17 @@ public class AudioManager : MonoBehaviour
                 break;
             default:
                 if (!CheckIfTrackIsAlreadyPlaying("MenuTheme"))
+                {
+                    Debug.Log("MenuTheme is not playing, so start playing it!");
                     PlayMusic("MenuTheme");
-                Debug.Log("Default to playing menu theme music");
+                }
                 break;
         }
-
-
-        //musicSource.Stop();
-        //if (trackNumber == 0) {
-        //    StartCoroutine(PlayMenuTheme());
-        //    Debug.Log("Now Playing the Menu Theme Sequence");
-        //} else {
-        //    PlayMusic("LevelTheme");
-        //    Debug.Log("Now Playing the Level Theme");
-        //}
     }
 
     private bool CheckIfTrackIsAlreadyPlaying(string track)
     {
+        Debug.Log("Is " + track + " already playing? CurrentTrack: " + musicSource.clip.name);
         return musicSource.clip.name == track;
     }
 }

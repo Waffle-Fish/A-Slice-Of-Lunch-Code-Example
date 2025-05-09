@@ -122,28 +122,33 @@ public class PlayerMoveFood : MonoBehaviour
 
     private void PlayGrabSFX(string textureSFX)
     {
-        if (textureSFX == "FoodCrunch")
+        switch (textureSFX)
         {
-            AudioManager.Instance.PlaySFX("FoodCrunch");
-        }
-        else if (textureSFX == "FoodSquish")
-        {
-            AudioManager.Instance.PlaySFX("FoodSquish");
-        }
-        else {
-            return;
+            case "FoodCrunch":
+                AudioManager.Instance.PlaySFX("FoodCrunch");
+                break;
+            case "FoodSquish":
+                AudioManager.Instance.PlaySFX("FoodSquish");
+                break;
+            case "FoodRice":
+                AudioManager.Instance.PlaySFX("FoodRice");
+                break;
+            default:
+                AudioManager.Instance.PlaySFX("FoodRice");
+                break;
         }
     }
 
     private void PlayDropSFX(string tableTextureSFX)
     {
-        if (tableTextureSFX == "Wood")
+        switch (tableTextureSFX)
         {
-            AudioManager.Instance.PlaySFX("PlaceOnWood");
-        }
-        else
-        {
-            AudioManager.Instance.PlaySFX("PlaceOnWood");
+            case "Wood":
+                AudioManager.Instance.PlaySFX("Wood");
+                break;
+            default:
+                AudioManager.Instance.PlaySFX("Wood");
+                break;
         }
     }
 }

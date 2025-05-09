@@ -134,6 +134,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: katsu (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 2623946325969311374, guid: aad816f72b497e34e8c2b57e4b54bbb3, type: 3}
+      propertyPath: TextureSFX
+      value: FoodCrunch
+      objectReference: {fileID: 0}
+    - target: {fileID: 2623946325969311374, guid: aad816f72b497e34e8c2b57e4b54bbb3, type: 3}
+      propertyPath: TableTextureSFX
+      value: Wood
+      objectReference: {fileID: 0}
     - target: {fileID: 3186283943368812084, guid: aad816f72b497e34e8c2b57e4b54bbb3, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
@@ -779,6 +787,10 @@ PrefabInstance:
     - target: {fileID: 5674412519626824148, guid: 906c7e68b3b203640a32f1d1226cc746, type: 3}
       propertyPath: m_Name
       value: SausageOctopus Pool
+      objectReference: {fileID: 0}
+    - target: {fileID: 5674412519626824148, guid: 906c7e68b3b203640a32f1d1226cc746, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7052,6 +7064,14 @@ PrefabInstance:
     - target: {fileID: 1037118538631015733, guid: f4180f04b10d73c4ea8ea29dcd647c73, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4900310256696606864, guid: f4180f04b10d73c4ea8ea29dcd647c73, type: 3}
+      propertyPath: TextureSFX
+      value: FoodRice
+      objectReference: {fileID: 0}
+    - target: {fileID: 4900310256696606864, guid: f4180f04b10d73c4ea8ea29dcd647c73, type: 3}
+      propertyPath: TableTextureSFX
+      value: Wood
       objectReference: {fileID: 0}
     - target: {fileID: 6218432336789074996, guid: f4180f04b10d73c4ea8ea29dcd647c73, type: 3}
       propertyPath: textureForSFX

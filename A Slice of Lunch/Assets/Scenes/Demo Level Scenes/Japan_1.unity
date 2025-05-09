@@ -393,10 +393,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4496668892055565411, guid: 014c1842e3bc51441a831fe95e99e378, type: 3}
-      propertyPath: textureForSFX
-      value: FoodCrunch
-      objectReference: {fileID: 0}
     - target: {fileID: 7321364085180309026, guid: 014c1842e3bc51441a831fe95e99e378, type: 3}
       propertyPath: m_Name
       value: ShrimpTempura Pool
@@ -657,14 +653,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rice Pool
       objectReference: {fileID: 0}
-    - target: {fileID: 2111788855090159422, guid: e02d2910721c6d9498310723cbedf336, type: 3}
-      propertyPath: TextureSFX
-      value: FoodSquish
-      objectReference: {fileID: 0}
-    - target: {fileID: 2111788855090159422, guid: e02d2910721c6d9498310723cbedf336, type: 3}
-      propertyPath: TableTextureSFX
-      value: PlaceOnWood
-      objectReference: {fileID: 0}
     - target: {fileID: 8012687329684091217, guid: e02d2910721c6d9498310723cbedf336, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -867,10 +855,6 @@ PrefabInstance:
     - target: {fileID: 2024682485550914157, guid: 2ed5e46a0c810fd48aae022144ca7738, type: 3}
       propertyPath: m_Name
       value: Tamago Pool
-      objectReference: {fileID: 0}
-    - target: {fileID: 2024682485550914157, guid: 2ed5e46a0c810fd48aae022144ca7738, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7388266335698221782, guid: 2ed5e46a0c810fd48aae022144ca7738, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1398,7 +1382,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5674412519626824148, guid: 906c7e68b3b203640a32f1d1226cc746, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

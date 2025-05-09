@@ -108,6 +108,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4900310256696606864, guid: f4180f04b10d73c4ea8ea29dcd647c73, type: 3}
+      propertyPath: TextureSFX
+      value: FoodRice
+      objectReference: {fileID: 0}
+    - target: {fileID: 4900310256696606864, guid: f4180f04b10d73c4ea8ea29dcd647c73, type: 3}
+      propertyPath: TableTextureSFX
+      value: Wood
+      objectReference: {fileID: 0}
     - target: {fileID: 6218432336789074996, guid: f4180f04b10d73c4ea8ea29dcd647c73, type: 3}
       propertyPath: textureForSFX
       value: FoodRice

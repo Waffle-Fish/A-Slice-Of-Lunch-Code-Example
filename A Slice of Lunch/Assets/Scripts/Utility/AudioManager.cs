@@ -156,6 +156,11 @@ public class AudioManager : MonoBehaviour
 
         Debug.Log("For playing the level music: Current Scene '" + currentScene + "'.");
 
+        if (musicSource.clip.name == "IntroStory" && !musicSource.loop)
+        {
+            musicSource.loop = true;
+        }
+
         // Set the case to the first five letters of the cuisine
         // Ex: America --> case "Ameri":
         switch (currentScene.Substring(0, 5))
@@ -171,6 +176,13 @@ public class AudioManager : MonoBehaviour
                 if (!CheckIfTrackIsAlreadyPlaying("UpbeatJapan"))
                     PlayMusic("UpbeatJapan");
                 Debug.Log("Playing Japan Music!");
+                break;
+            case "Intro":
+                if (!CheckIfTrackIsAlreadyPlaying("IntroStory"))
+                {
+                    PlayMusic("IntroStory");
+                    musicSource.loop = false;
+                } 
                 break;
             default:
                 if (!CheckIfTrackIsAlreadyPlaying("MenuTheme"))

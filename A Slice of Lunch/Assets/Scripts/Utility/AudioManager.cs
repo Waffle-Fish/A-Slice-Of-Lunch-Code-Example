@@ -167,9 +167,9 @@ public class AudioManager : MonoBehaviour
         {
             case "Italy":
                 if (currentLevel > 0 && currentLevel < 5 && !CheckIfTrackIsAlreadyPlaying("UpbeatNoodles"))
-                    PlayMusic("UpbeatNoodles");
+                    PlayMusic("DownbeatNoodles");    // PlayMusic("UpbeatNoodles");
                 else if (!CheckIfTrackIsAlreadyPlaying("DownbeatNoodles"))
-                    PlayMusic("DownbeatNoodles");
+                    PlayMusic("UpbeatNoodles");      // PlayMusic("DownbeatNoodles");
                 Debug.Log("Playing Italy Music!");
                 break;
             case "Japan":

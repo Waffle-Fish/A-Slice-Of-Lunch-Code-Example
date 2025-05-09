@@ -61,16 +61,24 @@ PrefabInstance:
       value: Farfalle
       objectReference: {fileID: 0}
     - target: {fileID: 6551539529664835813, guid: 5115dab571c0de446b118b71c28775e8, type: 3}
+      propertyPath: TextureSFX
+      value: FoodSquish
+      objectReference: {fileID: 0}
+    - target: {fileID: 6551539529664835813, guid: 5115dab571c0de446b118b71c28775e8, type: 3}
       propertyPath: textureForSFX
       value: FoodSquish
       objectReference: {fileID: 0}
+    - target: {fileID: 6551539529664835813, guid: 5115dab571c0de446b118b71c28775e8, type: 3}
+      propertyPath: TableTextureSFX
+      value: Wood
+      objectReference: {fileID: 0}
     - target: {fileID: 6927845485690413569, guid: 5115dab571c0de446b118b71c28775e8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.6
+      value: -3.1
       objectReference: {fileID: 0}
     - target: {fileID: 6927845485690413569, guid: 5115dab571c0de446b118b71c28775e8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 6.7
+      value: 12.4
       objectReference: {fileID: 0}
     - target: {fileID: 6927845485690413569, guid: 5115dab571c0de446b118b71c28775e8, type: 3}
       propertyPath: m_LocalPosition.z

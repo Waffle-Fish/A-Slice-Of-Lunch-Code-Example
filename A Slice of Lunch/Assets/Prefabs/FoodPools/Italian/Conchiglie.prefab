@@ -57,12 +57,20 @@ PrefabInstance:
     m_TransformParent: {fileID: 3224699107399011904}
     m_Modifications:
     - target: {fileID: 2794987922735837834, guid: c71d13833afbe9f49a195ec13ad5333c, type: 3}
+      propertyPath: TextureSFX
+      value: FoodSquish
+      objectReference: {fileID: 0}
+    - target: {fileID: 2794987922735837834, guid: c71d13833afbe9f49a195ec13ad5333c, type: 3}
       propertyPath: textureForSFX
       value: FoodSquish
       objectReference: {fileID: 0}
+    - target: {fileID: 2794987922735837834, guid: c71d13833afbe9f49a195ec13ad5333c, type: 3}
+      propertyPath: TableTextureSFX
+      value: Wood
+      objectReference: {fileID: 0}
     - target: {fileID: 5084216479253660389, guid: c71d13833afbe9f49a195ec13ad5333c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -9.1
+      value: -14
       objectReference: {fileID: 0}
     - target: {fileID: 5084216479253660389, guid: c71d13833afbe9f49a195ec13ad5333c, type: 3}
       propertyPath: m_LocalPosition.y

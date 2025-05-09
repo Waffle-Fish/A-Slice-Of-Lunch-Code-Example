@@ -61,16 +61,24 @@ PrefabInstance:
       value: Macaroni
       objectReference: {fileID: 0}
     - target: {fileID: 7969994597892591534, guid: fb0e2ad204dd79649a637f8b3c046c06, type: 3}
+      propertyPath: TextureSFX
+      value: FoodSquish
+      objectReference: {fileID: 0}
+    - target: {fileID: 7969994597892591534, guid: fb0e2ad204dd79649a637f8b3c046c06, type: 3}
       propertyPath: textureForSFX
       value: FoodSquish
       objectReference: {fileID: 0}
+    - target: {fileID: 7969994597892591534, guid: fb0e2ad204dd79649a637f8b3c046c06, type: 3}
+      propertyPath: TableTextureSFX
+      value: Wood
+      objectReference: {fileID: 0}
     - target: {fileID: 9124424278509207637, guid: fb0e2ad204dd79649a637f8b3c046c06, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -21.2
+      value: -14
       objectReference: {fileID: 0}
     - target: {fileID: 9124424278509207637, guid: fb0e2ad204dd79649a637f8b3c046c06, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.2
+      value: 14.2
       objectReference: {fileID: 0}
     - target: {fileID: 9124424278509207637, guid: fb0e2ad204dd79649a637f8b3c046c06, type: 3}
       propertyPath: m_LocalPosition.z

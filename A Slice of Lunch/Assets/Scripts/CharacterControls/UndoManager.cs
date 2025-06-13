@@ -20,13 +20,16 @@ public class UndoManager : MonoBehaviour
     Stack<TurnActions> everyTurnsMade = new();
 
     PlayerSlice playerSlice;
+    private Animator anim;
 
-    private void OnEnable() {
+    private void OnEnable()
+    {
         PlayerSlice.OnSliceFinish += UpdateTurns;
         UndoButton.OnUndoButtonPressed += UndoSlice;
     }
 
-    private void OnDisable() {    
+    private void OnDisable()
+    {
         PlayerSlice.OnSliceFinish -= UpdateTurns;
         UndoButton.OnUndoButtonPressed -= UndoSlice;
     }
@@ -36,16 +39,21 @@ public class UndoManager : MonoBehaviour
         everyTurnsMade.Push(currentTurn);
     }
 
-    private void Awake() {
+    private void Awake()
+    {
         playerSlice = GetComponent<PlayerSlice>();
+        anim = this.gameObject.transform.GetChild(0).GetComponent<Animator>();
     }
 
-    public void UndoSlice() {
+    public void UndoSlice()
+    {
+        anim.SetTrigger("PoofTrigger");
+
         if (everyTurnsMade.Count <= 0) return;
         TurnActions TurnToUndo = everyTurnsMade.Pop();
         foreach (SliceObjectData food in TurnToUndo.slicesModifiedThisTurn)
         {
-            // obj = specific sprite mask | obj parent = Sprite Masks | obj parent parent = food
+            // obj = specific spritemask | obj parent = Sprite Masks | obj parent parent = food
             food.spriteMaskObj.transform.parent.parent.GetComponentInChildren<PolygonCollider2D>().points = food.originalPolyColPoints;
             food.spriteMaskObj.SetActive(false);
         }
@@ -61,6 +69,11 @@ public class UndoManager : MonoBehaviour
         }
         playerSlice.UpdateCurrentSlicesCount(1);
         WinManager.Instance.UpdateTotalFoodList();
+    }
+
+    public void PlayAnimation()
+    {
+        
     }
 
 

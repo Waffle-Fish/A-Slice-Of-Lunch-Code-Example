@@ -30,7 +30,7 @@ Material:
     - _greenMult: 0.562
     - _redMult: 1
     m_Colors:
-    - _NewColor: {r: 0.42586052, g: 0.7924528, b: 0.22801706, a: 1}
+    - _NewColor: {r: 1, g: 0.058307324, b: 0, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &7292691348316478950
 MonoBehaviour:

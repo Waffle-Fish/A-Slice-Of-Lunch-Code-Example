@@ -6,9 +6,15 @@ using UnityEngine.Rendering;
 
 public class ControlFood : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
+    [Header("Audio Settings")]
     public string TextureSFX = "";
-    public string TableTextureSFX = "";
+    public string TableTextureSFX = "";   
 
+    [Header("Validate Placement Settings")]
+    GameObject validPlacementObj;
+    GameObject invalidPlacementObj;
+
+    [Header("Default Variables")]
     bool placeable = true;
     Vector2 offset;
     Transform parentTransform;
@@ -16,22 +22,23 @@ public class ControlFood : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     SortingGroup sortingGroup;
     int originalSortingOrder = 0;
 
-    [Header("Validate Placement Sprite")]
-    SpriteRenderer validPlaceSpriteRenderer;
-
     private void Awake()
     {
         parentTransform = transform.parent;
         prevPos = parentTransform.position;
         sortingGroup = GetComponentInParent<SortingGroup>();
-        validPlaceSpriteRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
+        if (transform.childCount == 2)
+        {
+            validPlacementObj = transform.GetChild(0).gameObject;
+            invalidPlacementObj = transform.GetChild(1).gameObject;
+        }
     }
 
     private void Start()
     {
         prevPos = parentTransform.position;
         originalSortingOrder = sortingGroup.sortingOrder;
-        validPlaceSpriteRenderer.gameObject.SetActive(false);
+        DisablePlacementObjects();
     }
 
     void OnTriggerEnter2D(Collider2D collision)
@@ -39,7 +46,6 @@ public class ControlFood : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         if (collision.CompareTag("Food") || collision.CompareTag("Border"))
         {
             placeable = false;
-            validPlaceSpriteRenderer.color = Color.red;
         }
     }
 
@@ -48,22 +54,22 @@ public class ControlFood : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         if (other.CompareTag("Food") || other.CompareTag("Border"))
         {
             placeable = false;
-            validPlaceSpriteRenderer.color = Color.red;
+            EnableInvalidObj();
         }
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
         placeable = true;
-        validPlaceSpriteRenderer.color = Color.green;
+        EnableValidObj();
     }
-    
+
     public void OnBeginDrag(PointerEventData eventData)
     {
         Vector3 newPosition = Camera.main.ScreenToWorldPoint(eventData.position);
         offset = newPosition - parentTransform.position;
         sortingGroup.sortingOrder = 1000;
-        validPlaceSpriteRenderer.gameObject.SetActive(true);
+        EnableValidObj();
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -77,11 +83,11 @@ public class ControlFood : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     public void OnEndDrag(PointerEventData eventData)
     {
         offset = Vector2.zero;
-        validPlaceSpriteRenderer.gameObject.SetActive(false);
+        DisablePlacementObjects();
         if (!placeable)
         {
             placeable = true;
-            StartCoroutine(ProcessReturn());
+            StartCoroutine(HandleFoodCollision());
         }
         else
         {
@@ -92,18 +98,41 @@ public class ControlFood : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
     private IEnumerator HandleFoodCollision()
     {
-        float numIterations = 50;
-        float totalTime = 0.01f;
-        float timePerIteration = totalTime / numIterations;
+        float totalIterations = 50;
+        float totalTime = 0.2f;
+        float timePerIteration = totalTime / totalIterations;
         Vector3 startPos = parentTransform.position;
         Vector3 endPos = prevPos;
-        for (float i = 0; i < totalTime; i += timePerIteration)
+        for (float i = 0; i < totalIterations; ++i)
         {
-            parentTransform.position = Vector3.Lerp(startPos, endPos, i / totalTime);
+            // Debug.Log("Handling Food Collision!");
+            parentTransform.position = Vector3.Lerp(startPos, endPos, i * timePerIteration / totalTime);
             yield return new WaitForSeconds(timePerIteration);
         }
+        sortingGroup.sortingOrder = originalSortingOrder;
     }
 
+    private void DisablePlacementObjects()
+    {
+        if (!validPlacementObj || !invalidPlacementObj) return;
+        validPlacementObj.SetActive(false);
+        invalidPlacementObj.SetActive(false);
+    }
+
+    private void EnableValidObj()
+    {
+        if (!validPlacementObj || !invalidPlacementObj) return;
+        validPlacementObj.SetActive(true);
+        invalidPlacementObj.SetActive(false);
+    }
+
+    private void EnableInvalidObj()
+    {
+        if (!validPlacementObj || !invalidPlacementObj) return;
+        validPlacementObj.SetActive(false);
+        invalidPlacementObj.SetActive(true);
+    }
+    
     public void PlayGrabSFX()
     {
         if (TextureSFX == "FoodCrunch")
@@ -126,21 +155,5 @@ public class ControlFood : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         {
             AudioManager.Instance.PlaySFX("PlaceOnWood");
         }
-    }
-
-    private IEnumerator ProcessReturn()
-    {
-        float totalIterations = 50;
-        float totalTime = 0.2f;
-        float timePerIteration = totalTime / totalIterations;
-        Vector3 startPos = parentTransform.position;
-        Vector3 endPos = prevPos;
-        for (float i = 0; i < totalIterations; ++i)
-        {
-            // Debug.Log("Handling Food Collision!");
-            parentTransform.position = Vector3.Lerp(startPos, endPos, i * timePerIteration / totalTime);
-            yield return new WaitForSeconds(timePerIteration);
-        }
-        sortingGroup.sortingOrder = originalSortingOrder;
     }
 }

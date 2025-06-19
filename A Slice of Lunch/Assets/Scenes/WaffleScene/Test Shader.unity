@@ -7382,6 +7382,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LunchBox1
       objectReference: {fileID: 0}
+    - target: {fileID: 3615119122374918623, guid: d21b7c20ca29b9a409001bcd6aa8e11a, type: 3}
+      propertyPath: m_TagString
+      value: LunchBox
+      objectReference: {fileID: 0}
     - target: {fileID: 4863339216173183808, guid: d21b7c20ca29b9a409001bcd6aa8e11a, type: 3}
       propertyPath: m_Size.x
       value: 4.9266033

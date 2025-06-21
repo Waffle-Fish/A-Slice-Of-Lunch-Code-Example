@@ -21,6 +21,8 @@ public class ControlFood : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     Vector3 prevPos;
     SortingGroup sortingGroup;
     int originalSortingOrder = 0;
+    bool isReturning = false;
+    bool isDragging = false;
 
     private void Awake()
     {
@@ -41,18 +43,12 @@ public class ControlFood : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         DisablePlacementObjects();
     }
 
-    void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Food") || collision.CompareTag("Border"))
-        {
-            placeable = false;
-        }
-    }
-
     private void OnTriggerStay2D(Collider2D other)
     {
-        if (other.CompareTag("Food") || other.CompareTag("Border"))
+        if (!isDragging) return;
+        if (other.gameObject.CompareTag("Food") || other.gameObject.CompareTag("Border") || !isReturning)
         {
+            Debug.Log("Staying on: " + other.tag);
             placeable = false;
             EnableInvalidObj();
         }
@@ -60,8 +56,11 @@ public class ControlFood : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        placeable = true;
-        EnableValidObj();
+        if (!isReturning && isDragging)
+        {
+            placeable = true;
+            EnableValidObj();
+        }
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -69,6 +68,9 @@ public class ControlFood : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         Vector3 newPosition = Camera.main.ScreenToWorldPoint(eventData.position);
         offset = newPosition - parentTransform.position;
         sortingGroup.sortingOrder = 1000;
+        isReturning = false;
+        isDragging = true;
+        StopCoroutine(HandleFoodCollision());
         EnableValidObj();
     }
 
@@ -78,10 +80,12 @@ public class ControlFood : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         newPosition -= (Vector3)offset;
         newPosition.z = parentTransform.position.z;
         parentTransform.position = newPosition;
+        isDragging = true;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        isDragging = false;
         offset = Vector2.zero;
         DisablePlacementObjects();
         if (!placeable)
@@ -98,6 +102,7 @@ public class ControlFood : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
     private IEnumerator HandleFoodCollision()
     {
+        isReturning = true;
         float totalIterations = 50;
         float totalTime = 0.2f;
         float timePerIteration = totalTime / totalIterations;
@@ -110,6 +115,7 @@ public class ControlFood : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
             yield return new WaitForSeconds(timePerIteration);
         }
         sortingGroup.sortingOrder = originalSortingOrder;
+        isReturning = false;
     }
 
     private void DisablePlacementObjects()

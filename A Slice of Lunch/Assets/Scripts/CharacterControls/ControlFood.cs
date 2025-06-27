@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Rendering;
@@ -8,7 +9,7 @@ public class ControlFood : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 {
     [Header("Audio Settings")]
     public string TextureSFX = "";
-    public string TableTextureSFX = "";   
+    public string TableTextureSFX = "";
 
     [Header("Validate Placement Settings")]
     GameObject validPlacementObj;
@@ -23,6 +24,7 @@ public class ControlFood : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     int originalSortingOrder = 0;
     bool isReturning = false;
     bool isDragging = false;
+    Collider2D foodCol;
 
     private void Awake()
     {
@@ -34,6 +36,7 @@ public class ControlFood : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
             validPlacementObj = transform.GetChild(0).gameObject;
             invalidPlacementObj = transform.GetChild(1).gameObject;
         }
+        foodCol = GetComponentInParent<Collider2D>();
     }
 
     private void Start()
@@ -41,26 +44,6 @@ public class ControlFood : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         prevPos = parentTransform.position;
         originalSortingOrder = sortingGroup.sortingOrder;
         DisablePlacementObjects();
-    }
-
-    private void OnTriggerStay2D(Collider2D other)
-    {
-        if (!isDragging) return;
-        if (other.gameObject.CompareTag("Food") || other.gameObject.CompareTag("Border") || !isReturning)
-        {
-            Debug.Log("Staying on: " + other.tag);
-            placeable = false;
-            EnableInvalidObj();
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (!isReturning && isDragging)
-        {
-            placeable = true;
-            EnableValidObj();
-        }
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -81,6 +64,17 @@ public class ControlFood : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         newPosition.z = parentTransform.position.z;
         parentTransform.position = newPosition;
         isDragging = true;
+
+        if (DetectOverlap())
+        {
+            placeable = false;
+            EnableInvalidObj();
+        }
+        else
+        {
+            placeable = true;
+            EnableValidObj();
+        }
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -138,7 +132,23 @@ public class ControlFood : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         validPlacementObj.SetActive(false);
         invalidPlacementObj.SetActive(true);
     }
-    
+
+    private bool DetectOverlap()
+    {
+        ContactFilter2D cf = new();
+        cf.NoFilter();
+        List<Collider2D> results = new();
+        foodCol.OverlapCollider(cf, results);
+        foreach (var col in results)
+        {
+            if (col.CompareTag("Food") || col.CompareTag("Border"))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void PlayGrabSFX()
     {
         if (TextureSFX == "FoodCrunch")

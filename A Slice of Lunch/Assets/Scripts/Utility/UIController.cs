@@ -16,9 +16,13 @@ public class UIController : MonoBehaviour
     bool isGamePaused = false;
 
     public void Start() {
-        if (AudioManager.Instance != null) {
+        if (AudioManager.Instance != null)
+        {
             _musicSlider.value = PlayerPrefs.GetFloat("musicVolume");
+            AudioManager.Instance.MusicVolume(_musicSlider.value);
             _sfxSlider.value = PlayerPrefs.GetFloat("sfxVolume");
+            AudioManager.Instance.SFXVolume(_sfxSlider.value);
+            UpdateVolumeText();
         }
         
         if (isInGameSettings == true) {
@@ -30,8 +34,7 @@ public class UIController : MonoBehaviour
     }
 
     public void Update() {
-        _musicVolumeText.text = Math.Round(_musicSlider.value, 1).ToString();
-        _sfxVolumeText.text = Math.Round(_sfxSlider.value, 1).ToString();
+        return;
     }
 
     public void ToggleMusic() {
@@ -43,30 +46,38 @@ public class UIController : MonoBehaviour
     }
 
     public void MusicVolume() {
-        float musicVolume = (float) Math.Round(_musicSlider.value, 1);
+        float musicVolume = _musicSlider.value;
+        UpdateVolumeText();
         AudioManager.Instance.MusicVolume(musicVolume);
         PlayerPrefs.SetFloat("musicVolume", musicVolume);
-
-        Debug.Log("Saved music volume level");
     }
     
     public void SFXVolume() {
-        float sfxVolume = (float) Math.Round(_sfxSlider.value, 1);
+        float sfxVolume = _sfxSlider.value;
+        UpdateVolumeText();
         AudioManager.Instance.SFXVolume(sfxVolume);
         PlayerPrefs.SetFloat("sfxVolume", sfxVolume);
-        // AudioManager.Instance.PlaySFX("Slice");
-        Debug.Log("Saved SFX volume level");
     }
 
-    public void PauseGame() {
+    public void UpdateVolumeText()
+    {
+        _musicVolumeText.text = Math.Round(_musicSlider.value, 1).ToString();
+        _sfxVolumeText.text = Math.Round(_sfxSlider.value, 1).ToString();
+    }
+
+    public void PauseGame()
+    {
         AudioManager.Instance.PlaySFX("ButtonPop");
-        if (!isGamePaused) {
+        if (!isGamePaused)
+        {
             isGamePaused = true;
             _settingsPanel.SetActive(true);
             // Time.timeScale = 0f;
 
             Debug.Log("Pause Game");
-        } else if (isGamePaused) {
+        }
+        else if (isGamePaused)
+        {
             isGamePaused = false;
             _settingsPanel.SetActive(false);
             // Time.timeScale = 1f;

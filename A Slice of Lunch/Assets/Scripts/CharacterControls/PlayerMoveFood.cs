@@ -18,13 +18,25 @@ public class PlayerMoveFood : MonoBehaviour
     int initialSortingOrder;
     SortingGroup foodSortingGroup;
 
-    
-    private void Awake() {
+    [Header("Validate Placement Settings")]
+    GameObject validPlacementObj;
+    GameObject invalidPlacementObj;
+
+
+    private void Awake()
+    {
         playerSlice = GameObject.FindWithTag("Player").GetComponent<PlayerSlice>();
         playerActions = PlayerInputManager.Instance.PlayerActions;
+
+        if (transform.childCount == 2)
+        {
+            validPlacementObj = transform.GetChild(0).gameObject;
+            invalidPlacementObj = transform.GetChild(1).gameObject;
+        }
     }
 
-    private void OnEnable() {
+    private void OnEnable()
+    {
         playerActions.LeftClick.performed += PickUpFood;
         playerActions.LeftClick.canceled += ReleaseFood;
     }
@@ -35,8 +47,10 @@ public class PlayerMoveFood : MonoBehaviour
         playerActions.LeftClick.canceled -= ReleaseFood;
     }
 
-    private void Update() {
-        if (dragging) {
+    private void Update()
+    {
+        if (dragging)
+        {
             Vector3 pos = Camera.main.ScreenToWorldPoint(PlayerInputManager.Instance.MousePos);
             pos.z = 0f;
             foodCol.transform.parent.position = pos - mouseOffset;
@@ -71,17 +85,20 @@ public class PlayerMoveFood : MonoBehaviour
         ContactFilter2D contactFilter2D = new();
         List<Collider2D> results = new();
         Dictionary<string, int> resultsTags = new();
-        
+
 
         foodCol.OverlapCollider(contactFilter2D.NoFilter(), results);
         foreach (var item in results)
         {
-            if(!resultsTags.TryAdd(item.tag, 1)) resultsTags[item.tag]++;
+            if (!resultsTags.TryAdd(item.tag, 1)) resultsTags[item.tag]++;
         }
-        if (resultsTags.ContainsKey("Border") || resultsTags.ContainsKey("Food")) {
+        if (resultsTags.ContainsKey("Border") || resultsTags.ContainsKey("Food"))
+        {
             // Debug.Log("On Food");
             StartCoroutine(HandleFoodCollision());
-        } else {
+        }
+        else
+        {
             // originalPosition = parentTransform.position;
             if (!resultsTags.ContainsKey("Food")) return;
 
@@ -99,14 +116,16 @@ public class PlayerMoveFood : MonoBehaviour
         PlayDropSFX(foodCol.GetComponent<ControlFood>().TableTextureSFX);
     }
 
-    private void ResetHandleCollisionVariables() {
+    private void ResetHandleCollisionVariables()
+    {
         foodCol = new();
         foodPreviousPosition = new();
         initialSortingOrder = 0;
         foodSortingGroup = new();
     }
 
-    private IEnumerator HandleFoodCollision() {
+    private IEnumerator HandleFoodCollision()
+    {
         float totalIterations = 50;
         float totalTime = 0.2f;
         float timePerIteration = totalTime / totalIterations;
@@ -150,5 +169,42 @@ public class PlayerMoveFood : MonoBehaviour
                 AudioManager.Instance.PlaySFX("Wood");
                 break;
         }
+    }
+    
+     private void DisablePlacementObjects()
+    {
+        if (!validPlacementObj || !invalidPlacementObj) return;
+        validPlacementObj.SetActive(false);
+        invalidPlacementObj.SetActive(false);
+    }
+
+    private void EnableValidObj()
+    {
+        if (!validPlacementObj || !invalidPlacementObj) return;
+        validPlacementObj.SetActive(true);
+        invalidPlacementObj.SetActive(false);
+    }
+
+    private void EnableInvalidObj()
+    {
+        if (!validPlacementObj || !invalidPlacementObj) return;
+        validPlacementObj.SetActive(false);
+        invalidPlacementObj.SetActive(true);
+    }
+
+    private bool DetectOverlap()
+    {
+        ContactFilter2D cf = new();
+        cf.NoFilter();
+        List<Collider2D> results = new();
+        foodCol.OverlapCollider(cf, results);
+        foreach (var col in results)
+        {
+            if (col.CompareTag("Food") || col.CompareTag("Border"))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Rendering;
 
+[ExecuteInEditMode]
 public class ControlFood : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     [Header("Audio Settings")]
@@ -37,6 +38,8 @@ public class ControlFood : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
             invalidPlacementObj = transform.GetChild(1).gameObject;
         }
         foodCol = GetComponentInParent<Collider2D>();
+
+        transform.parent.GetComponent<SpriteRenderer>().sprite = GetComponentInParent<SpriteRenderer>().sprite;
     }
 
     private void Start()

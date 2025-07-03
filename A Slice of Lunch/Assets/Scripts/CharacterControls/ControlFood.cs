@@ -5,8 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Rendering;
 
-[ExecuteInEditMode]
-public class ControlFood : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class ControlFood : MonoBehaviour/*, IBeginDragHandler, IDragHandler, IEndDragHandler*/
 {
     [Header("Audio Settings")]
     public string TextureSFX = "";
@@ -39,7 +38,6 @@ public class ControlFood : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         }
         foodCol = GetComponentInParent<Collider2D>();
 
-        transform.parent.GetComponent<SpriteRenderer>().sprite = GetComponentInParent<SpriteRenderer>().sprite;
     }
 
     private void Start()
@@ -49,53 +47,55 @@ public class ControlFood : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         DisablePlacementObjects();
     }
 
-    public void OnBeginDrag(PointerEventData eventData)
-    {
-        Vector3 newPosition = Camera.main.ScreenToWorldPoint(eventData.position);
-        offset = newPosition - parentTransform.position;
-        sortingGroup.sortingOrder = 1000;
-        isReturning = false;
-        isDragging = true;
-        StopCoroutine(HandleFoodCollision());
-        EnableValidObj();
-    }
+    #region Food Movement
+    // public void OnBeginDrag(PointerEventData eventData)
+    // {
+    //     Vector3 newPosition = Camera.main.ScreenToWorldPoint(eventData.position);
+    //     offset = newPosition - parentTransform.position;
+    //     sortingGroup.sortingOrder = 1000;
+    //     isReturning = false;
+    //     isDragging = true;
+    //     StopCoroutine(HandleFoodCollision());
+    //     EnableValidObj();
+    // }
 
-    public void OnDrag(PointerEventData eventData)
-    {
-        Vector3 newPosition = Camera.main.ScreenToWorldPoint(eventData.position);
-        newPosition -= (Vector3)offset;
-        newPosition.z = parentTransform.position.z;
-        parentTransform.position = newPosition;
-        isDragging = true;
+    // public void OnDrag(PointerEventData eventData)
+    // {
+    //     Vector3 newPosition = Camera.main.ScreenToWorldPoint(eventData.position);
+    //     newPosition -= (Vector3)offset;
+    //     newPosition.z = parentTransform.position.z;
+    //     parentTransform.position = newPosition;
+    //     isDragging = true;
 
-        if (DetectOverlap())
-        {
-            placeable = false;
-            EnableInvalidObj();
-        }
-        else
-        {
-            placeable = true;
-            EnableValidObj();
-        }
-    }
+    //     if (DetectOverlap())
+    //     {
+    //         placeable = false;
+    //         EnableInvalidObj();
+    //     }
+    //     else
+    //     {
+    //         placeable = true;
+    //         EnableValidObj();
+    //     }
+    // }
 
-    public void OnEndDrag(PointerEventData eventData)
-    {
-        isDragging = false;
-        offset = Vector2.zero;
-        DisablePlacementObjects();
-        if (!placeable)
-        {
-            placeable = true;
-            StartCoroutine(HandleFoodCollision());
-        }
-        else
-        {
-            sortingGroup.sortingOrder = originalSortingOrder;
-            prevPos = parentTransform.position;
-        }
-    }
+    // public void OnEndDrag(PointerEventData eventData)
+    // {
+    //     isDragging = false;
+    //     offset = Vector2.zero;
+    //     DisablePlacementObjects();
+    //     if (!placeable)
+    //     {
+    //         placeable = true;
+    //         StartCoroutine(HandleFoodCollision());
+    //     }
+    //     else
+    //     {
+    //         sortingGroup.sortingOrder = originalSortingOrder;
+    //         prevPos = parentTransform.position;
+    //     }
+    // }
+    #endregion
 
     private IEnumerator HandleFoodCollision()
     {

@@ -19,6 +19,7 @@ public class PlayerMoveFood : MonoBehaviour
     SortingGroup foodSortingGroup;
 
     [Header("Validate Placement Settings")]
+    bool placeable = true;
     GameObject validPlacementObj;
     GameObject invalidPlacementObj;
 
@@ -28,11 +29,14 @@ public class PlayerMoveFood : MonoBehaviour
         playerSlice = GameObject.FindWithTag("Player").GetComponent<PlayerSlice>();
         playerActions = PlayerInputManager.Instance.PlayerActions;
 
-        if (transform.childCount == 2)
+        Transform childTransform = transform.GetChild(0);
+        if (childTransform.childCount == 2)
         {
-            validPlacementObj = transform.GetChild(0).gameObject;
-            invalidPlacementObj = transform.GetChild(1).gameObject;
+            validPlacementObj = childTransform.GetChild(0).gameObject;
+            invalidPlacementObj = childTransform.GetChild(1).gameObject;
         }
+
+        DisablePlacementObjects();
     }
 
     private void OnEnable()
@@ -54,6 +58,16 @@ public class PlayerMoveFood : MonoBehaviour
             Vector3 pos = Camera.main.ScreenToWorldPoint(PlayerInputManager.Instance.MousePos);
             pos.z = 0f;
             foodCol.transform.parent.position = pos - mouseOffset;
+            if (DetectOverlap())
+            {
+                placeable = false;
+                EnableInvalidObj();
+            }
+            else
+            {
+                placeable = true;
+                EnableValidObj();
+            }
         }
     }
 
@@ -74,6 +88,17 @@ public class PlayerMoveFood : MonoBehaviour
         mouseOffset.z = 0f;
 
         PlayGrabSFX(foodCol.GetComponent<ControlFood>().TextureSFX);
+
+        // if (!placeable)
+        // {
+        //     placeable = true;
+        //     StartCoroutine(HandleFoodCollision());
+        // }
+        // else
+        // {
+        //     // sortingGroup.sortingOrder = originalSortingOrder;
+        //     // prevPos = parentTransform.position;
+        // }
     }
 
     private void ReleaseFood(UnityEngine.InputSystem.InputAction.CallbackContext context)
@@ -86,7 +111,7 @@ public class PlayerMoveFood : MonoBehaviour
         List<Collider2D> results = new();
         Dictionary<string, int> resultsTags = new();
 
-
+        DisablePlacementObjects();
         foodCol.OverlapCollider(contactFilter2D.NoFilter(), results);
         foreach (var item in results)
         {
@@ -113,6 +138,7 @@ public class PlayerMoveFood : MonoBehaviour
             parentTransform.GetComponent<SortingGroup>().sortingOrder = maxLayer;
         }
 
+        
         PlayDropSFX(foodCol.GetComponent<ControlFood>().TableTextureSFX);
     }
 
@@ -171,7 +197,7 @@ public class PlayerMoveFood : MonoBehaviour
         }
     }
     
-     private void DisablePlacementObjects()
+    private void DisablePlacementObjects()
     {
         if (!validPlacementObj || !invalidPlacementObj) return;
         validPlacementObj.SetActive(false);

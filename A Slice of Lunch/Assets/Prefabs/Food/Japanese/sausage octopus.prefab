@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 9c178bd2ec9df5748b0b3ab9043dd1d4, type: 3}
+    - target: {fileID: 2662235265632021088, guid: 850fcbcd0492cd549879a926ae607dde, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 9c178bd2ec9df5748b0b3ab9043dd1d4, type: 3}
     - target: {fileID: 3739351793150600444, guid: 850fcbcd0492cd549879a926ae607dde, type: 3}
       propertyPath: m_Name
       value: sausage octopus

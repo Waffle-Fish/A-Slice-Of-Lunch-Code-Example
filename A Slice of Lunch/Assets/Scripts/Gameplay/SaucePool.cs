@@ -9,6 +9,7 @@ public class SaucePool : MonoBehaviour
     [Header("Pooling Settings")]
     public GameObject splatPrefab;
     public int initialPoolSize = 20;
+    public float spriteSize = 2;
 
     private List<GameObject> pool = new List<GameObject>();
 
@@ -27,7 +28,7 @@ public class SaucePool : MonoBehaviour
     {
         for (int i = 0; i < initialPoolSize; i++)
         {
-            GameObject splat = Instantiate(splatPrefab);
+            GameObject splat = Instantiate(splatPrefab, this.transform);
             splat.SetActive(false);
             pool.Add(splat);
         }
@@ -55,7 +56,7 @@ public class SaucePool : MonoBehaviour
     {
         splat.transform.position = position;
         splat.transform.rotation = rotation;
-        splat.transform.localScale = Vector3.one; // Optional reset
+        splat.transform.localScale = new Vector3(spriteSize, spriteSize, spriteSize);
         splat.SetActive(true);
     }
 }

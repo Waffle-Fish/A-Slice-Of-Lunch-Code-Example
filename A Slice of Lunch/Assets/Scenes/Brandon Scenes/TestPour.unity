@@ -5359,7 +5359,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   splatPrefab: {fileID: 7965993415720236309, guid: 99d34756fd5476d4ea256b630dddc4a1, type: 3}
-  initialPoolSize: 20
+  initialPoolSize: 500
 --- !u!4 &465277822
 Transform:
   m_ObjectHideFlags: 0

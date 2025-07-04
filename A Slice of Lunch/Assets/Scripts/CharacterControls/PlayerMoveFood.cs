@@ -77,7 +77,6 @@ public class PlayerMoveFood : MonoBehaviour
         if (!(foodCol && foodCol.CompareTag("Food"))) return;
 
         // Debug.Log(foodCol.transform.parent.name + " is being picked up");
-        StopCoroutine(nameof(HandleFoodCollision));
         dragging = true;
 
         foodSortingGroup = foodCol.transform.parent.GetComponent<SortingGroup>();

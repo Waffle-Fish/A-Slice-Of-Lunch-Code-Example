@@ -107,7 +107,8 @@ public class PlayerMoveFood : MonoBehaviour
     {
         if (!dragging || !foodCol) return;
         Debug.Log("Release food");
-        foodSpriteRenderer.material.SetColor("_OutlineColor", new Color(0.9137f, 0.855f, 0.6941f, 1));
+        // foodSpriteRenderer.transform.parent.GetChild(2).GetComponent<SpriteRenderer>().color = Color.white;
+        foodSpriteRenderer.color = Color.white;
         dragging = false;
         Transform parentTransform = foodCol.transform.parent;
         foodSortingGroup.sortingOrder = initialSortingOrder;
@@ -215,7 +216,9 @@ public class PlayerMoveFood : MonoBehaviour
         if (!validPlacementObj || !invalidPlacementObj) return;
         validPlacementObj.SetActive(true);
         invalidPlacementObj.SetActive(false);
-        if(foodSpriteRenderer) foodSpriteRenderer.material.SetColor("_OutlineColor", new Color(0.9137f, 0.855f, 0.6941f, 1));
+        // if(foodSpriteRenderer) foodSpriteRenderer.material.SetColor("_OutlineColor", new Color(0.9137f, 0.855f, 0.6941f, 1));
+        // if(foodSpriteRenderer) foodSpriteRenderer.transform.parent.GetChild(2).GetComponent<SpriteRenderer>().color = Color.white;
+        if(foodSpriteRenderer) foodSpriteRenderer.color = Color.white;
     }
 
     private void EnableInvalidObj()
@@ -223,7 +226,8 @@ public class PlayerMoveFood : MonoBehaviour
         if (!validPlacementObj || !invalidPlacementObj) return;
         validPlacementObj.SetActive(false);
         invalidPlacementObj.SetActive(true);
-        if(foodSpriteRenderer) foodSpriteRenderer.material.SetColor("_OutlineColor", Color.red);
+        // if(foodSpriteRenderer) foodSpriteRenderer.material.SetColor("_OutlineColor", Color.red);
+        if(foodSpriteRenderer) foodSpriteRenderer.color = Color.red;
     }
 
     private bool DetectOverlap()

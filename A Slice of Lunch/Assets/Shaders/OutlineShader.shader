@@ -9,7 +9,6 @@ Shader "Custom/SpriteOutline"
     SubShader
     {
         Tags { "RenderType"="Transparent" "Queue"="Transparent" }
-        LOD 200
 
         Pass
         {

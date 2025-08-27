@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4361098676727301377}
   - component: {fileID: 4627563510936517927}
   m_Layer: 0
-  m_Name: GreenChonchiglie
+  m_Name: GreenChonchiglie Pool
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,7 +30,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 625910065898389604}
+  - {fileID: 1414074642230600325}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4627563510936517927
@@ -45,10 +45,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67922ab0c0a437948a6ac53facf1d3ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectToCopy: {fileID: 3545755175280223603}
+  objectToCopy: {fileID: 1808721507136321403, guid: 47ec0c322e032cb43805e5b72e72dd83, type: 3}
   maxObjectCount: 20
   parent: {fileID: 0}
---- !u!1001 &1021944287613733130
+--- !u!1001 &5586794077092137488
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -56,74 +56,57 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4361098676727301377}
     m_Modifications:
-    - target: {fileID: 468656977615243630, guid: 9ae0d0e4981e1c343bbbfd5f87464b79, type: 3}
+    - target: {fileID: 1808721507136321403, guid: 47ec0c322e032cb43805e5b72e72dd83, type: 3}
+      propertyPath: m_Name
+      value: Green Conchiglie
+      objectReference: {fileID: 0}
+    - target: {fileID: 6780040569543436437, guid: 47ec0c322e032cb43805e5b72e72dd83, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -13.7
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 468656977615243630, guid: 9ae0d0e4981e1c343bbbfd5f87464b79, type: 3}
+    - target: {fileID: 6780040569543436437, guid: 47ec0c322e032cb43805e5b72e72dd83, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 6.7
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 468656977615243630, guid: 9ae0d0e4981e1c343bbbfd5f87464b79, type: 3}
+    - target: {fileID: 6780040569543436437, guid: 47ec0c322e032cb43805e5b72e72dd83, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 468656977615243630, guid: 9ae0d0e4981e1c343bbbfd5f87464b79, type: 3}
+    - target: {fileID: 6780040569543436437, guid: 47ec0c322e032cb43805e5b72e72dd83, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 468656977615243630, guid: 9ae0d0e4981e1c343bbbfd5f87464b79, type: 3}
+    - target: {fileID: 6780040569543436437, guid: 47ec0c322e032cb43805e5b72e72dd83, type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 468656977615243630, guid: 9ae0d0e4981e1c343bbbfd5f87464b79, type: 3}
+    - target: {fileID: 6780040569543436437, guid: 47ec0c322e032cb43805e5b72e72dd83, type: 3}
       propertyPath: m_LocalRotation.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 468656977615243630, guid: 9ae0d0e4981e1c343bbbfd5f87464b79, type: 3}
+    - target: {fileID: 6780040569543436437, guid: 47ec0c322e032cb43805e5b72e72dd83, type: 3}
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 468656977615243630, guid: 9ae0d0e4981e1c343bbbfd5f87464b79, type: 3}
+    - target: {fileID: 6780040569543436437, guid: 47ec0c322e032cb43805e5b72e72dd83, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 468656977615243630, guid: 9ae0d0e4981e1c343bbbfd5f87464b79, type: 3}
+    - target: {fileID: 6780040569543436437, guid: 47ec0c322e032cb43805e5b72e72dd83, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 468656977615243630, guid: 9ae0d0e4981e1c343bbbfd5f87464b79, type: 3}
+    - target: {fileID: 6780040569543436437, guid: 47ec0c322e032cb43805e5b72e72dd83, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4547405690777398393, guid: 9ae0d0e4981e1c343bbbfd5f87464b79, type: 3}
-      propertyPath: m_Name
-      value: GreenConchiglie
-      objectReference: {fileID: 0}
-    - target: {fileID: 7645971134732541798, guid: 9ae0d0e4981e1c343bbbfd5f87464b79, type: 3}
-      propertyPath: TextureSFX
-      value: FoodSquish
-      objectReference: {fileID: 0}
-    - target: {fileID: 7645971134732541798, guid: 9ae0d0e4981e1c343bbbfd5f87464b79, type: 3}
-      propertyPath: textureForSFX
-      value: FoodSquish
-      objectReference: {fileID: 0}
-    - target: {fileID: 7645971134732541798, guid: 9ae0d0e4981e1c343bbbfd5f87464b79, type: 3}
-      propertyPath: TableTextureSFX
-      value: Wood
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 9ae0d0e4981e1c343bbbfd5f87464b79, type: 3}
---- !u!4 &625910065898389604 stripped
+  m_SourcePrefab: {fileID: 100100000, guid: 47ec0c322e032cb43805e5b72e72dd83, type: 3}
+--- !u!4 &1414074642230600325 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 468656977615243630, guid: 9ae0d0e4981e1c343bbbfd5f87464b79, type: 3}
-  m_PrefabInstance: {fileID: 1021944287613733130}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &3545755175280223603 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4547405690777398393, guid: 9ae0d0e4981e1c343bbbfd5f87464b79, type: 3}
-  m_PrefabInstance: {fileID: 1021944287613733130}
+  m_CorrespondingSourceObject: {fileID: 6780040569543436437, guid: 47ec0c322e032cb43805e5b72e72dd83, type: 3}
+  m_PrefabInstance: {fileID: 5586794077092137488}
   m_PrefabAsset: {fileID: 0}

@@ -17,14 +17,31 @@ public class PlayerMoveFood : MonoBehaviour
     Vector3 foodPreviousPosition;
     int initialSortingOrder;
     SortingGroup foodSortingGroup;
+    SpriteRenderer foodSpriteRenderer;
 
-    
-    private void Awake() {
+    [Header("Validate Placement Settings")]
+    bool placeable = true;
+    GameObject validPlacementObj;
+    GameObject invalidPlacementObj;
+
+
+    private void Awake()
+    {
         playerSlice = GameObject.FindWithTag("Player").GetComponent<PlayerSlice>();
         playerActions = PlayerInputManager.Instance.PlayerActions;
+
+        Transform childTransform = transform.GetChild(0);
+        if (childTransform.childCount == 2)
+        {
+            validPlacementObj = childTransform.GetChild(0).gameObject;
+            invalidPlacementObj = childTransform.GetChild(1).gameObject;
+        }
+
+        DisablePlacementObjects();
     }
 
-    private void OnEnable() {
+    private void OnEnable()
+    {
         playerActions.LeftClick.performed += PickUpFood;
         playerActions.LeftClick.canceled += ReleaseFood;
     }
@@ -35,11 +52,23 @@ public class PlayerMoveFood : MonoBehaviour
         playerActions.LeftClick.canceled -= ReleaseFood;
     }
 
-    private void Update() {
-        if (dragging) {
+    private void Update()
+    {
+        if (dragging)
+        {
             Vector3 pos = Camera.main.ScreenToWorldPoint(PlayerInputManager.Instance.MousePos);
             pos.z = 0f;
             foodCol.transform.parent.position = pos - mouseOffset;
+            if (DetectOverlap())
+            {
+                placeable = false;
+                EnableInvalidObj();
+            }
+            else
+            {
+                placeable = true;
+                EnableValidObj();
+            }
         }
     }
 
@@ -49,39 +78,55 @@ public class PlayerMoveFood : MonoBehaviour
         if (!(foodCol && foodCol.CompareTag("Food"))) return;
 
         // Debug.Log(foodCol.transform.parent.name + " is being picked up");
-        StopCoroutine(nameof(HandleFoodCollision));
         dragging = true;
 
         foodSortingGroup = foodCol.transform.parent.GetComponent<SortingGroup>();
+        foodSpriteRenderer = foodCol.transform.parent.GetComponent<SpriteRenderer>();
         initialSortingOrder = foodSortingGroup.sortingOrder;
         foodSortingGroup.sortingOrder = 10000;
         foodPreviousPosition = foodCol.transform.parent.transform.position;
         mouseOffset = Camera.main.ScreenToWorldPoint(PlayerInputManager.Instance.MousePos) - foodCol.transform.position;
         mouseOffset.z = 0f;
 
+
         PlayGrabSFX(foodCol.GetComponent<ControlFood>().TextureSFX);
+
+        // if (!placeable)
+        // {
+        //     placeable = true;
+        //     StartCoroutine(HandleFoodCollision());
+        // }
+        // else
+        // {
+        //     // sortingGroup.sortingOrder = originalSortingOrder;
+        //     // prevPos = parentTransform.position;
+        // }
     }
 
     private void ReleaseFood(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
         if (!dragging || !foodCol) return;
+        foodSpriteRenderer.color = Color.white;
         dragging = false;
         Transform parentTransform = foodCol.transform.parent;
         foodSortingGroup.sortingOrder = initialSortingOrder;
         ContactFilter2D contactFilter2D = new();
         List<Collider2D> results = new();
         Dictionary<string, int> resultsTags = new();
-        
 
+        DisablePlacementObjects();
         foodCol.OverlapCollider(contactFilter2D.NoFilter(), results);
         foreach (var item in results)
         {
-            if(!resultsTags.TryAdd(item.tag, 1)) resultsTags[item.tag]++;
+            if (!resultsTags.TryAdd(item.tag, 1)) resultsTags[item.tag]++;
         }
-        if (resultsTags.ContainsKey("Border") || resultsTags.ContainsKey("Food")) {
+        if (resultsTags.ContainsKey("Border") || resultsTags.ContainsKey("Food"))
+        {
             // Debug.Log("On Food");
             StartCoroutine(HandleFoodCollision());
-        } else {
+        }
+        else
+        {
             // originalPosition = parentTransform.position;
             if (!resultsTags.ContainsKey("Food")) return;
 
@@ -96,17 +141,21 @@ public class PlayerMoveFood : MonoBehaviour
             parentTransform.GetComponent<SortingGroup>().sortingOrder = maxLayer;
         }
 
+        
         PlayDropSFX(foodCol.GetComponent<ControlFood>().TableTextureSFX);
+        Debug.Log("Finish releasing food");
     }
 
-    private void ResetHandleCollisionVariables() {
+    private void ResetHandleCollisionVariables()
+    {
         foodCol = new();
         foodPreviousPosition = new();
         initialSortingOrder = 0;
         foodSortingGroup = new();
     }
 
-    private IEnumerator HandleFoodCollision() {
+    private IEnumerator HandleFoodCollision()
+    {
         float totalIterations = 50;
         float totalTime = 0.2f;
         float timePerIteration = totalTime / totalIterations;
@@ -150,5 +199,45 @@ public class PlayerMoveFood : MonoBehaviour
                 AudioManager.Instance.PlaySFX("Wood");
                 break;
         }
+    }
+
+    private void DisablePlacementObjects()
+    {
+        if (!validPlacementObj || !invalidPlacementObj) return;
+        validPlacementObj.SetActive(false);
+        invalidPlacementObj.SetActive(false);
+        
+    }
+
+    private void EnableValidObj()
+    {
+        if (!validPlacementObj || !invalidPlacementObj) return;
+        validPlacementObj.SetActive(true);
+        invalidPlacementObj.SetActive(false);
+        if(foodSpriteRenderer) foodSpriteRenderer.color = Color.white;
+    }
+
+    private void EnableInvalidObj()
+    {
+        if (!validPlacementObj || !invalidPlacementObj) return;
+        validPlacementObj.SetActive(false);
+        invalidPlacementObj.SetActive(true);
+        if(foodSpriteRenderer) foodSpriteRenderer.color = Color.red;
+    }
+
+    private bool DetectOverlap()
+    {
+        ContactFilter2D cf = new();
+        cf.NoFilter();
+        List<Collider2D> results = new();
+        foodCol.OverlapCollider(cf, results);
+        foreach (var col in results)
+        {
+            if (col.CompareTag("Food") || col.CompareTag("Border"))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }

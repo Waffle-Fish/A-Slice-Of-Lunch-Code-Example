@@ -91,6 +91,8 @@ public class PlayerMoveFood : MonoBehaviour
 
         PlayGrabSFX(foodCol.GetComponent<ControlFood>().TextureSFX);
 
+        if (foodCol.TryGetComponent<FoodShadowManager>(out FoodShadowManager fsm)) fsm.UpdateShadowToPickedUp(); 
+
         // if (!placeable)
         // {
         //     placeable = true;
@@ -143,6 +145,7 @@ public class PlayerMoveFood : MonoBehaviour
 
         
         PlayDropSFX(foodCol.GetComponent<ControlFood>().TableTextureSFX);
+        if (foodCol.TryGetComponent<FoodShadowManager>(out FoodShadowManager fsm)) fsm.UpdateShadowToPlacedDown(); 
         Debug.Log("Finish releasing food");
     }
 

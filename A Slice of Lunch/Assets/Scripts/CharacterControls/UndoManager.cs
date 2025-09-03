@@ -47,7 +47,7 @@ public class UndoManager : MonoBehaviour
 
     public void UndoSlice()
     {
-        anim.SetTrigger("PoofTrigger");
+        // anim.SetTrigger("PoofTrigger");
 
         if (everyTurnsMade.Count <= 0) return;
         TurnActions TurnToUndo = everyTurnsMade.Pop();

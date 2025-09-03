@@ -6694,19 +6694,6 @@ Animator:
   m_CorrespondingSourceObject: {fileID: 1058143819550132666, guid: 97063aaa2c68709498e3b26f8f29555d, type: 3}
   m_PrefabInstance: {fileID: 4074297325897072830}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1873862630
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1873862616}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0245c8f54adc4ec46835d72c2fb5b78a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  alphaHitTestMinimumThreshold: 0.5
 --- !u!1 &1951162419
 GameObject:
   m_ObjectHideFlags: 0
@@ -6993,7 +6980,7 @@ PrefabInstance:
     - target: {fileID: 73501929176176872, guid: 97063aaa2c68709498e3b26f8f29555d, type: 3}
       propertyPath: m_SceneBindings.Array.data[0].value
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1743506578}
     - target: {fileID: 73501929176176872, guid: 97063aaa2c68709498e3b26f8f29555d, type: 3}
       propertyPath: m_SceneBindings.Array.data[1].value
       value: 
@@ -7017,6 +7004,10 @@ PrefabInstance:
     - target: {fileID: 1696506436783147861, guid: 97063aaa2c68709498e3b26f8f29555d, type: 3}
       propertyPath: m_Name
       value: Canvas_WorldSpace
+      objectReference: {fileID: 0}
+    - target: {fileID: 3487236493633421689, guid: 97063aaa2c68709498e3b26f8f29555d, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4689463306667826261, guid: 97063aaa2c68709498e3b26f8f29555d, type: 3}
       propertyPath: timeline
@@ -7105,7 +7096,7 @@ PrefabInstance:
     - target: {fileID: 6582925601301117869, guid: 97063aaa2c68709498e3b26f8f29555d, type: 3}
       propertyPath: m_SceneBindings.Array.data[0].value
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1743506578}
     - target: {fileID: 6582925601301117869, guid: 97063aaa2c68709498e3b26f8f29555d, type: 3}
       propertyPath: m_SceneBindings.Array.data[2].value
       value: 
@@ -7117,10 +7108,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8296572674652686519, guid: 97063aaa2c68709498e3b26f8f29555d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1873862630}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 97063aaa2c68709498e3b26f8f29555d, type: 3}
 --- !u!1001 &5827718164698712905
 PrefabInstance:
@@ -7130,6 +7118,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 196640532206281438, guid: eabf853503ff1f5419e1d86bd9364ba6, type: 3}
+      propertyPath: buildIndex
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 1748562034380143916, guid: eabf853503ff1f5419e1d86bd9364ba6, type: 3}
       propertyPath: m_Name
       value: Canvas

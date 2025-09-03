@@ -10,10 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 4138380798867498186}
   - component: {fileID: 3630606116523598917}
-  - component: {fileID: 4341607243295470270}
   - component: {fileID: 6102227230777883721}
   - component: {fileID: 7071422286669776290}
+  - component: {fileID: 4692539171658864991}
   - component: {fileID: 2450343709911087074}
+  - component: {fileID: 4341607243295470270}
   - component: {fileID: 8269153305361856144}
   m_Layer: 0
   m_Name: PlayerManager
@@ -142,20 +143,6 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
---- !u!114 &4341607243295470270
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1424977087920001653}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0389da86be0eb284082bb7907e8307df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxSlices: 10
-  minFoodAreaSize: 2
 --- !u!114 &6102227230777883721
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -180,7 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2421e62a9c5fced40b239a7d4936397f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2450343709911087074
+--- !u!114 &4692539171658864991
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -189,9 +176,35 @@ MonoBehaviour:
   m_GameObject: {fileID: 1424977087920001653}
   m_Enabled: 1
   m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95e9de99a9a909f47b0282150c772a97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2450343709911087074
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1424977087920001653}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 71722ad157ed7ed46a736d6c50c1bd73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4341607243295470270
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1424977087920001653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0389da86be0eb284082bb7907e8307df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxSlices: 10
+  minFoodAreaSize: 2
 --- !u!114 &8269153305361856144
 MonoBehaviour:
   m_ObjectHideFlags: 0

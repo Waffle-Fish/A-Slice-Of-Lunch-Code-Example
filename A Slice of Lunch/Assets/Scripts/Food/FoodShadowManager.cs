@@ -16,6 +16,10 @@ public class FoodShadowManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // TEMP DISABLE SHADOWS
+        shadowTransform.gameObject.SetActive(false);
+        // TEMP DISABLE SHADOWS
+
         UpdateShadowToPlacedDown();
         prevZRot = transform.rotation.eulerAngles.z;
     }

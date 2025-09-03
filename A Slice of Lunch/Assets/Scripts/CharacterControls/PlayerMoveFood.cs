@@ -31,11 +31,8 @@ public class PlayerMoveFood : MonoBehaviour
         playerActions = PlayerInputManager.Instance.PlayerActions;
 
         Transform childTransform = transform.GetChild(0);
-        if (childTransform.childCount == 2)
-        {
-            validPlacementObj = childTransform.GetChild(0).gameObject;
-            invalidPlacementObj = childTransform.GetChild(1).gameObject;
-        }
+        validPlacementObj = childTransform.GetChild(0).gameObject;
+        invalidPlacementObj = childTransform.GetChild(1).gameObject;
 
         DisablePlacementObjects();
     }

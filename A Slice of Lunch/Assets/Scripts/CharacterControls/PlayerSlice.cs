@@ -53,7 +53,7 @@ public class PlayerSlice : MonoBehaviour
 
     private void Update() {
         mouseWorldPos = Camera.main.ScreenToWorldPoint(PlayerInputManager.Instance.MousePos);
-        DetectRightClick();
+        DetectLeftClick();
         DisplaySliceMarkings();
     }
 

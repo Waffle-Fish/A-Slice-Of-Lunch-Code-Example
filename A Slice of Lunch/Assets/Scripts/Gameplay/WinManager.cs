@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
+using UnityEngine.U2D.IK;
 
 public class WinManager : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class WinManager : MonoBehaviour
     List<PolygonCollider2D> totalFoodList = new();
     List<PolygonCollider2D> foodInBox = new();
     private Collider2D container;
+    private bool foodIsDragging = false;
 
     void Awake()
     {
@@ -31,9 +33,18 @@ public class WinManager : MonoBehaviour
     {
         UpdateTotalFoodList();
     }
+    
+    private void OnEnable() {
+        PlayerMoveFood.OnFoodIsDragging += UpdateFoodIsDragging;
+    }
+
+    private void OnDisable() {
+        PlayerMoveFood.OnFoodIsDragging -= UpdateFoodIsDragging;
+    }
 
     void Update() {
-        winButton.SetActive(foodInBox.Count == totalFoodList.Count);
+        bool win = foodInBox.Count == totalFoodList.Count && !foodIsDragging;
+        winButton.SetActive(win);
     }
 
     void OnTriggerStay2D(Collider2D col)
@@ -48,30 +59,32 @@ public class WinManager : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other) {
         foodInBox.Remove(other.GetComponent<PolygonCollider2D>());
-        UpdatePiecestOutsideBox();
+        // UpdatePiecestOutsideBox();
         // Debug.Log(other.transform.parent.name + " has left the box");
     }
 
-    bool IsFoodInBox(Collider2D col)
+    // void IsFoodInBox(Collider2D foodCol)
+    // {
+    //     ContactFilter2D cf2d = new();
+    //     List<Collider2D> results = new();
+    //     if (Physics2D.OverlapCollider(container,cf2d.NoFilter(), results) == 0) return;
+    //     if (results.Contains(foodCol) && !foodInBox.Contains((PolygonCollider2D)foodCol))
+    //     {
+            
+    //     }
+    //         foodInBox.Add((PolygonCollider2D)foodCol);
+    // }
+
+    void UpdateFoodIsDragging(bool b)
     {
-        // Debug.Log("bounds: "+container.bounds);
-        PolygonCollider2D col_p = (PolygonCollider2D) col;
-        foreach (Vector2 point in col_p.points)
-        {
-            Vector3 col_global_point = col.transform.parent.position + (Vector3) point / transform.lossyScale.x;
-            //Debug.Log(point);
-            if (!container.bounds.Contains(col_global_point))
-            {
-                return false;
-            }
-        }
-        return true;
+        foodIsDragging = b;
     }
 
-    public void UpdateTotalFoodList() {
+    public void UpdateTotalFoodList()
+    {
         totalFoodList.Clear();
         // foodsObj.GetComponentsInChildren<ControlFood>(false,totalFoodList);
-        foodsObj.GetComponentsInChildren<PolygonCollider2D>(false,totalFoodList);
+        foodsObj.GetComponentsInChildren<PolygonCollider2D>(false, totalFoodList);
         // UpdatePiecestOutsideBox();
     }
 

@@ -16,9 +16,14 @@ public class UIController : MonoBehaviour
     bool isGamePaused = false;
 
     public void Start() {
-        if (AudioManager.Instance != null) {
-            _musicSlider.value = PlayerPrefs.GetFloat("musicVolume");
-            _sfxSlider.value = PlayerPrefs.GetFloat("sfxVolume");
+        if (AudioManager.Instance != null)
+        {
+            // _musicSlider.value = PlayerPrefs.GetFloat("musicVolume");
+            // _sfxSlider.value = PlayerPrefs.GetFloat("sfxVolume");
+            _musicSlider.value = 0.5f;
+            _sfxSlider.value = 0.6f;
+            MusicVolume();
+            SFXVolume();
         }
         
         if (isInGameSettings == true) {
@@ -43,7 +48,7 @@ public class UIController : MonoBehaviour
     }
 
     public void MusicVolume() {
-        float musicVolume = (float) Math.Round(_musicSlider.value, 1);
+        float musicVolume = _musicSlider.value;
         AudioManager.Instance.MusicVolume(musicVolume);
         PlayerPrefs.SetFloat("musicVolume", musicVolume);
 
@@ -51,7 +56,7 @@ public class UIController : MonoBehaviour
     }
     
     public void SFXVolume() {
-        float sfxVolume = (float) Math.Round(_sfxSlider.value, 1);
+        float sfxVolume = _sfxSlider.value;
         AudioManager.Instance.SFXVolume(sfxVolume);
         PlayerPrefs.SetFloat("sfxVolume", sfxVolume);
         // AudioManager.Instance.PlaySFX("Slice");

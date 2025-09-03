@@ -13,10 +13,10 @@ public class AudioManager : MonoBehaviour
     public Sound[] musicSounds, sfxSounds;
     public AudioSource musicSource, sfxSource;
 
-   
+
 
     public void Awake()
-    { 
+    {
         if (Instance == null)
         {
             Instance = this;
@@ -26,6 +26,9 @@ public class AudioManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        MusicVolume(0.3f);
+        SFXVolume(0.5f);
     }
 
     private void OnEnable()

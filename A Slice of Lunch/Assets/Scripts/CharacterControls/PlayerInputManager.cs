@@ -8,10 +8,12 @@ public class PlayerInputManager : MonoBehaviour
     public PlayerInputActions InputActions { get; private set; }
     public PlayerInputActions.PlayerActions PlayerActions { get; private set; }
     public Vector2 MousePos { get; private set; } = Vector2.zero;
+    public Vector2 PointerDelta { get;  private set; } = Vector2.zero;
 
-    private void Awake() {
-        if (Instance != null && Instance != this) Destroy(this); 
-        else Instance = this; 
+    private void Awake()
+    {
+        if (Instance != null && Instance != this) Destroy(this);
+        else Instance = this;
 
         InputActions = new();
         PlayerActions = InputActions.Player;
@@ -25,7 +27,9 @@ public class PlayerInputManager : MonoBehaviour
         InputActions.Disable();
     }
 
-    private void Update() {
+    private void Update()
+    {
         MousePos = PlayerActions.MousePosition.ReadValue<Vector2>();
+        PointerDelta = PlayerActions.PointerDelta.ReadValue<Vector2>();
     }
 }

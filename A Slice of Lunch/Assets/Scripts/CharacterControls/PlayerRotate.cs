@@ -7,6 +7,8 @@ using UnityEngine.Rendering;
 
 public class PlayerRotate : MonoBehaviour
 {
+    [SerializeField][Min(0.001f)] float sensitivity = 1f;
+
     bool rotating = false;
     bool onFood = false;
     PlayerSlice playerSlice;
@@ -55,25 +57,39 @@ public class PlayerRotate : MonoBehaviour
 
     private void Update()
     {
+        Vector2 mouseDelta = PlayerInputManager.Instance.PointerDelta;
+        Vector2 mousePos = Camera.main.ScreenToWorldPoint(PlayerInputManager.Instance.MousePos);
+        if (mouseDelta == Vector2.zero) return;
+        
         if (rotating)
         {
+            // TODO: 
+            // * Have food rotate around center point of collider
+            // * Make rotation less sensitive when super close to point of rotation
+
             float newZRot = GetAngleToMouse() - degOffset + foodPreviousZRot;
-            Vector3 rotatePoint = foodCol.bounds.center;
-            // TODO: Have food rotate around center point of collider
+            Vector3 rotatePoint = foodCol.transform.GetComponent<Collider2D>().bounds.center;
 
-            // foodCol.transform.parent.RotateAround(rotatePoint, Vector3.forward, newZRot * Time.deltaTime);
+            // Attempt 1
+            // Vector3 dir = foodCol.transform.parent.position - foodCol.transform.GetComponent<PolygonCollider2D>().bounds.center;
+            // Quaternion rotation = Quaternion.AngleAxis(newZRot, Vector3.forward);
+            // dir = rotation * dir;
+            // foodCol.transform.parent.SetPositionAndRotation(rotatePoint + dir, rotation * foodCol.transform.parent.rotation);
 
-            // Vector3 vector = foodCol.transform.parent.position;
-            // Quaternion quaternion = Quaternion.AngleAxis(newZRot, Vector3.forward);
-            // Vector3 vector2 = vector - rotatePoint;
-            // vector2 = quaternion * vector2;
-            // vector = rotatePoint + vector2;
-            // foodCol.transform.parent.position = vector;
-            foodCol.transform.parent.rotation = Quaternion.Euler(0, 0, newZRot);
-            // foodCol.transform.parent.Rotate(Vector3.forward, newZRot);
+            // Attempt 2
+            // bool rotLeft = CheckMouseRot(mouseDelta, mousePos, rotatePoint);
+            // float rotMod = mouseDelta.magnitude * sensitivity * Time.deltaTime;
+            // if (!rotLeft) rotMod *= -1;
+            // foodCol.transform.parent.RotateAround(rotatePoint, Vector3.forward, newZRot * rotMod);
 
+            // Attempt 3
+            float distFromMouseToRotatePoint = Vector2.Distance(mousePos, foodCol.transform.position);
+            // float sensitivityVal = Mathf.Pow(2, -5 * distFromMouseToRotatePoint);
+            float sensitivityVal = 0;
+            if (distFromMouseToRotatePoint >= 0.01) sensitivityVal = 0.5f * Mathf.Log10(distFromMouseToRotatePoint) + 1;
+            float rotSensitivity = Mathf.Clamp(sensitivityVal, 0, 1);
+            foodCol.transform.parent.rotation = Quaternion.AngleAxis(newZRot * rotSensitivity, Vector3.forward);
 
-            // foodCol.transform.parent.transform.rotation = Quaternion.Euler(0, 0, newZRot);
             if (DetectOverlap())
             {
                 placeable = false;
@@ -87,6 +103,20 @@ public class PlayerRotate : MonoBehaviour
         }
     }
 
+    private bool CheckMouseRot(Vector2 mouseDelta, Vector2 mousePos, Vector2 pointOfRotation)
+    {
+        bool outVal = true;
+        if      (mouseDelta.x == 0) outVal = (mouseDelta.y > 0) ? mousePos.x <= pointOfRotation.x : mousePos.x > pointOfRotation.x;
+        else if (mouseDelta.y == 0) outVal = (mouseDelta.x > 0) ? mousePos.y <= pointOfRotation.y : mousePos.y > pointOfRotation.y;
+        else if (mouseDelta.x > 0)  outVal = (mouseDelta.y > 0) ? mousePos.x > pointOfRotation.x : mousePos.x < pointOfRotation.x;
+        else   /*mouseDelta.x < 0*/ outVal = (mouseDelta.y > 0) ? mousePos.x > pointOfRotation.x : mousePos.x < pointOfRotation.x;
+
+        // if (mouseDelta.x == 0) outVal = (mouseDelta.y > 0);
+        // else if (mouseDelta.y == 0) outVal = (mouseDelta.x > 0);
+        // else if (mouseDelta.x > 0) outVal = (mouseDelta.y > 0);
+        // else   /*mouseDelta.x < 0*/ outVal = (mouseDelta.y > 0); 
+        return !outVal;
+    }
 
     private void PickUpFood(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
@@ -101,8 +131,8 @@ public class PlayerRotate : MonoBehaviour
         initialSortingOrder = foodSortingGroup.sortingOrder;
         foodSortingGroup.sortingOrder = 10000;
 
-        degOffset = GetAngleToMouse();
-        foodCol.transform.parent.transform.rotation = Quaternion.Euler(0, 0, degOffset);
+        // degOffset = GetAngleToMouse();
+        // foodCol.transform.parent.transform.rotation = Quaternion.Euler(0, 0, degOffset);
 
 
 

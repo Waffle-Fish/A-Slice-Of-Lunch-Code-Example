@@ -13,6 +13,7 @@ public struct PlayerData
 
 public class SaveSystem : MonoBehaviour
 {
+    public static SaveSystem Instance { get; private set; }
     [Header("Next Level To Unlock")]
     [SerializeField] BoxType BoxID = 0;
     [Tooltip("0 = Level 1 \n7 = Level 8")]
@@ -25,6 +26,16 @@ public class SaveSystem : MonoBehaviour
     [SerializeField] bool ResetPlayerdata = false;
 
     public PlayerData PlayerData { get; private set; }
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Debug.LogError("Multiple SaveSystems in this scene!");
+            Destroy(this);
+        }
+        else Instance = this; 
+    }
 
     private void Start()
     {
@@ -57,9 +68,9 @@ public class SaveSystem : MonoBehaviour
         }
     }
 
-    public void SaveBoxCutsceneData(bool hasSeen)
+    public void SaveCutsceneData()
     {
-        UpdateCutsceneData(CutsceneID, hasSeen);
+        UpdateCutsceneData(CutsceneID);
         string json = JsonUtility.ToJson(PlayerData);
         Debug.Log(json);
         using (StreamWriter sw = new StreamWriter(Application.dataPath + Path.AltDirectorySeparatorChar + "SaveData.json"))
@@ -101,10 +112,10 @@ public class SaveSystem : MonoBehaviour
         PlayerData.BoxLevelData[boxId] = level;
     }
 
-    public void UpdateCutsceneData(int cutsceneIndex, bool hasSeen)
+    public void UpdateCutsceneData(int cutsceneIndex)
     {
         if (cutsceneIndex < 0 || cutsceneIndex >= PlayerData.BoxLevelData.Count) return;
-        PlayerData.CutsceneData[cutsceneIndex] = hasSeen;
+        PlayerData.CutsceneData[cutsceneIndex] = true;
     }
     #endregion
 }

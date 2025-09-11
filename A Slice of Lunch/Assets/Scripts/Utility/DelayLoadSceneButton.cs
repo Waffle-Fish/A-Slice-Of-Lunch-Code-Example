@@ -7,18 +7,18 @@ using UnityEngine.UI;
 
 public class DelayLoadSceneButton : MonoBehaviour
 {
-    Button button;
-    SceneController sc;
+    protected Button button;
+    protected SceneController sc;
     [SerializeField]
-    private int buildIndex = 0;
+    protected int sceneIndex = 0;
     [SerializeField]
     [Tooltip("This gets overriden if there is a playable director assigned")]
-    private float delay = 0;
+    protected float delay = 0;
     [SerializeField]
     [Tooltip("This overrides delay")]
-    private PlayableDirector timeline;
+    protected PlayableDirector timeline;
 
-    private void Awake() {
+    protected void Awake() {
         
         button = GetComponent<Button>();
         if (timeline) {
@@ -26,20 +26,20 @@ public class DelayLoadSceneButton : MonoBehaviour
         }
     }
 
-    private void Start() {
+    protected virtual void Start() {
         sc = SceneController.Instance;
     }
 
-    private void OnEnable() {
+    protected void OnEnable() {
         button.onClick.AddListener(() => LoadSceneCallback());
     }
 
-    private void LoadSceneCallback() {
+    protected virtual void LoadSceneCallback() {
         if (timeline) timeline.gameObject.SetActive(true);
-        sc.LoadScene(buildIndex, delay);
+        sc.LoadScene(sceneIndex, delay);
     }
 
-    private void OnDisable() {
+    protected void OnDisable() {
         button.onClick.RemoveAllListeners();
     }
 }

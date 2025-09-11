@@ -7302,6 +7302,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas_WorldSpace
       objectReference: {fileID: 0}
+    - target: {fileID: 3366204700894158335, guid: 97063aaa2c68709498e3b26f8f29555d, type: 3}
+      propertyPath: timeline
+      value: 
+      objectReference: {fileID: 366246438}
+    - target: {fileID: 3366204700894158335, guid: 97063aaa2c68709498e3b26f8f29555d, type: 3}
+      propertyPath: sceneIndex
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3487236493633421689, guid: 97063aaa2c68709498e3b26f8f29555d, type: 3}
       propertyPath: m_PresetInfoIsWorld
       value: 1
@@ -7420,6 +7428,10 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 196640532206281438, guid: eabf853503ff1f5419e1d86bd9364ba6, type: 3}
       propertyPath: buildIndex
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 196640532206281438, guid: eabf853503ff1f5419e1d86bd9364ba6, type: 3}
+      propertyPath: sceneIndex
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1349304944467718243, guid: eabf853503ff1f5419e1d86bd9364ba6, type: 3}

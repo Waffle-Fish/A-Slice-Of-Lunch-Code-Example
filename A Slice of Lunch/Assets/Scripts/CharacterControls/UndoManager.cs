@@ -10,9 +10,11 @@ public struct SliceObjectData {
     public float originalSliceZRot;
 }
 
-public struct TurnActions {
+public struct TurnActions
+{
     public List<SliceObjectData> slicesModifiedThisTurn;
     public List<GameObject> foodsToDisableThisTurn;
+    public List<Tuple<Transform,Vector2>> foodPositionsThisTurn;
 }
 
 public class UndoManager : MonoBehaviour
@@ -66,6 +68,10 @@ public class UndoManager : MonoBehaviour
                 spriteMask.gameObject.SetActive(false);
             }
             foodObj.SetActive(false);
+        }
+        foreach (var food in TurnToUndo.foodPositionsThisTurn)
+        {
+            food.Item1.position = food.Item2;
         }
         playerSlice.UpdateCurrentSlicesCount(1);
         WinManager.Instance.UpdateTotalFoodList();

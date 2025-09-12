@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System;
+using System.Runtime.CompilerServices;
+using System.Collections;
 
 public struct SliceObjectData {
     // public GameObject foodObject;
@@ -19,10 +21,12 @@ public struct TurnActions
 
 public class UndoManager : MonoBehaviour
 {
+    const float VFX_DELAY = 0.2f;
     Stack<TurnActions> everyTurnsMade = new();
 
     PlayerSlice playerSlice;
     private Animator anim;
+    
 
     private void OnEnable()
     {
@@ -49,38 +53,40 @@ public class UndoManager : MonoBehaviour
 
     public void UndoSlice()
     {
-        // anim.SetTrigger("PoofTrigger");
-
-        if (everyTurnsMade.Count <= 0) return;
-        TurnActions TurnToUndo = everyTurnsMade.Pop();
-        foreach (SliceObjectData food in TurnToUndo.slicesModifiedThisTurn)
+        IEnumerator DelayUndo()
         {
-            // obj = specific spritemask | obj parent = Sprite Masks | obj parent parent = food
-            food.spriteMaskObj.transform.parent.parent.GetComponentInChildren<PolygonCollider2D>().points = food.originalPolyColPoints;
-            food.spriteMaskObj.SetActive(false);
+            yield return new WaitForSeconds(VFX_DELAY);
+            ProcessUndo();
         }
-        foreach (GameObject foodObj in TurnToUndo.foodsToDisableThisTurn)
+
+        void ProcessUndo()
         {
-            // On Disable food object, disable every spritemasks
-            SpriteMask[] foodSpriteMasks = foodObj.GetComponentsInChildren<SpriteMask>();
-            foreach (var spriteMask in foodSpriteMasks)
+            if (everyTurnsMade.Count <= 0) return;
+            TurnActions TurnToUndo = everyTurnsMade.Pop();
+            foreach (SliceObjectData food in TurnToUndo.slicesModifiedThisTurn)
             {
-                spriteMask.gameObject.SetActive(false);
+                // obj = specific spritemask | obj parent = Sprite Masks | obj parent parent = food
+                food.spriteMaskObj.transform.parent.parent.GetComponentInChildren<PolygonCollider2D>().points = food.originalPolyColPoints;
+                food.spriteMaskObj.SetActive(false);
             }
-            foodObj.SetActive(false);
+            foreach (GameObject foodObj in TurnToUndo.foodsToDisableThisTurn)
+            {
+                // On Disable food object, disable every spritemasks
+                SpriteMask[] foodSpriteMasks = foodObj.GetComponentsInChildren<SpriteMask>();
+                foreach (var spriteMask in foodSpriteMasks)
+                {
+                    spriteMask.gameObject.SetActive(false);
+                }
+                foodObj.SetActive(false);
+            }
+            foreach (var food in TurnToUndo.foodPositionsThisTurn)
+            {
+                food.Item1.position = food.Item2;
+            }
+            playerSlice.UpdateCurrentSlicesCount(1);
+            WinManager.Instance.UpdateTotalFoodList();
         }
-        foreach (var food in TurnToUndo.foodPositionsThisTurn)
-        {
-            food.Item1.position = food.Item2;
-        }
-        playerSlice.UpdateCurrentSlicesCount(1);
-        WinManager.Instance.UpdateTotalFoodList();
+
+        StartCoroutine(DelayUndo());
     }
-
-    public void PlayAnimation()
-    {
-        
-    }
-
-
 }

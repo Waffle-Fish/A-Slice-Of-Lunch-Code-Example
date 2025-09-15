@@ -44,12 +44,12 @@ public class AudioManager : MonoBehaviour
     public void Start() {
         if (trackToPlay > 0 || trackToPlay < musicSounds.Length)
         {
-            Debug.Log("Play given track");
+            // Debug.Log("Play given track");
             PlayMusic(trackToPlay);
         }
         else
         {
-            Debug.Log("Play menu track");
+            // Debug.Log("Play menu track");
             StartCoroutine(PlayMenuTheme());
         }
     }

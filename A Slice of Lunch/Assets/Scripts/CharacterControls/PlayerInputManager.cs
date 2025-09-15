@@ -19,17 +19,25 @@ public class PlayerInputManager : MonoBehaviour
         PlayerActions = InputActions.Player;
     }
 
-    private void OnEnable() {
-        InputActions.Enable();
+    private void OnEnable()
+    {
+        ToggleControls(true);
     }
 
-    private void OnDisable() {
-        InputActions.Disable();
+    private void OnDisable()
+    {
+        ToggleControls(false);
     }
 
     private void Update()
     {
         MousePos = PlayerActions.MousePosition.ReadValue<Vector2>();
         PointerDelta = PlayerActions.PointerDelta.ReadValue<Vector2>();
+    }
+
+    public void ToggleControls(bool b)
+    {
+        if (b) InputActions.Enable();
+        else InputActions.Disable();
     }
 }

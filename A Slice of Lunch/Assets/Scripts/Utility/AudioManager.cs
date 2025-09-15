@@ -13,10 +13,10 @@ public class AudioManager : MonoBehaviour
     public Sound[] musicSounds, sfxSounds;
     public AudioSource musicSource, sfxSource;
 
-   
+
 
     public void Awake()
-    { 
+    {
         if (Instance == null)
         {
             Instance = this;
@@ -26,6 +26,9 @@ public class AudioManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        MusicVolume(0.3f);
+        SFXVolume(0.5f);
     }
 
     private void OnEnable()
@@ -41,12 +44,12 @@ public class AudioManager : MonoBehaviour
     public void Start() {
         if (trackToPlay > 0 || trackToPlay < musicSounds.Length)
         {
-            Debug.Log("Play given track");
+            // Debug.Log("Play given track");
             PlayMusic(trackToPlay);
         }
         else
         {
-            Debug.Log("Play menu track");
+            // Debug.Log("Play menu track");
             StartCoroutine(PlayMenuTheme());
         }
     }

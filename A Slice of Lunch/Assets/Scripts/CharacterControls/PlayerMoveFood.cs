@@ -6,6 +6,7 @@ using UnityEngine.Rendering;
 
 public class PlayerMoveFood : MonoBehaviour
 {
+    public static event Action<bool> OnFoodIsDragging;
     bool dragging = false;
     bool onFood = false;
     PlayerSlice playerSlice;
@@ -23,6 +24,8 @@ public class PlayerMoveFood : MonoBehaviour
     bool placeable = true;
     GameObject validPlacementObj;
     GameObject invalidPlacementObj;
+
+    
 
 
     private void Awake()
@@ -79,6 +82,7 @@ public class PlayerMoveFood : MonoBehaviour
 
         // Debug.Log(foodCol.transform.parent.name + " is being picked up");
         dragging = true;
+        OnFoodIsDragging?.Invoke(dragging);
 
         foodSortingGroup = foodCol.transform.parent.GetComponent<SortingGroup>();
         foodSpriteRenderer = foodCol.transform.parent.GetComponent<SpriteRenderer>();
@@ -110,6 +114,7 @@ public class PlayerMoveFood : MonoBehaviour
         if (!dragging || !foodCol) return;
         foodSpriteRenderer.color = Color.white;
         dragging = false;
+        OnFoodIsDragging?.Invoke(dragging);
         Transform parentTransform = foodCol.transform.parent;
         foodSortingGroup.sortingOrder = initialSortingOrder;
         ContactFilter2D contactFilter2D = new();
@@ -142,7 +147,6 @@ public class PlayerMoveFood : MonoBehaviour
             }
             parentTransform.GetComponent<SortingGroup>().sortingOrder = maxLayer;
         }
-
         
         PlayDropSFX(foodCol.GetComponent<ControlFood>().TableTextureSFX);
         if (foodCol.TryGetComponent<FoodShadowManager>(out FoodShadowManager fsm)) fsm.UpdateShadowToPlacedDown(); 

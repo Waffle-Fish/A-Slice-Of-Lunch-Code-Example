@@ -9,23 +9,33 @@ public class PlayerInputManager : MonoBehaviour
     public PlayerInputActions.PlayerActions PlayerActions { get; private set; }
     public Vector2 MousePos { get; private set; } = Vector2.zero;
 
-    private void Awake() {
-        if (Instance != null && Instance != this) Destroy(this); 
-        else Instance = this; 
+    private void Awake()
+    {
+        if (Instance != null && Instance != this) Destroy(this);
+        else Instance = this;
 
         InputActions = new();
         PlayerActions = InputActions.Player;
     }
 
-    private void OnEnable() {
-        InputActions.Enable();
+    private void OnEnable()
+    {
+        ToggleControls(true);
     }
 
-    private void OnDisable() {
-        InputActions.Disable();
+    private void OnDisable()
+    {
+        ToggleControls(false);
     }
 
-    private void Update() {
+    private void Update()
+    {
         MousePos = PlayerActions.MousePosition.ReadValue<Vector2>();
+    }
+
+    public void ToggleControls(bool b)
+    {
+        if (b) InputActions.Enable();
+        else InputActions.Disable();
     }
 }

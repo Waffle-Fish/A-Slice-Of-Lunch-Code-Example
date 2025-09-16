@@ -26,6 +26,11 @@ public class CustomMouse_Level : MonoBehaviour
         PlayerSwitchAction.OnPlayerActionChange += UpdateCursor;
     }
 
+    void OnDisable()
+    {
+        PlayerSwitchAction.OnPlayerActionChange -= UpdateCursor;
+    }
+
     private void Start()
     {
         Cursor.visible = false;

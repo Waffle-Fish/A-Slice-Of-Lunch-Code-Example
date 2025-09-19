@@ -64,8 +64,8 @@ public class PlayerRotate : MonoBehaviour
         
         if (rotating)
         {
-            Vector2 toMouse = mousePos - (Vector2)pivotPoint;
-            float cross = toMouse.x * mouseDelta.y - toMouse.y * mouseDelta.x;
+            Vector2 foodToMouse = mousePos - (Vector2)pivotPoint;
+            float cross = foodToMouse.x * mouseDelta.y - foodToMouse.y * mouseDelta.x;
             cross *= sensitivity * Time.deltaTime;
             foodCol.transform.parent.RotateAround(pivotPoint, Vector3.forward, cross);
 

@@ -1244,6 +1244,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: Katsu Pool
       objectReference: {fileID: 0}
+    - target: {fileID: 8890098764679447218, guid: 334b07450b4390f4395d6bc74c21c15b, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8890098764679447218, guid: 334b07450b4390f4395d6bc74c21c15b, type: 3}
+      propertyPath: pickedUpOffset.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8890098764679447218, guid: 334b07450b4390f4395d6bc74c21c15b, type: 3}
+      propertyPath: pickedUpOffset.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8890098764679447218, guid: 334b07450b4390f4395d6bc74c21c15b, type: 3}
+      propertyPath: placedDownOffset.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8890098764679447218, guid: 334b07450b4390f4395d6bc74c21c15b, type: 3}
+      propertyPath: placedDownOffset.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9139398230234696947, guid: 334b07450b4390f4395d6bc74c21c15b, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3.03

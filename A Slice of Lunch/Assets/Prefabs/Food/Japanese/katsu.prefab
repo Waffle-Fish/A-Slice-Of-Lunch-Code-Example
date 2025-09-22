@@ -28,6 +28,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: katsu
       objectReference: {fileID: 0}
+    - target: {fileID: 4222420531476669703, guid: 850fcbcd0492cd549879a926ae607dde, type: 3}
+      propertyPath: pickedUpOffset.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4222420531476669703, guid: 850fcbcd0492cd549879a926ae607dde, type: 3}
+      propertyPath: pickedUpOffset.y
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4222420531476669703, guid: 850fcbcd0492cd549879a926ae607dde, type: 3}
+      propertyPath: placedDownOffset.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4222420531476669703, guid: 850fcbcd0492cd549879a926ae607dde, type: 3}
+      propertyPath: placedDownOffset.y
+      value: -0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 5814914332308558681, guid: 850fcbcd0492cd549879a926ae607dde, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4.5

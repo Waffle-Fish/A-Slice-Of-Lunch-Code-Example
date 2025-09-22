@@ -34,11 +34,8 @@ public class PlayerMoveFood : MonoBehaviour
         playerActions = PlayerInputManager.Instance.PlayerActions;
 
         Transform childTransform = transform.GetChild(0);
-        if (childTransform.childCount == 2)
-        {
-            validPlacementObj = childTransform.GetChild(0).gameObject;
-            invalidPlacementObj = childTransform.GetChild(1).gameObject;
-        }
+        validPlacementObj = childTransform.GetChild(0).gameObject;
+        invalidPlacementObj = childTransform.GetChild(1).gameObject;
 
         DisablePlacementObjects();
     }
@@ -95,6 +92,8 @@ public class PlayerMoveFood : MonoBehaviour
 
         PlayGrabSFX(foodCol.GetComponent<ControlFood>().TextureSFX);
 
+        if (foodCol.TryGetComponent<FoodShadowManager>(out FoodShadowManager fsm)) fsm.UpdateShadowToPickedUp(); 
+
         // if (!placeable)
         // {
         //     placeable = true;
@@ -147,6 +146,7 @@ public class PlayerMoveFood : MonoBehaviour
         }
         
         PlayDropSFX(foodCol.GetComponent<ControlFood>().TableTextureSFX);
+        if (foodCol.TryGetComponent<FoodShadowManager>(out FoodShadowManager fsm)) fsm.UpdateShadowToPlacedDown(); 
         Debug.Log("Finish releasing food");
     }
 
@@ -167,7 +167,6 @@ public class PlayerMoveFood : MonoBehaviour
         Vector3 endPos = foodPreviousPosition;
         for (float i = 0; i < totalIterations; ++i)
         {
-            // Debug.Log("Handling Food Collision!");
             foodCol.transform.parent.position = Vector3.Lerp(startPos, endPos, i * timePerIteration / totalTime);
             yield return new WaitForSeconds(timePerIteration);
         }

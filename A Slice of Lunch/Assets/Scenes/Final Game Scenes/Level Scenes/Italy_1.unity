@@ -824,7 +824,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -1000
-  m_Sprite: {fileID: 21300000, guid: 53802ecfc3ed6f544b656fc7d4162a0c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 28041f969b1fd304e9a9d1bb6e36604a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1693,7 +1693,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -1000
-  m_Sprite: {fileID: 21300000, guid: 53802ecfc3ed6f544b656fc7d4162a0c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 28041f969b1fd304e9a9d1bb6e36604a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -2068,7 +2068,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -1000
-  m_Sprite: {fileID: 21300000, guid: 53802ecfc3ed6f544b656fc7d4162a0c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 28041f969b1fd304e9a9d1bb6e36604a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -7663,6 +7663,10 @@ PrefabInstance:
     - target: {fileID: 3366204700894158335, guid: 97063aaa2c68709498e3b26f8f29555d, type: 3}
       propertyPath: sceneIndex
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3487236493633421689, guid: 97063aaa2c68709498e3b26f8f29555d, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4689463306667826261, guid: 97063aaa2c68709498e3b26f8f29555d, type: 3}
       propertyPath: timeline

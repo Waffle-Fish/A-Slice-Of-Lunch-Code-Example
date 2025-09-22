@@ -53,6 +53,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""PointerDelta"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""15f6ecbf-696c-42cb-baa6-f1c8197dd079"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -110,6 +119,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""LeftClick"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""efa10adb-390e-4f86-8234-8102cafb0bd4"",
+                    ""path"": ""<Pointer>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PointerDelta"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -121,6 +141,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_LeftClick = m_Player.FindAction("LeftClick", throwIfNotFound: true);
         m_Player_RightClick = m_Player.FindAction("RightClick", throwIfNotFound: true);
         m_Player_MousePosition = m_Player.FindAction("MousePosition", throwIfNotFound: true);
+        m_Player_PointerDelta = m_Player.FindAction("PointerDelta", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -185,6 +206,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_LeftClick;
     private readonly InputAction m_Player_RightClick;
     private readonly InputAction m_Player_MousePosition;
+    private readonly InputAction m_Player_PointerDelta;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -192,6 +214,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @LeftClick => m_Wrapper.m_Player_LeftClick;
         public InputAction @RightClick => m_Wrapper.m_Player_RightClick;
         public InputAction @MousePosition => m_Wrapper.m_Player_MousePosition;
+        public InputAction @PointerDelta => m_Wrapper.m_Player_PointerDelta;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -210,6 +233,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @MousePosition.started += instance.OnMousePosition;
             @MousePosition.performed += instance.OnMousePosition;
             @MousePosition.canceled += instance.OnMousePosition;
+            @PointerDelta.started += instance.OnPointerDelta;
+            @PointerDelta.performed += instance.OnPointerDelta;
+            @PointerDelta.canceled += instance.OnPointerDelta;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -223,6 +249,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @MousePosition.started -= instance.OnMousePosition;
             @MousePosition.performed -= instance.OnMousePosition;
             @MousePosition.canceled -= instance.OnMousePosition;
+            @PointerDelta.started -= instance.OnPointerDelta;
+            @PointerDelta.performed -= instance.OnPointerDelta;
+            @PointerDelta.canceled -= instance.OnPointerDelta;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -245,5 +274,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnLeftClick(InputAction.CallbackContext context);
         void OnRightClick(InputAction.CallbackContext context);
         void OnMousePosition(InputAction.CallbackContext context);
+        void OnPointerDelta(InputAction.CallbackContext context);
     }
 }

@@ -8,6 +8,7 @@ public class PlayerInputManager : MonoBehaviour
     public PlayerInputActions InputActions { get; private set; }
     public PlayerInputActions.PlayerActions PlayerActions { get; private set; }
     public Vector2 MousePos { get; private set; } = Vector2.zero;
+    public Vector2 PointerDelta { get;  private set; } = Vector2.zero;
 
     private void Awake()
     {
@@ -31,6 +32,7 @@ public class PlayerInputManager : MonoBehaviour
     private void Update()
     {
         MousePos = PlayerActions.MousePosition.ReadValue<Vector2>();
+        PointerDelta = PlayerActions.PointerDelta.ReadValue<Vector2>();
     }
 
     public void ToggleControls(bool b)

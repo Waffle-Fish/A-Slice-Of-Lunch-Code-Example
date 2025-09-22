@@ -19,7 +19,7 @@ public class PlayerRotate : MonoBehaviour
 
     [Header("Food Collision Handler")]
     Collider2D foodCol;
-    float foodPreviousZRot;
+    Quaternion foodPreviousRot;
     int initialSortingOrder;
     SortingGroup foodSortingGroup;
     SpriteRenderer foodSpriteRenderer;
@@ -98,8 +98,7 @@ public class PlayerRotate : MonoBehaviour
         pivotPoint = foodCol.bounds.center;
         pivotPoint.z = 0;
 
-        // degOffset = GetAngleToMouse();
-        // foodCol.transform.parent.transform.rotation = Quaternion.Euler(0, 0, degOffset);
+        foodPreviousRot = foodCol.transform.rotation;
 
         PlayGrabSFX(foodCol.GetComponent<ControlFood>().TextureSFX);
 
@@ -117,8 +116,6 @@ public class PlayerRotate : MonoBehaviour
         List<Collider2D> results = new();
         Dictionary<string, int> resultsTags = new();
 
-        foodPreviousZRot = foodCol.transform.eulerAngles.z;
-
         DisablePlacementObjects();
         foodCol.OverlapCollider(contactFilter2D.NoFilter(), results);
         foreach (var item in results)
@@ -127,8 +124,8 @@ public class PlayerRotate : MonoBehaviour
         }
         if (resultsTags.ContainsKey("Border") || resultsTags.ContainsKey("Food"))
         {
-            // Debug.Log("On Food");
-            // StartCoroutine(HandleFoodCollision());
+            Debug.Log("On Food");
+            StartCoroutine(HandleFoodCollision());
         }
         else
         {
@@ -154,25 +151,24 @@ public class PlayerRotate : MonoBehaviour
     private void ResetHandleCollisionVariables()
     {
         foodCol = new();
-        foodPreviousZRot = new();
+        foodPreviousRot = new();
         initialSortingOrder = 0;
         foodSortingGroup = new();
     }
 
-    // private IEnumerator HandleFoodCollision()
-    // {
-    //     float totalIterations = 50;
-    //     float totalTime = 0.2f;
-    //     float timePerIteration = totalTime / totalIterations;
-    //     Vector3 startPos = foodCol.transform.parent.position;
-    //     Vector3 endPos = foodPreviousZRot;
-    //     for (float i = 0; i < totalIterations; ++i)
-    //     {
-    //         // Debug.Log("Handling Food Collision!");
-    //         foodCol.transform.parent.position = Vector3.Lerp(startPos, endPos, i * timePerIteration / totalTime);
-    //         yield return new WaitForSeconds(timePerIteration);
-    //     }
-    // }
+    private IEnumerator HandleFoodCollision()
+    {
+        const float TOTAL_ITERATIONS = 50;
+        const float TOTAL_TIME = 0.2f;
+        float timePerIteration = TOTAL_TIME / TOTAL_ITERATIONS;
+        Quaternion startRot = foodCol.transform.parent.rotation;
+        Quaternion endRot = foodPreviousRot;
+        for (float i = 0; i < TOTAL_ITERATIONS; ++i)
+        {
+            foodCol.transform.parent.rotation = Quaternion.Lerp(startRot, endRot, i * timePerIteration / TOTAL_TIME);
+            yield return new WaitForSeconds(timePerIteration);
+        }
+    }
 
     private void PlayGrabSFX(string textureSFX)
     {

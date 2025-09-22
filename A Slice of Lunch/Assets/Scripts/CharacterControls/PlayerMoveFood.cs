@@ -167,7 +167,6 @@ public class PlayerMoveFood : MonoBehaviour
         Vector3 endPos = foodPreviousPosition;
         for (float i = 0; i < totalIterations; ++i)
         {
-            // Debug.Log("Handling Food Collision!");
             foodCol.transform.parent.position = Vector3.Lerp(startPos, endPos, i * timePerIteration / totalTime);
             yield return new WaitForSeconds(timePerIteration);
         }

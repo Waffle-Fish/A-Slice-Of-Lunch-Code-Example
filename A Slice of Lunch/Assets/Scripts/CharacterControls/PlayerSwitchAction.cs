@@ -57,7 +57,7 @@ public class PlayerSwitchAction : MonoBehaviour
                 break;
         }
         OnPlayerActionChange?.Invoke(currentAction);
-        Debug.Log("Player Action switched to: " + currentAction);
+        // Debug.Log("Player Action switched to: " + currentAction);
     }
 
     private void DisableScripts()

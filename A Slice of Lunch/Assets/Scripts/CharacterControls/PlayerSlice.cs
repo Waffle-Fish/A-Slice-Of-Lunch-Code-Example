@@ -169,18 +169,11 @@ public class PlayerSlice : MonoBehaviour
         foodCollider.collider.gameObject.layer = sliceLayer;
 
         // rotate endPoints
-        Debug.Log("End points before rotation: \n  * Point 0: " + sliceEndPoints[0] + "\n  * Point 1: " + sliceEndPoints[1]);
-        // sliceEndPoints[0] = Quaternion.Euler(0, 0, -foodCollider.transform.parent.eulerAngles.z) * sliceEndPoints[0];
-        // sliceEndPoints[1] = Quaternion.Euler(0, 0, -foodCollider.transform.parent.eulerAngles.z) * sliceEndPoints[1];
-        Debug.Log("End points after rotation: \n  * Point 0: " + sliceEndPoints[0] + "\n  * Point 1: " + sliceEndPoints[1]);
-
-        sliceEdgePoints[0] = Physics2D.Raycast(sliceEndPoints[0], (sliceEndPoints[1] - sliceEndPoints[0]), distance: 100f, layerMask: sliceLayerMask).point;
-        sliceEdgePoints[1] = Physics2D.Raycast(sliceEndPoints[1], (sliceEndPoints[0] - sliceEndPoints[1]), distance: 100f, layerMask: sliceLayerMask).point;
+        sliceEdgePoints[0] = Physics2D.Raycast(sliceEndPoints[0], sliceEndPoints[1] - sliceEndPoints[0], distance: 100f, layerMask: sliceLayerMask).point;
+        sliceEdgePoints[1] = Physics2D.Raycast(sliceEndPoints[1], sliceEndPoints[0] - sliceEndPoints[1], distance: 100f, layerMask: sliceLayerMask).point;
         Vector2 sliceCenter = (sliceEdgePoints[0] + sliceEdgePoints[1]) / 2f;
 
         foodCollider.collider.gameObject.layer = originalLayer;
-
-        Debug.DrawLine(sliceEdgePoints[0], sliceEdgePoints[1], Color.black, 100f);
 
         // Rotate mask to be parallel to slice
         bool rotateFromYAxis = (sliceEndPoints[0].x < sliceEndPoints[1].x && sliceEndPoints[0].y > sliceEndPoints[1].y) || (sliceEndPoints[1].x < sliceEndPoints[0].x && sliceEndPoints[1].y > sliceEndPoints[0].y);
@@ -272,16 +265,19 @@ public class PlayerSlice : MonoBehaviour
         {
             Vector2 currentPoint = inputPoints[i];
             Vector2 prevPoint = inputPoints[(i - 1 < 0) ? ^1 : i - 1];
+            float rotAng = foodCollider.transform.parent.eulerAngles.z;
 
             // points in polycollider are affected by scale, divide by lossyScale to get point in world
             Vector2 worldPosCurPoint = currentPoint / foodCollider.transform.lossyScale.x + (Vector2)foodCollider.transform.position;
-            Vector2 worldPosCurPoint2 = foodCollider.transform.TransformPoint(currentPoint);
+            worldPosCurPoint = RotatePoint(worldPosCurPoint - (Vector2)foodCollider.transform.position, rotAng) + (Vector2)foodCollider.transform.position;
             Vector2 worldPosPrevPoint = prevPoint / foodCollider.transform.lossyScale.x + (Vector2)foodCollider.transform.position;
+            worldPosPrevPoint = RotatePoint(worldPosPrevPoint - (Vector2)foodCollider.transform.position, rotAng) + (Vector2)foodCollider.transform.position;
             Vector2 newEdgePoint1 = sliceEdgePoints[0] - foodCollider.transform.position;
             Vector2 newEdgePoint2 = sliceEdgePoints[1] - foodCollider.transform.position;
 
             // Get intersection in local scale
-            Vector2 intersectingPoint = GetTwoLinesIntersectPoint(currentPoint, prevPoint, newEdgePoint1, newEdgePoint2);
+            Vector2 intersectingPoint = GetTwoLinesIntersectPoint(RotatePoint(currentPoint ,rotAng), RotatePoint(prevPoint, rotAng), newEdgePoint1, newEdgePoint2);
+            intersectingPoint = RotatePoint(intersectingPoint, -rotAng);
 
             Tuple<Directions, Directions> sideCurPointIsOn = GetSidePointIsOn(worldPosCurPoint);
             Tuple<Directions, Directions> sidePrevPointIsOn = GetSidePointIsOn(worldPosPrevPoint);
@@ -298,19 +294,23 @@ public class PlayerSlice : MonoBehaviour
                 outputPoints.Add(intersectingPoint);
             }
         }
-
-        // for (int i = 0; i < outputPoints.Count; i++)
-        // {
-        //     Vector2 relativePos = outputPoints[i] - pivotPoint;
-        //     relativePos = Quaternion.Euler(0, 0, foodCollider.transform.parent.eulerAngles.z) * relativePos;
-        //     outputPoints[i] = relativePos + pivotPoint;
-        // }
         return outputPoints;
     }
 
+    // Rot Ang is in degrees
+    private Vector2 RotatePoint(float x, float y, float rotAng)
+    {
+        rotAng *= Mathf.Deg2Rad;
+        float xPrime = x * Mathf.Cos(rotAng) - y * Mathf.Sin(rotAng);
+        float yPrime = x * Mathf.Sin(rotAng) + y * Mathf.Cos(rotAng);
+        return new Vector2(xPrime, yPrime);
+    }
+    private Vector2 RotatePoint(Vector2 point, float rotAng) => RotatePoint(point.x, point.y, rotAng);
+
     private void DisplaySliceMarkings()
     {
-        if (sliceEndPoints[0] == INVALID_VECTOR) {
+        if (sliceEndPoints[0] == INVALID_VECTOR)
+        {
             sliceMarking.enabled = false;
             return;
         }

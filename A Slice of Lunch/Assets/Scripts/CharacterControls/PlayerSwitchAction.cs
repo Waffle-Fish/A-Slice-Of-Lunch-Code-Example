@@ -30,8 +30,17 @@ public class PlayerSwitchAction : MonoBehaviour
         ActionsLength = Enum.GetValues(typeof(PlayerActions)).Length;
         playerActions = PlayerInputManager.Instance.PlayerActions;
     }
+    
+    private void OnEnable() {
+        ToolButton.OnPlayerActionChange += SwitchPlayerActions;
+    }
 
-    private void Update() {
+    private void OnDisable() {
+        ToolButton.OnPlayerActionChange -= SwitchPlayerActions;
+    }
+
+    private void Update()
+    {
         DetectRightClick();
     }
 
@@ -43,6 +52,13 @@ public class PlayerSwitchAction : MonoBehaviour
     private void SwitchPlayerActions()
     {
         currentAction = (PlayerActions)((int)(currentAction + 1) % ActionsLength);
+        SwitchPlayerActions(currentAction);
+        
+    }
+
+    private void SwitchPlayerActions(PlayerActions playerAction)
+    {
+        currentAction = playerAction;
         DisableScripts();
         switch (currentAction)
         {

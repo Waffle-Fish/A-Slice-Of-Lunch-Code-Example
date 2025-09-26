@@ -40,7 +40,7 @@ public class UIController : MonoBehaviour
     }
 
     public void ToggleMusic() {
-        AudioManager.Instance.ToggelMusic();
+        AudioManager.Instance.ToggleMusic();
     }
 
     public void ToggleSFX() {

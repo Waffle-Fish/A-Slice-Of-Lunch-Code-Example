@@ -1,21 +1,21 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.SceneManagement;
 
 public class AudioManager : MonoBehaviour
 {
-    public static AudioManager Instance {get; private set;}
+    public static AudioManager Instance { get; private set; }
+
     [Min(0)]
     public int trackToPlay;
 
     public Sound[] musicSounds, sfxSounds;
     public AudioSource musicSource, sfxSource;
 
+    private Coroutine introRoutine;
 
-
-    public void Awake()
+    private void Awake()
     {
         if (Instance == null)
         {
@@ -25,11 +25,13 @@ public class AudioManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
+            return;
         }
 
+        // Auto-assign AudioSources if not set
         AudioSource[] audioSources = GetComponentsInChildren<AudioSource>();
-        if (!musicSource) musicSource = audioSources[0];
-        if (!sfxSource) sfxSource = audioSources[1];
+        if (!musicSource && audioSources.Length > 0) musicSource = audioSources[0];
+        if (!sfxSource && audioSources.Length > 1) sfxSource = audioSources[1];
 
         MusicVolume(0.3f);
         SFXVolume(0.5f);
@@ -45,67 +47,72 @@ public class AudioManager : MonoBehaviour
         SceneManager.sceneLoaded -= UpdateTrack;
     }
 
-    public void Start() {
-        if (trackToPlay > 0 || trackToPlay < musicSounds.Length)
-        {
-            // Debug.Log("Play given track");
-            PlayMusic(trackToPlay);
-        }
-        else
-        {
-            // Debug.Log("Play menu track");
-            StartCoroutine(PlayMenuTheme());
-        }
+    private void Start()
+    {
+        // if (trackToPlay >= 0 && trackToPlay < musicSounds.Length)
+        // {
+        //     PlayMusic(trackToPlay, true);
+        // }
+        // else
+        // {
+        //     StartCoroutine(PlayMenuTheme());
+        // }
+        StartCoroutine(PlayMenuTheme());
     }
 
-    public IEnumerator PlayMenuTheme() {
-        // Debug.Log("Play the Main Menu Theme sequence!");
-        PlayMusic("MenuThemeIntro");
-        yield return new WaitForSeconds(musicSource.clip.length);
-        // Debug.Log("Play the main loop.");
-        PlayMusic("MenuThemeLoop");
+    private IEnumerator PlayMenuTheme()
+    {
+        PlayMusic("MenuThemeIntro", false);
+        if (musicSource.clip != null)
+        {
+            yield return new WaitForSeconds(musicSource.clip.length);
+        }
+        PlayMusic("MenuThemeLoop", true);
     }
 
-    public void PlayMusic(string name)
+    private IEnumerator PlayIntroThenMenuLoop()
+    {
+        PlayMusic("IntroStory", false);
+
+        if (musicSource.clip != null)
+        {
+            yield return new WaitForSeconds(musicSource.clip.length);
+        }
+
+        PlayMusic("MenuThemeLoop", true);
+    }
+
+    public void PlayMusic(string name, bool loop = true)
     {
         Sound s = Array.Find(musicSounds, x => x.name == name);
 
         if (s == null)
         {
-            Debug.Log("Sound not found");
+            Debug.LogWarning($"[AudioManager] Music '{name}' not found.");
+            return;
         }
-        else
-        {
-            musicSource.clip = s.clip;
-            musicSource.Play();
-        }
+
+        musicSource.clip = s.clip;
+        musicSource.loop = loop;
+        musicSource.Play();
+
+        // Debug.Log($"[AudioManager] Now playing: {name} (Loop={loop})");
     }
 
-    public void PlayMusic(int ind)
+    public void PlayMusic(int index, bool loop = true)
     {
-        Sound s = musicSounds[ind];
+        if (index < 0 || index >= musicSounds.Length)
+        {
+            Debug.LogWarning($"[AudioManager] Invalid music index {index}");
+            return;
+        }
 
-        if (s == null)
-        {
-            Debug.Log("Sound not found");
-        }
-        else
-        {
-            musicSource.clip = s.clip;
-            musicSource.Play();
-        }
-    }
+        Sound s = musicSounds[index];
+        musicSource.clip = s.clip;
+        musicSource.loop = loop;
+        musicSource.Play();
 
-    public void PlayMusic(AudioClip music) {
-        if (music == null)
-        {
-            Debug.Log("Sound not found");
-        }
-        else
-        {
-            musicSource.clip = music;
-            musicSource.Play();
-        }
+        // Debug.Log($"[AudioManager] Now playing index {index}: {s.name} (Loop={loop})");
     }
 
     public void PlaySFX(string name)
@@ -114,99 +121,83 @@ public class AudioManager : MonoBehaviour
 
         if (s == null)
         {
-            Debug.Log("Sound not found");
+            Debug.LogWarning($"[AudioManager] SFX '{name}' not found.");
+            return;
         }
-        else
-        {
-            sfxSource.Stop();
-            sfxSource.PlayOneShot(s.clip);
-        }
+
+        sfxSource.PlayOneShot(s.clip);
+        // Debug.Log($"[AudioManager] Played SFX: {name}");
     }
 
     public void PlaySFX(AudioClip sfx)
     {
         if (sfx == null)
         {
-            Debug.Log("Sound not found");
+            Debug.LogWarning("[AudioManager] Null SFX clip passed to PlaySFX.");
+            return;
+        }
+
+        sfxSource.PlayOneShot(sfx);
+        // Debug.Log($"[AudioManager] Played SFX clip: {sfx.name}");
+    }
+
+    public void ToggleMusic() => musicSource.mute = !musicSource.mute;
+    public void ToggleSFX() => sfxSource.mute = !sfxSource.mute;
+
+    public void MusicVolume(float volume) => musicSource.volume = Mathf.Clamp01(volume);
+    public void SFXVolume(float volume) => sfxSource.volume = Mathf.Clamp01(volume);
+
+    /// <summary>
+    /// Called automatically whenever a new scene loads.
+    /// </summary>
+    private void UpdateTrack(Scene scene, LoadSceneMode mode)
+    {
+        string currentScene = scene.name;
+        // Debug.Log($"[AudioManager] Scene loaded: {currentScene}");
+
+        // Stop any intro coroutine if switching scenes
+        if (introRoutine != null)
+        {
+            StopCoroutine(introRoutine);
+            introRoutine = null;
+        }
+
+        if (currentScene.StartsWith("Intro"))
+        {
+            if (!CheckIfTrackIsAlreadyPlaying("IntroStory"))
+                PlayMusic("IntroStory", false);
+        }
+        else if (currentScene.StartsWith("Italy"))
+        {
+            if (!CheckIfTrackIsAlreadyPlaying("UpbeatNoodles"))
+                PlayMusic("UpbeatNoodles", true);
+        }
+        else if (currentScene.StartsWith("Japan"))
+        {
+            if (!CheckIfTrackIsAlreadyPlaying("UpbeatJapan"))
+                PlayMusic("UpbeatJapan", true);
         }
         else
         {
-            sfxSource.PlayOneShot(sfx);
-        }
-    }
-
-    public void ToggelMusic() 
-    {
-        musicSource.mute = !musicSource.mute;
-    }
-
-    public void ToggleSFX() 
-    {
-        sfxSource.mute = !sfxSource.mute;
-    }
-
-    public void MusicVolume(float volume) 
-    {
-        musicSource.volume = volume;
-    }
-
-    public void SFXVolume(float volume) 
-    {
-        sfxSource.volume = volume;
-    }
-
-    // Play level sound track based on the level's build index
-    public void UpdateTrack(Scene scene, LoadSceneMode mode) 
-    {
-        string currentScene = scene.name;
-        int currentLevel = (int)currentScene[currentScene.Length - 1];
-
-        Debug.Log("For playing the level music: Current Scene '" + currentScene + "'.");
-        if (!musicSource.clip) Debug.Log("MusicSource.clip is gone");
-        else Debug.Log("MusicSource.clip is here with name: " + musicSource.clip);
-
-
-        if (musicSource.clip.name == "IntroStory" && !musicSource.loop)
-        {
-            musicSource.loop = true;
-        }
-
-        // Set the case to the first five letters of the cuisine
-        // Ex: America --> case "Ameri":
-        switch (currentScene.Substring(0, 5))
-        {
-            case "Italy":
-                if (currentLevel > 0 && currentLevel < 5 && !CheckIfTrackIsAlreadyPlaying("UpbeatNoodles"))
-                    PlayMusic("DownbeatNoodles");    // PlayMusic("UpbeatNoodles");
-                else if (!CheckIfTrackIsAlreadyPlaying("DownbeatNoodles"))
-                    PlayMusic("UpbeatNoodles");      // PlayMusic("DownbeatNoodles");
-                Debug.Log("Playing Italy Music!");
-                break;
-            case "Japan":
-                if (!CheckIfTrackIsAlreadyPlaying("UpbeatJapan"))
-                    PlayMusic("UpbeatJapan");
-                Debug.Log("Playing Japan Music!");
-                break;
-            case "Intro":
-                if (!CheckIfTrackIsAlreadyPlaying("IntroStory"))
+            if (musicSource.clip == null)
+            {
+                introRoutine = StartCoroutine(PlayMenuTheme());
+            }
+            else if (!CheckIfTrackIsAlreadyPlaying("MenuThemeLoop"))
+            {
+                // If we're on MenuThemeIntro (not loop yet), do nothing — it'll transition automatically
+                // If we're on a different track, then switch
+                if (musicSource.clip.name != "MenuThemeIntro")
                 {
-                    PlayMusic("IntroStory");
-                    musicSource.loop = false;
+                    introRoutine = StartCoroutine(PlayMenuTheme());
                 }
-                break;
-            default:
-                if (!CheckIfTrackIsAlreadyPlaying("MenuTheme"))
-                {
-                    Debug.Log("MenuTheme is not playing, so start playing it!");
-                    PlayMusic("MenuTheme");
-                }
-                break;
+            }
         }
     }
 
     private bool CheckIfTrackIsAlreadyPlaying(string track)
     {
-        Debug.Log("Is " + track + " already playing? CurrentTrack: " + musicSource.clip.name);
+        if (musicSource.clip == null) return false;
         return musicSource.clip.name == track;
     }
 }

@@ -14,7 +14,7 @@ public class TestSFX : MonoBehaviour
         // MenuThemeIntro.Play();
         // MenuThemeLoop.PlayDelayed(MenuThemeIntro.clip.length);
 
-        AudioManager.Instance.PlayMenuTheme();
+        // AudioManager.Instance.PlayMenuTheme();
     }
 
     void OnMouseDown(){

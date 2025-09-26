@@ -62,7 +62,7 @@ public class SaveSystem : MonoBehaviour
         UpdateBoxLevelData((int)BoxID, Level);
         string json = JsonUtility.ToJson(PlayerData);
         Debug.Log("Saved to box: " + json);
-        using (StreamWriter sw = new StreamWriter(Application.dataPath + Path.AltDirectorySeparatorChar + "SaveData.json"))
+        using (StreamWriter sw = new StreamWriter(Application.streamingAssetsPath + Path.AltDirectorySeparatorChar + "SaveData.json"))
         {
             sw.Write(json);
         }
@@ -73,7 +73,7 @@ public class SaveSystem : MonoBehaviour
         UpdateCutsceneData(CutsceneID);
         string json = JsonUtility.ToJson(PlayerData);
         Debug.Log(json);
-        using (StreamWriter sw = new StreamWriter(Application.dataPath + Path.AltDirectorySeparatorChar + "SaveData.json"))
+        using (StreamWriter sw = new StreamWriter(Application.streamingAssetsPath + Path.AltDirectorySeparatorChar + "SaveData.json"))
         {
             sw.Write(json);
         }
@@ -82,7 +82,7 @@ public class SaveSystem : MonoBehaviour
     public void LoadData()
     {
         string json = string.Empty;
-        using (StreamReader reader = new StreamReader(Application.dataPath + Path.AltDirectorySeparatorChar + "SaveData.json"))
+        using (StreamReader reader = new StreamReader(Application.streamingAssetsPath + Path.AltDirectorySeparatorChar + "SaveData.json"))
         {
             json = reader.ReadToEnd();
         }

@@ -27,6 +27,10 @@ public class AudioManager : MonoBehaviour
             Destroy(gameObject);
         }
 
+        AudioSource[] audioSources = GetComponentsInChildren<AudioSource>();
+        if (!musicSource) musicSource = audioSources[0];
+        if (!sfxSource) sfxSource = audioSources[1];
+
         MusicVolume(0.3f);
         SFXVolume(0.5f);
     }
@@ -158,6 +162,9 @@ public class AudioManager : MonoBehaviour
         int currentLevel = (int)currentScene[currentScene.Length - 1];
 
         Debug.Log("For playing the level music: Current Scene '" + currentScene + "'.");
+        if (!musicSource.clip) Debug.Log("MusicSource.clip is gone");
+        else Debug.Log("MusicSource.clip is here with name: " + musicSource.clip);
+
 
         if (musicSource.clip.name == "IntroStory" && !musicSource.loop)
         {
@@ -185,7 +192,7 @@ public class AudioManager : MonoBehaviour
                 {
                     PlayMusic("IntroStory");
                     musicSource.loop = false;
-                } 
+                }
                 break;
             default:
                 if (!CheckIfTrackIsAlreadyPlaying("MenuTheme"))

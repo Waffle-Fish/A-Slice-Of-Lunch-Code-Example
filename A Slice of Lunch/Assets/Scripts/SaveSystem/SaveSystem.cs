@@ -9,6 +9,12 @@ public struct PlayerData
 {
     public List<int> BoxLevelData;
     public List<bool> CutsceneData;
+
+    public PlayerData(List<int> boxLevelData, List<bool> cutsceneData)
+    {
+        BoxLevelData = boxLevelData;
+        CutsceneData = cutsceneData;
+    }
 }
 
 public class SaveSystem : MonoBehaviour
@@ -27,6 +33,8 @@ public class SaveSystem : MonoBehaviour
 
     public PlayerData PlayerData { get; private set; }
 
+    string FILE_PATH;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -34,12 +42,18 @@ public class SaveSystem : MonoBehaviour
             Debug.LogError("Multiple SaveSystems in this scene!");
             Destroy(this);
         }
-        else Instance = this; 
+        else Instance = this;
     }
 
     private void Start()
     {
-        PlayerData = new PlayerData();
+        FILE_PATH = Application.persistentDataPath + Path.AltDirectorySeparatorChar + "SaveData.json";
+        if (!File.Exists(FILE_PATH))
+        {
+            PlayerData = new PlayerData(new List<int> { 0, -1, -1 }, new List<bool> { false, false });
+            string json = JsonUtility.ToJson(PlayerData);
+            File.WriteAllText(FILE_PATH, json);
+        }
         LoadData();
     }
 
@@ -62,7 +76,7 @@ public class SaveSystem : MonoBehaviour
         UpdateBoxLevelData((int)BoxID, Level);
         string json = JsonUtility.ToJson(PlayerData);
         Debug.Log("Saved to box: " + json);
-        using (StreamWriter sw = new StreamWriter(Application.streamingAssetsPath + Path.AltDirectorySeparatorChar + "SaveData.json"))
+        using (StreamWriter sw = new StreamWriter(FILE_PATH))
         {
             sw.Write(json);
         }
@@ -73,7 +87,7 @@ public class SaveSystem : MonoBehaviour
         UpdateCutsceneData(CutsceneID);
         string json = JsonUtility.ToJson(PlayerData);
         Debug.Log(json);
-        using (StreamWriter sw = new StreamWriter(Application.streamingAssetsPath + Path.AltDirectorySeparatorChar + "SaveData.json"))
+        using (StreamWriter sw = new StreamWriter(FILE_PATH))
         {
             sw.Write(json);
         }
@@ -82,7 +96,7 @@ public class SaveSystem : MonoBehaviour
     public void LoadData()
     {
         string json = string.Empty;
-        using (StreamReader reader = new StreamReader(Application.streamingAssetsPath + Path.AltDirectorySeparatorChar + "SaveData.json"))
+        using (StreamReader reader = new StreamReader(FILE_PATH))
         {
             json = reader.ReadToEnd();
         }
@@ -92,23 +106,30 @@ public class SaveSystem : MonoBehaviour
     }
 
     #region Utilities
-    private void ResetLevels()
+    public void ResetLevels()
     {
         for (int i = 0; i < PlayerData.BoxLevelData.Count; i++)
         {
             PlayerData.BoxLevelData[i] = -1;
+
         }
-        PlayerData.BoxLevelData[0] = 1;
+        PlayerData.BoxLevelData[0] = 0;
 
         for (int i = 0; i < PlayerData.CutsceneData.Count; i++)
         {
             PlayerData.CutsceneData[i] = false;
         }
+        
+        string json = JsonUtility.ToJson(PlayerData);
+        using (StreamWriter sw = new StreamWriter(FILE_PATH))
+        {
+            sw.Write(json);
+        }
     }
 
     public void UpdateBoxLevelData(int boxId, int level)
     {
-        if (boxId < 0 || boxId >= PlayerData.BoxLevelData.Count) return;
+        if (boxId < 0 || boxId >= PlayerData.BoxLevelData.Count || level <= PlayerData.BoxLevelData[boxId]) return;
         PlayerData.BoxLevelData[boxId] = level;
     }
 

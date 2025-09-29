@@ -1426,6 +1426,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: -2.35
       objectReference: {fileID: 0}
+    - target: {fileID: 3184910690877118460, guid: 9af0551bc6bd32745ab445a30115a66a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4735078914250581124, guid: 9af0551bc6bd32745ab445a30115a66a, type: 3}
       propertyPath: TextureSFX
       value: FoodSquish
@@ -1498,6 +1502,10 @@ PrefabInstance:
       propertyPath: TableTextureSFX
       value: Wood
       objectReference: {fileID: 0}
+    - target: {fileID: 8120479385166813161, guid: 9af0551bc6bd32745ab445a30115a66a, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 0500ee2b29a472d4db1a1b76a1780d38, type: 2}
     - target: {fileID: 8730190071158978792, guid: 9af0551bc6bd32745ab445a30115a66a, type: 3}
       propertyPath: m_Name
       value: Ravioli
@@ -2317,11 +2325,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &1645996161 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8005415620687566721, guid: eabf853503ff1f5419e1d86bd9364ba6, type: 3}
-  m_PrefabInstance: {fileID: 5827718164698712905}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1765762094
 GameObject:
   m_ObjectHideFlags: 0
@@ -2379,7 +2382,7 @@ PlayableDirector:
   - key: {fileID: 1001883972265319173, guid: 0884c1df4ee7b6b498704477ab4c8600, type: 2}
     value: {fileID: 0}
   - key: {fileID: -1967348673044978213, guid: 0884c1df4ee7b6b498704477ab4c8600, type: 2}
-    value: {fileID: 1645996161}
+    value: {fileID: 0}
   - key: {fileID: 2093025196495759459, guid: 0884c1df4ee7b6b498704477ab4c8600, type: 2}
     value: {fileID: 199578195}
   - key: {fileID: -4040164118343744849, guid: 0884c1df4ee7b6b498704477ab4c8600, type: 2}
@@ -2389,7 +2392,7 @@ PlayableDirector:
   - key: {fileID: -4873240572021536420, guid: 0884c1df4ee7b6b498704477ab4c8600, type: 2}
     value: {fileID: 1419872871}
   - key: {fileID: 8531108169569856510, guid: 0884c1df4ee7b6b498704477ab4c8600, type: 2}
-    value: {fileID: 0}
+    value: {fileID: 4074297325897072831}
   - key: {fileID: 2056025531384297997, guid: 0884c1df4ee7b6b498704477ab4c8600, type: 2}
     value: {fileID: 1419872875}
   - key: {fileID: 98236612275790720, guid: 0884c1df4ee7b6b498704477ab4c8600, type: 2}
@@ -7517,6 +7520,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6247725881351127872, guid: 228078a9e6d276e479414f1ea779459b, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6247725881351127872, guid: 228078a9e6d276e479414f1ea779459b, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6247725881351127872, guid: 228078a9e6d276e479414f1ea779459b, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6247725881351127872, guid: 228078a9e6d276e479414f1ea779459b, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6247725881351127872, guid: 228078a9e6d276e479414f1ea779459b, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 6602275703872325831, guid: 228078a9e6d276e479414f1ea779459b, type: 3}
       propertyPath: m_Name
       value: Penne
@@ -7631,7 +7654,7 @@ PrefabInstance:
     - target: {fileID: 73501929176176872, guid: 97063aaa2c68709498e3b26f8f29555d, type: 3}
       propertyPath: m_SceneBindings.Array.data[1].value
       value: 
-      objectReference: {fileID: 1645996161}
+      objectReference: {fileID: 0}
     - target: {fileID: 737191664898142424, guid: 97063aaa2c68709498e3b26f8f29555d, type: 3}
       propertyPath: m_Camera
       value: 
@@ -7759,7 +7782,7 @@ PrefabInstance:
     - target: {fileID: 6582925601301117869, guid: 97063aaa2c68709498e3b26f8f29555d, type: 3}
       propertyPath: m_SceneBindings.Array.data[2].value
       value: 
-      objectReference: {fileID: 1645996161}
+      objectReference: {fileID: 0}
     - target: {fileID: 8464356426590323989, guid: 97063aaa2c68709498e3b26f8f29555d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -7769,6 +7792,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 97063aaa2c68709498e3b26f8f29555d, type: 3}
+--- !u!1 &4074297325897072831 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2934794053568863546, guid: 97063aaa2c68709498e3b26f8f29555d, type: 3}
+  m_PrefabInstance: {fileID: 4074297325897072830}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5827718164698712905
 PrefabInstance:
   m_ObjectHideFlags: 0

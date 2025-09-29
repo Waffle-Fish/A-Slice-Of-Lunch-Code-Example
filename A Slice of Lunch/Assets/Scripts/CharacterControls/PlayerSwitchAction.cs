@@ -24,7 +24,7 @@ public class PlayerSwitchAction : MonoBehaviour
         sliceScript = GetComponent<PlayerSlice>();
         rotateScript = GetComponent<PlayerRotate>();
 
-        DisableScripts();
+        DisableAllActions();
         moveScript.enabled = true;
 
         ActionsLength = Enum.GetValues(typeof(PlayerActions)).Length;
@@ -59,7 +59,7 @@ public class PlayerSwitchAction : MonoBehaviour
     private void SwitchPlayerActions(PlayerActions playerAction)
     {
         currentAction = playerAction;
-        DisableScripts();
+        DisableAllActions();
         switch (currentAction)
         {
             case PlayerActions.move:
@@ -76,7 +76,7 @@ public class PlayerSwitchAction : MonoBehaviour
         // Debug.Log("Player Action switched to: " + currentAction);
     }
 
-    private void DisableScripts()
+    public void DisableAllActions()
     {
         moveScript.enabled = false;
         sliceScript.enabled = false;

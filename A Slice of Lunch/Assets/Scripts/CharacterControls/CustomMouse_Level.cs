@@ -3,8 +3,9 @@ using UnityEngine.InputSystem;
 
 public class CustomMouse_Level : MonoBehaviour
 {
-    [SerializeField] Sprite finger;
-    [SerializeField] Sprite fist;
+    [SerializeField] Sprite openGrab;
+    [SerializeField] Sprite closeGrab;
+    [SerializeField] Sprite fingerPoint;
     [SerializeField] Sprite knife;
     [SerializeField] Vector3 offset = Vector3.zero;
     SpriteRenderer spriteRenderer;
@@ -34,7 +35,7 @@ public class CustomMouse_Level : MonoBehaviour
     private void Start()
     {
         Cursor.visible = false;
-        spriteRenderer.sprite = finger;
+        spriteRenderer.sprite = fingerPoint;
         rotateObj.SetActive(false);
         playerInputActions = PlayerInputManager.Instance.PlayerActions;
     }
@@ -43,10 +44,9 @@ public class CustomMouse_Level : MonoBehaviour
     {
         if (currentPlayerAction == PlayerActions.move)
         {
-            spriteRenderer.sprite = playerInputActions.LeftClick.IsInProgress() ? fist : finger;
+            spriteRenderer.sprite = playerInputActions.LeftClick.IsInProgress() ? closeGrab : openGrab;
         }
-        // transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition) + ((spriteRenderer.sprite == knife) ? Vector3.zero : offset);
-            Vector2 mousePos = playerInputActions.MousePosition.ReadValue<Vector2>();
+        Vector2 mousePos = playerInputActions.MousePosition.ReadValue<Vector2>();
         Collider2D overlapCol = Physics2D.OverlapPoint(Camera.main.ScreenToWorldPoint(mousePos) + ((spriteRenderer.sprite == knife) ? Vector3.zero : offset));
 
         transform.position = Camera.main.ScreenToWorldPoint(mousePos) + ((spriteRenderer.sprite == knife) ? Vector3.zero : offset);
@@ -59,13 +59,13 @@ public class CustomMouse_Level : MonoBehaviour
         switch (currentPlayerAction)
         {
             case PlayerActions.move:
-                spriteRenderer.sprite = finger;
+                spriteRenderer.sprite = openGrab;
                 break;
             case PlayerActions.slice:
                 spriteRenderer.sprite = knife;
                 break;
             case PlayerActions.rotate:
-                spriteRenderer.sprite = finger;
+                spriteRenderer.sprite = fingerPoint;
                 rotateObj.SetActive(true);
                 break;
         }

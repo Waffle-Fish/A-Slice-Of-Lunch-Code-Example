@@ -18,4 +18,10 @@ public class ToolbarHandle : MonoBehaviour, IPointerClickHandler
         isOpen = !isOpen;
         animator.SetBool("Open", isOpen);
     }
+
+    public void CloseToolbar()
+    {
+        isOpen = false;
+        animator.SetBool("Open", isOpen);
+    }
 }

@@ -8,12 +8,11 @@ using UnityEngine.Rendering;
 
 public class PlayerRotate : MonoBehaviour
 {
+    public static event Action<bool> OnFoodIsRotating;
     [SerializeField][Min(0.001f)] float sensitivity = 1f;
 
     bool rotating = false;
-    bool onFood = false;
     PlayerSlice playerSlice;
-    float degOffset;
     PlayerInputActions.PlayerActions playerActions;
     Vector3 pivotPoint = Vector3.zero;
 
@@ -35,11 +34,8 @@ public class PlayerRotate : MonoBehaviour
         playerActions = PlayerInputManager.Instance.PlayerActions;
 
         Transform childTransform = transform.GetChild(0);
-        if (childTransform.childCount == 2)
-        {
-            validPlacementObj = childTransform.GetChild(0).gameObject;
-            invalidPlacementObj = childTransform.GetChild(1).gameObject;
-        }
+        validPlacementObj = childTransform.GetChild(0).gameObject;
+        invalidPlacementObj = childTransform.GetChild(1).gameObject;
 
         DisablePlacementObjects();
     }
@@ -61,7 +57,7 @@ public class PlayerRotate : MonoBehaviour
         Vector2 mouseDelta = PlayerInputManager.Instance.PointerDelta;
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(PlayerInputManager.Instance.MousePos);
         if (mouseDelta == Vector2.zero) return;
-        
+
         if (rotating)
         {
             Vector2 foodToMouse = mousePos - (Vector2)pivotPoint;
@@ -89,6 +85,7 @@ public class PlayerRotate : MonoBehaviour
 
         // Debug.Log(foodCol.transform.parent.name + " is being picked up");
         rotating = true;
+        OnFoodIsRotating?.Invoke(rotating);
 
         foodSortingGroup = foodCol.transform.parent.GetComponent<SortingGroup>();
         foodSpriteRenderer = foodCol.transform.parent.GetComponent<SpriteRenderer>();
@@ -110,6 +107,7 @@ public class PlayerRotate : MonoBehaviour
         if (!rotating || !foodCol) return;
         foodSpriteRenderer.color = Color.white;
         rotating = false;
+        OnFoodIsRotating?.Invoke(rotating);
         Transform parentTransform = foodCol.transform.parent;
         foodSortingGroup.sortingOrder = initialSortingOrder;
         ContactFilter2D contactFilter2D = new();
@@ -158,6 +156,7 @@ public class PlayerRotate : MonoBehaviour
 
     private IEnumerator HandleFoodCollision()
     {
+        OnFoodIsRotating?.Invoke(true);
         const float TOTAL_ITERATIONS = 50;
         const float TOTAL_TIME = 0.2f;
         float timePerIteration = TOTAL_TIME / TOTAL_ITERATIONS;
@@ -168,6 +167,7 @@ public class PlayerRotate : MonoBehaviour
             foodCol.transform.parent.rotation = Quaternion.Lerp(startRot, endRot, i * timePerIteration / TOTAL_TIME);
             yield return new WaitForSeconds(timePerIteration);
         }
+        OnFoodIsRotating?.Invoke(false);
     }
 
     private void PlayGrabSFX(string textureSFX)
@@ -240,16 +240,5 @@ public class PlayerRotate : MonoBehaviour
             }
         }
         return false;
-    }
-
-    private float GetAngleToMouse()
-    {
-        if (!foodCol) return 0;
-        Vector2 foodPos = (Vector2)foodCol.bounds.center;
-        Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint(PlayerInputManager.Instance.MousePos);
-        Vector2 dir = mouseWorldPos - foodPos;
-        float sensitivity = 1;
-        float angle = -Mathf.Atan2(dir.x, dir.y) * Mathf.Rad2Deg * sensitivity;
-        return angle;
     }
 }

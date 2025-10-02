@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(SaveSystem))]
 public class LevelManager : MonoBehaviour
 {
     [SerializeField] GameObject JapaneseBox;
     List<Button> JapaneseButtons = new();
-    // [SerializeField] GameObject ItalianBox;
+    [SerializeField] GameObject ItalianBox;
     List<Button> ItalianButtons = new();
     SaveSystem saveSystem;
 
@@ -16,14 +17,14 @@ public class LevelManager : MonoBehaviour
         saveSystem = GetComponent<SaveSystem>();
 
         JapaneseBox.GetComponentsInChildren<Button>(JapaneseButtons);
-        // ItalianBox.GetComponentsInChildren<Button>(ItalianButtons);
+        ItalianBox.GetComponentsInChildren<Button>(ItalianButtons);
 
         DisableAllButtons(JapaneseButtons);
-        // DisableAllButtons(ItalianButtons);
+        DisableAllButtons(ItalianButtons);
 
         saveSystem.LoadData();
         if (saveSystem.PlayerData.BoxLevelData[0] > -1) EnableAllButtonsUpToALevel(JapaneseButtons, saveSystem.PlayerData.BoxLevelData[0]);
-        // if (boxData[1] > -1) EnableAllButtonsUpToALevel(ItalianButtons, boxData[1]);
+        if (saveSystem.PlayerData.BoxLevelData[1] > -1) EnableAllButtonsUpToALevel(ItalianButtons, saveSystem.PlayerData.BoxLevelData[1]);
     }
 
     private void DisableAllButtons(List<Button> buttons)

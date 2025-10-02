@@ -6,7 +6,7 @@ using UnityEngine.Rendering;
 
 public class PlayerMoveFood : MonoBehaviour
 {
-    public static event Action<bool> OnFoodIsDragging;
+    public static event Action<bool> OnFoodIsMoving;
     bool dragging = false;
     bool onFood = false;
     PlayerSlice playerSlice;
@@ -79,7 +79,7 @@ public class PlayerMoveFood : MonoBehaviour
 
         // Debug.Log(foodCol.transform.parent.name + " is being picked up");
         dragging = true;
-        OnFoodIsDragging?.Invoke(dragging);
+        OnFoodIsMoving?.Invoke(dragging);
 
         foodSortingGroup = foodCol.transform.parent.GetComponent<SortingGroup>();
         foodSpriteRenderer = foodCol.transform.parent.GetComponent<SpriteRenderer>();
@@ -111,7 +111,7 @@ public class PlayerMoveFood : MonoBehaviour
         if (!dragging || !foodCol) return;
         foodSpriteRenderer.color = Color.white;
         dragging = false;
-        OnFoodIsDragging?.Invoke(dragging);
+        OnFoodIsMoving?.Invoke(dragging);
         Transform parentTransform = foodCol.transform.parent;
         foodSortingGroup.sortingOrder = initialSortingOrder;
         ContactFilter2D contactFilter2D = new();
@@ -160,6 +160,7 @@ public class PlayerMoveFood : MonoBehaviour
 
     private IEnumerator HandleFoodCollision()
     {
+        OnFoodIsMoving?.Invoke(true);
         float totalIterations = 50;
         float totalTime = 0.2f;
         float timePerIteration = totalTime / totalIterations;
@@ -170,6 +171,7 @@ public class PlayerMoveFood : MonoBehaviour
             foodCol.transform.parent.position = Vector3.Lerp(startPos, endPos, i * timePerIteration / totalTime);
             yield return new WaitForSeconds(timePerIteration);
         }
+        OnFoodIsMoving?.Invoke(false);
     }
 
     private void PlayGrabSFX(string textureSFX)

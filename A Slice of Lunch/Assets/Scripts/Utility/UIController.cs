@@ -15,18 +15,20 @@ public class UIController : MonoBehaviour
     public bool isInGameSettings;
     bool isGamePaused = false;
 
-    public void Start() {
+    public void Start()
+    {
         if (AudioManager.Instance != null)
         {
             // _musicSlider.value = PlayerPrefs.GetFloat("musicVolume");
             // _sfxSlider.value = PlayerPrefs.GetFloat("sfxVolume");
-            _musicSlider.value = 0.5f;
-            _sfxSlider.value = 0.6f;
+            _musicSlider.value = 0.4f;
+            _sfxSlider.value = 0.5f;
             MusicVolume();
             SFXVolume();
         }
-        
-        if (isInGameSettings == true) {
+
+        if (isInGameSettings == true)
+        {
             _settingsPanel.SetActive(false);
             Debug.Log("Deactivated settings panel");
         }
@@ -34,28 +36,33 @@ public class UIController : MonoBehaviour
         Debug.Log("Loaded volume levels");
     }
 
-    public void Update() {
-        _musicVolumeText.text = Math.Round(_musicSlider.value, 1).ToString();
-        _sfxVolumeText.text = Math.Round(_sfxSlider.value, 1).ToString();
+    public void Update()
+    {
+        _musicVolumeText.text = PercentToString(Math.Round(_musicSlider.value, 1));
+        _sfxVolumeText.text = PercentToString(Math.Round(_sfxSlider.value, 1));
     }
 
-    public void ToggleMusic() {
+    public void ToggleMusic()
+    {
         AudioManager.Instance.ToggleMusic();
     }
 
-    public void ToggleSFX() {
+    public void ToggleSFX()
+    {
         AudioManager.Instance.ToggleSFX();
     }
 
-    public void MusicVolume() {
+    public void MusicVolume()
+    {
         float musicVolume = _musicSlider.value;
         AudioManager.Instance.MusicVolume(musicVolume);
         PlayerPrefs.SetFloat("musicVolume", musicVolume);
 
         Debug.Log("Saved music volume level");
     }
-    
-    public void SFXVolume() {
+
+    public void SFXVolume()
+    {
         float sfxVolume = _sfxSlider.value;
         AudioManager.Instance.SFXVolume(sfxVolume);
         PlayerPrefs.SetFloat("sfxVolume", sfxVolume);
@@ -63,15 +70,19 @@ public class UIController : MonoBehaviour
         Debug.Log("Saved SFX volume level");
     }
 
-    public void PauseGame() {
+    public void PauseGame()
+    {
         AudioManager.Instance.PlaySFX("ButtonPop");
-        if (!isGamePaused) {
+        if (!isGamePaused)
+        {
             isGamePaused = true;
             _settingsPanel.SetActive(true);
             // Time.timeScale = 0f;
 
             Debug.Log("Pause Game");
-        } else if (isGamePaused) {
+        }
+        else if (isGamePaused)
+        {
             isGamePaused = false;
             _settingsPanel.SetActive(false);
             // Time.timeScale = 1f;
@@ -80,4 +91,8 @@ public class UIController : MonoBehaviour
         }
     }
 
+    private String PercentToString(double percent)
+    {
+        return (percent * 100).ToString("F0") + "%";
+    }
 }

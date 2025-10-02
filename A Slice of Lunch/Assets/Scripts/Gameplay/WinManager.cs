@@ -1,10 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.Rendering;
-using UnityEngine.U2D.IK;
 
 public class WinManager : MonoBehaviour
 {
@@ -20,7 +16,8 @@ public class WinManager : MonoBehaviour
     List<PolygonCollider2D> totalFoodList = new();
     List<PolygonCollider2D> foodInBox = new();
     private Collider2D container;
-    private bool foodIsDragging = false;
+    private bool foodIsMoving = false;
+    private bool foodIsRotating = false;
 
     void Awake()
     {
@@ -33,17 +30,21 @@ public class WinManager : MonoBehaviour
     {
         UpdateTotalFoodList();
     }
-    
-    private void OnEnable() {
-        PlayerMoveFood.OnFoodIsDragging += UpdateFoodIsDragging;
+
+    private void OnEnable()
+    {
+        PlayerMoveFood.OnFoodIsMoving += UpdateFoodIsMoving;
+        PlayerRotate.OnFoodIsRotating += UpdateFoodIsRotating;
     }
 
-    private void OnDisable() {
-        PlayerMoveFood.OnFoodIsDragging -= UpdateFoodIsDragging;
+    private void OnDisable()
+    {
+        PlayerMoveFood.OnFoodIsMoving -= UpdateFoodIsMoving;
+        PlayerRotate.OnFoodIsRotating -= UpdateFoodIsRotating;
     }
 
     void Update() {
-        bool win = foodInBox.Count == totalFoodList.Count && !foodIsDragging;
+        bool win = foodInBox.Count == totalFoodList.Count && !foodIsMoving && !foodIsRotating;
         winButton.SetActive(win);
     }
 
@@ -59,25 +60,16 @@ public class WinManager : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other) {
         foodInBox.Remove(other.GetComponent<PolygonCollider2D>());
-        // UpdatePiecestOutsideBox();
-        // Debug.Log(other.transform.parent.name + " has left the box");
     }
 
-    // void IsFoodInBox(Collider2D foodCol)
-    // {
-    //     ContactFilter2D cf2d = new();
-    //     List<Collider2D> results = new();
-    //     if (Physics2D.OverlapCollider(container,cf2d.NoFilter(), results) == 0) return;
-    //     if (results.Contains(foodCol) && !foodInBox.Contains((PolygonCollider2D)foodCol))
-    //     {
-            
-    //     }
-    //         foodInBox.Add((PolygonCollider2D)foodCol);
-    // }
-
-    void UpdateFoodIsDragging(bool b)
+    void UpdateFoodIsMoving(bool b)
     {
-        foodIsDragging = b;
+        foodIsMoving = b;
+    }
+
+    void UpdateFoodIsRotating(bool b)
+    {
+        foodIsRotating = b;
     }
 
     public void UpdateTotalFoodList()

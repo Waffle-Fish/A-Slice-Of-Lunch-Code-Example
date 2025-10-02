@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(AudioSource))]
 public class ButtonSFX : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
@@ -9,10 +10,13 @@ public class ButtonSFX : MonoBehaviour, IPointerClickHandler, IPointerEnterHandl
     [SerializeField] List<AudioClip> hoverSFXS;
 
     AudioSource audioSource;
-    private void Awake() {
+    Button button;
+    private void Awake()
+    {
         audioSource = GetComponent<AudioSource>();
         audioSource.playOnAwake = false;
         audioSource.loop = false;
+        TryGetComponent(out button);
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -24,7 +28,7 @@ public class ButtonSFX : MonoBehaviour, IPointerClickHandler, IPointerEnterHandl
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (hoverSFXS.Count == 0) return;
+        if (hoverSFXS.Count == 0 || button == null || !button.interactable) return;
         //audioSource.PlayOneShot(hoverSFXS[Random.Range(0, hoverSFXS.Count)]);
         AudioManager.Instance.PlaySFX(hoverSFXS[Random.Range(0, hoverSFXS.Count)]);
     }

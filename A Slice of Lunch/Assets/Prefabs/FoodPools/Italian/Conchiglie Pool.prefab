@@ -100,6 +100,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7798638528406392139, guid: f61ac99eab8dc534eb7f9eb9d32ce87f, type: 3}
+      propertyPath: TextureSFX
+      value: FoodSquish
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

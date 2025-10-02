@@ -1740,6 +1740,14 @@ PrefabInstance:
       propertyPath: m_Points.m_Paths.Array.data[0].Array.data[211].y
       value: -4.48
       objectReference: {fileID: 0}
+    - target: {fileID: 6497931674979536645, guid: 850fcbcd0492cd549879a926ae607dde, type: 3}
+      propertyPath: TextureSFX
+      value: FoodSquish
+      objectReference: {fileID: 0}
+    - target: {fileID: 6497931674979536645, guid: 850fcbcd0492cd549879a926ae607dde, type: 3}
+      propertyPath: TableTextureSFX
+      value: Wood
+      objectReference: {fileID: 0}
     - target: {fileID: 7395996719869723221, guid: 850fcbcd0492cd549879a926ae607dde, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4

@@ -697,7 +697,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bfda56da833e2384a9677cd3c976a436, type: 3}
-  m_Name: WinTransitionTimeline
+  m_Name: ItalianWinTransition
   m_EditorClassIdentifier: 
   m_Version: 0
   m_Tracks:
@@ -1292,9 +1292,9 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 1
-      value: {fileID: 21300000, guid: 7f2bb33fe8695d843a4b0af9364c1958, type: 3}
+      value: {fileID: 21300000, guid: 6b66279ed9a340c42989b0050d6f2296, type: 3}
     - time: 1.1666666
-      value: {fileID: 21300000, guid: 1c714762c0d301949b917d3aab2e16d9, type: 3}
+      value: {fileID: 21300000, guid: 25461e52e52ec254a959d00181f0c3f8, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -1362,8 +1362,8 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
-    - {fileID: 21300000, guid: 7f2bb33fe8695d843a4b0af9364c1958, type: 3}
-    - {fileID: 21300000, guid: 1c714762c0d301949b917d3aab2e16d9, type: 3}
+    - {fileID: 21300000, guid: 6b66279ed9a340c42989b0050d6f2296, type: 3}
+    - {fileID: 21300000, guid: 25461e52e52ec254a959d00181f0c3f8, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}

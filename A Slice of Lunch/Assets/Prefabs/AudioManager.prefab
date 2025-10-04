@@ -79,6 +79,8 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: b8daf14987c3c2049bb075c96204b9a1, type: 3}
   - name: WinJingle
     clip: {fileID: 8300000, guid: ca99cb1b5e86aad48b352759892ef836, type: 3}
+  - name: Clasp
+    clip: {fileID: 8300000, guid: 8c995d4541d1efd4e8bc7d2ccd7a644c, type: 3}
   musicSource: {fileID: 5150821011014824834}
   sfxSource: {fileID: 5174887348149827966}
 --- !u!1 &4081869595994002383

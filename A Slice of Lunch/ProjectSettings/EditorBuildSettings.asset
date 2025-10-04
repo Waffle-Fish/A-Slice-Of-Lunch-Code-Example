@@ -37,7 +37,7 @@ EditorBuildSettings:
     guid: 0caea6a867ee2734abce8c8f42faab65
   - enabled: 1
     path: Assets/Scenes/Final Game Scenes/Level Scenes/Italy_1.unity
-    guid: 5e71abbd5b66940498359aa1f1e60cdf
+    guid: 859ac272e6a9a4b4a9c84e4fc9609268
   - enabled: 1
     path: Assets/Scenes/Final Game Scenes/Level Scenes/Italy_2.unity
     guid: 805552df38b535b4b996ee47f9a99320

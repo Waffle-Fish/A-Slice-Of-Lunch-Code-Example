@@ -32,5 +32,7 @@ public class ProcessWin : MonoBehaviour
     {
         yield return new WaitForSeconds(0.75f);
         AudioManager.Instance.PlaySFX("WinJingle");
+        yield return new WaitForSeconds(0.2f);
+        AudioManager.Instance.PlaySFX("Clasp");
     }
 }

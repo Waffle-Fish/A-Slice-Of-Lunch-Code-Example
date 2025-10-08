@@ -64,11 +64,11 @@ public class PlayerSlice : MonoBehaviour
         if (playerActions.LeftClick.WasReleasedThisFrame()) FinalizeSlice();
     }
 
-    private void DetectRightClick()
-    {
-        if (playerActions.RightClick.WasPressedThisFrame()) BeginSlice();
-        if (playerActions.RightClick.WasReleasedThisFrame()) FinalizeSlice();
-    }
+    // private void DetectRightClick()
+    // {
+    //     if (playerActions.RightClick.WasPressedThisFrame()) BeginSlice();
+    //     if (playerActions.RightClick.WasReleasedThisFrame()) FinalizeSlice();
+    // }
 
     #region Slice Zone
     private void BeginSlice()

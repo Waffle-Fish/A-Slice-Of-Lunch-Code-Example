@@ -46,7 +46,7 @@ public class PlayerSwitchAction : MonoBehaviour
 
     private void DetectRightClick()
     {
-        if (playerActions.RightClick.WasPressedThisFrame()) SwitchPlayerActions();
+        if (playerActions.RightClick.WasPressedThisFrame() && !playerActions.LeftClick.IsInProgress()) SwitchPlayerActions();
     }
 
     private void SwitchPlayerActions()

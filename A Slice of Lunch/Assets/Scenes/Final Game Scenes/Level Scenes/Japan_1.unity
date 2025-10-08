@@ -6008,7 +6008,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 10000
+  m_SortingOrder: 10001
   m_RenderMode: 0
   m_MeshDistribution: 0
   m_SortMode: 0
@@ -6141,6 +6141,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1436691705279208488, guid: 873855b1f42536141936533ccc3cfbbe, type: 3}
+      propertyPath: m_SceneBindings.Array.data[0].value
+      value: 
+      objectReference: {fileID: 1743506578}
     - target: {fileID: 1921510446006911936, guid: 873855b1f42536141936533ccc3cfbbe, type: 3}
       propertyPath: m_Type
       value: 0
@@ -6309,6 +6313,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 425
       objectReference: {fileID: 0}
+    - target: {fileID: 5309243785460350829, guid: 873855b1f42536141936533ccc3cfbbe, type: 3}
+      propertyPath: m_SceneBindings.Array.data[0].value
+      value: 
+      objectReference: {fileID: 1743506578}
     - target: {fileID: 6854526011633429712, guid: 873855b1f42536141936533ccc3cfbbe, type: 3}
       propertyPath: m_Name
       value: UI_Canvas_WorldSpace_Tutorial
@@ -6319,6 +6327,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8704965051725309692, guid: 873855b1f42536141936533ccc3cfbbe, type: 3}
       propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9180092189915014761, guid: 873855b1f42536141936533ccc3cfbbe, type: 3}
+      propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []

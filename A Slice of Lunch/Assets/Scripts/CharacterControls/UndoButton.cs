@@ -8,6 +8,6 @@ public class UndoButton : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        OnUndoButtonPressed?.Invoke();
+        if (eventData.button == PointerEventData.InputButton.Left) OnUndoButtonPressed?.Invoke();
     }
 }

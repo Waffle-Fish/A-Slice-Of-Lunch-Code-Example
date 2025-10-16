@@ -9,12 +9,12 @@ using UnityEngine.Rendering;
 public class PlayerRotate : MonoBehaviour
 {
     public static event Action<bool> OnFoodIsRotating;
+    public static event Action<TurnActions> OnRotateFinish;
     [SerializeField][Min(0.001f)] float sensitivity = 1f;
-
     bool rotating = false;
-    PlayerSlice playerSlice;
     PlayerInputActions.PlayerActions playerActions;
     Vector3 pivotPoint = Vector3.zero;
+    private TurnActions movesMadeThisTurn = new();
 
     [Header("Food Collision Handler")]
     Collider2D foodCol;
@@ -30,14 +30,15 @@ public class PlayerRotate : MonoBehaviour
 
     private void Awake()
     {
-        playerSlice = GameObject.FindWithTag("Player").GetComponent<PlayerSlice>();
         playerActions = PlayerInputManager.Instance.PlayerActions;
 
         Transform childTransform = transform.GetChild(0);
         validPlacementObj = childTransform.GetChild(0).gameObject;
         invalidPlacementObj = childTransform.GetChild(1).gameObject;
 
-        DisablePlacementObjects();
+        movesMadeThisTurn.foodPositionsThisTurn = new();
+
+        DisablePlacementIndicators();
     }
 
     private void OnEnable()
@@ -50,6 +51,10 @@ public class PlayerRotate : MonoBehaviour
     {
         playerActions.LeftClick.performed -= PickUpFood;
         playerActions.LeftClick.canceled -= ReleaseFood;
+    }
+
+    private void Start() {
+        movesMadeThisTurn.foodPositionsThisTurn = new();
     }
 
     private void Update()
@@ -114,7 +119,10 @@ public class PlayerRotate : MonoBehaviour
         List<Collider2D> results = new();
         Dictionary<string, int> resultsTags = new();
 
-        DisablePlacementObjects();
+        // Setup Undo
+        movesMadeThisTurn.foodPositionsThisTurn = new();
+
+        DisablePlacementIndicators();
         foodCol.OverlapCollider(contactFilter2D.NoFilter(), results);
         foreach (var item in results)
         {
@@ -142,6 +150,7 @@ public class PlayerRotate : MonoBehaviour
         }
 
         PlayDropSFX(foodCol.GetComponent<ControlFood>().TableTextureSFX);
+        OnRotateFinish?.Invoke(movesMadeThisTurn);
         if (foodCol.TryGetComponent<FoodShadowManager>(out FoodShadowManager fsm)) fsm.UpdateShadowToPlacedDown();
         Debug.Log("Finish releasing food");
     }
@@ -202,7 +211,7 @@ public class PlayerRotate : MonoBehaviour
         }
     }
 
-    private void DisablePlacementObjects()
+    private void DisablePlacementIndicators()
     {
         if (!validPlacementObj || !invalidPlacementObj) return;
         validPlacementObj.SetActive(false);

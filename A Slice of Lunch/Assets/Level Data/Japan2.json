@@ -1,0 +1,14 @@
+{
+    "BoxType": 0,
+    "LevelNum": 2,
+    "FoodList": {
+        "instanceID": 30610
+    },
+    "LunchBox": {
+        "instanceID": 30536
+    },
+    "Background": {
+        "instanceID": 30754
+    },
+    "TotalSlices": 1
+}

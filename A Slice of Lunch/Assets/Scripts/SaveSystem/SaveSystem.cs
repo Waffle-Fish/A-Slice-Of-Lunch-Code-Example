@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 
-public enum BoxType { Japan, Italy, French, Chinese }
-
 public struct PlayerData
 {
     public List<int> BoxLevelData;

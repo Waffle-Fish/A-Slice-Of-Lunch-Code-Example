@@ -202,11 +202,6 @@ Animator:
   m_CorrespondingSourceObject: {fileID: 8965451813350291068, guid: eabf853503ff1f5419e1d86bd9364ba6, type: 3}
   m_PrefabInstance: {fileID: 5827718164698712905}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &214969918 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3615119122374918623, guid: d21b7c20ca29b9a409001bcd6aa8e11a, type: 3}
-  m_PrefabInstance: {fileID: 695592686}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &278745600
 GameObject:
   m_ObjectHideFlags: 0
@@ -1602,12 +1597,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentLevelData:
     BoxType: 0
-    LevelNum: 2
-    FoodList:
-    - {fileID: 0}
-    LunchBox: {fileID: 214969918}
-    Background: {fileID: 21300000, guid: e0e73aa90547e7a419e36f04828209c0, type: 3}
-    TotalSlices: 1
+    LevelNum: 0
+    FoodList: []
+    TotalSlices: 0
 --- !u!114 &1372616618
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1621,6 +1613,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   FoodList: {fileID: 0}
+  CuisineAesthetics:
+  - BoxType: 0
+    SceneObjects:
+      LunchBox: {fileID: 0}
+      Background: {fileID: 0}
+  - BoxType: 0
+    SceneObjects:
+      LunchBox: {fileID: 0}
+      Background: {fileID: 0}
+  JapanesePool: []
+  ItalianPool: []
 --- !u!1 &1419872871 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7375822066527608076, guid: eabf853503ff1f5419e1d86bd9364ba6, type: 3}

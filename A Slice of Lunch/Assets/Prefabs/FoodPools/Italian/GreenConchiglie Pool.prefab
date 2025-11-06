@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4361098676727301377}
   - component: {fileID: 4627563510936517927}
   m_Layer: 0
-  m_Name: GreenChonchiglie Pool
+  m_Name: GreenConchiglie Pool
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

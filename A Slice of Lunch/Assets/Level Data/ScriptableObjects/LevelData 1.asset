@@ -10,19 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4a944bc22e8c4e04ca12724fc63bc484, type: 3}
-  m_Name: JapaneseLevel2
+  m_Name: LevelData 1
   m_EditorClassIdentifier: 
   BoxType: 0
-  LevelNum: 1
-  FoodList:
-  - foodType: 0
-    position: {x: 0, y: 0, z: 0}
-    rotation: {x: 0, y: 0, z: 0}
-  - foodType: 0
-    position: {x: 0, y: 0, z: 0}
-    rotation: {x: 0, y: 0, z: 0}
+  LevelNum: 0
+  JapaneseFoodList: []
+  ItalianFoodList: []
   LunchBox: {fileID: 0}
   Background: {fileID: 0}
   TotalSlices: 0
-  JapanesePool: 
-  ItalianPool: 

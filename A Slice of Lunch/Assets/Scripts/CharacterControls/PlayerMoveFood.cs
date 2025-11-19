@@ -18,15 +18,11 @@ public class PlayerMoveFood : MonoBehaviour
     Vector3 foodPreviousPosition;
     int initialSortingOrder;
     SortingGroup foodSortingGroup;
-    SpriteRenderer foodSpriteRenderer;
 
     [Header("Validate Placement Settings")]
     bool placeable = true;
     GameObject validPlacementObj;
     GameObject invalidPlacementObj;
-
-    
-
 
     private void Awake()
     {
@@ -82,7 +78,6 @@ public class PlayerMoveFood : MonoBehaviour
         OnFoodIsMoving?.Invoke(dragging);
 
         foodSortingGroup = foodCol.transform.parent.GetComponent<SortingGroup>();
-        foodSpriteRenderer = foodCol.transform.parent.GetComponent<SpriteRenderer>();
         initialSortingOrder = foodSortingGroup.sortingOrder;
         foodSortingGroup.sortingOrder = 10000;
         foodPreviousPosition = foodCol.transform.parent.transform.position;
@@ -109,7 +104,6 @@ public class PlayerMoveFood : MonoBehaviour
     private void ReleaseFood(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
         if (!dragging || !foodCol) return;
-        foodSpriteRenderer.color = Color.white;
         dragging = false;
         OnFoodIsMoving?.Invoke(dragging);
         Transform parentTransform = foodCol.transform.parent;
@@ -219,7 +213,7 @@ public class PlayerMoveFood : MonoBehaviour
         if (!validPlacementObj || !invalidPlacementObj) return;
         validPlacementObj.SetActive(true);
         invalidPlacementObj.SetActive(false);
-        if(foodSpriteRenderer) foodSpriteRenderer.color = Color.white;
+        // if(foodSpriteRenderer) foodSpriteRenderer.color = Color.white;
     }
 
     private void EnableInvalidObj()
@@ -227,7 +221,7 @@ public class PlayerMoveFood : MonoBehaviour
         if (!validPlacementObj || !invalidPlacementObj) return;
         validPlacementObj.SetActive(false);
         invalidPlacementObj.SetActive(true);
-        if(foodSpriteRenderer) foodSpriteRenderer.color = Color.red;
+        // if(foodSpriteRenderer) foodSpriteRenderer.color = Color.red;
     }
 
     private bool DetectOverlap()

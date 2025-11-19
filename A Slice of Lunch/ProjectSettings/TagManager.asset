@@ -9,6 +9,7 @@ TagManager:
   - LunchBox
   - Border
   - NoSlice
+  - UnsliceableFood
   layers:
   - Default
   - TransparentFX

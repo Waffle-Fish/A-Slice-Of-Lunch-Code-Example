@@ -10,6 +10,8 @@ public class LevelManager : MonoBehaviour
     List<Button> JapaneseButtons = new();
     [SerializeField] GameObject ItalianBox;
     List<Button> ItalianButtons = new();
+    [SerializeField] GameObject HolidayBox;
+    List<Button> HolidayButtons = new();
     SaveSystem saveSystem;
 
     void Start()

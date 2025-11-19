@@ -54,7 +54,7 @@ public class WinManager : MonoBehaviour
         PolygonCollider2D foodCol = col.GetComponent<PolygonCollider2D>();
         if (!foodInBox.Contains(foodCol)) {
             foodInBox.Add(foodCol);
-            UpdatePiecestOutsideBox();
+            // UpdatePiecestOutsideBox();
         }
     }
 
@@ -81,6 +81,6 @@ public class WinManager : MonoBehaviour
     }
 
     private void UpdatePiecestOutsideBox() {
-        // piecesLeftText.text = $"Pieces outside lunchbox: {totalFoodList.Count - foodInBox.Count}";
+        piecesLeftText.text = $"Pieces outside lunchbox: {totalFoodList.Count - foodInBox.Count}";
     }
 }

@@ -102,12 +102,18 @@ public class PlayerSlice : MonoBehaviour
         }
 
         sliceEndPoints[1] = mouseWorldPos;
+
         slicedObjects = Physics2D.LinecastAll(sliceEndPoints[0], sliceEndPoints[1]).ToList();
 
+        if (slicedObjects.Find(slice2 => slice2.collider.CompareTag("NoSlice")))
+        {
+            ResetSliceEndPoints();
+            return;
+        }
         slicedObjects.RemoveAll(slice => !slice.collider.CompareTag("Food"));
 
         if (slicedObjects.Count == 0) {
-            Reset();
+            ResetSliceEndPoints();
             return;
         }
 
@@ -128,7 +134,7 @@ public class PlayerSlice : MonoBehaviour
         }
 
         // Process Slice for each piece
-         foreach (var foodCollider in slicedObjects)
+        foreach (var foodCollider in slicedObjects)
         {
             if (!foodCollider.transform.CompareTag("Food")) continue;
             SliceFood(foodCollider);
@@ -137,7 +143,7 @@ public class PlayerSlice : MonoBehaviour
         OnSliceFinish?.Invoke(movesMadeThisTurn);
         WinManager.Instance.UpdateTotalFoodList();
         UpdateCurrentSlicesCount(-1);
-        Reset();
+        ResetSliceEndPoints();
 
         if (!ValidateFoodSizes()) {
             Debug.Log("A food slice was too small! Canceling slice");
@@ -192,6 +198,13 @@ public class PlayerSlice : MonoBehaviour
         spriteMaskObj.transform.SetPositionAndRotation(maskPos, Quaternion.Euler(0, 0, rotAng));
         firstSliceData.spriteMaskObj = spriteMaskObj;
 
+        // ================================================================================================================
+        // TODO
+        // ----------------------------------------------------------------------------------------------------------------
+        // Task: If food piece has unsliceable sections under sprite mask, disable unsliceable sections
+        //
+        // ================================================================================================================
+
         // Update polygonCollider2D
         PolygonCollider2D originalFoodCollider = (PolygonCollider2D)foodCollider.collider;
         firstSliceData.originalPolyColPoints = originalFoodCollider.points;
@@ -221,6 +234,13 @@ public class PlayerSlice : MonoBehaviour
         Vector2 otherSliceSpawnPos = sliceCenter - spriteMaskObj.transform.localScale.x / 2f * perpendicularSlice;
         finalSliceMask.transform.SetPositionAndRotation(otherSliceSpawnPos, Quaternion.Euler(0, 0, rotAng));
         secondSliceData.spriteMaskObj = finalSliceMask;
+
+        // ================================================================================================================
+        // TODO
+        // ----------------------------------------------------------------------------------------------------------------
+        // Task: If food piece has unsliceable sections under sprite mask, disable unsliceable sections
+        //
+        // ================================================================================================================
 
         // Update other slice polygonCollider2D
         PolygonCollider2D otherSliceNewFoodCollider = otherSlicePiece.GetComponentInChildren<PolygonCollider2D>();
@@ -320,7 +340,7 @@ public class PlayerSlice : MonoBehaviour
         sliceMarking.SetPositions(smPos);
     }
 
-    private void Reset() {
+    private void ResetSliceEndPoints() {
         sliceEndPoints[0] = INVALID_VECTOR;
         sliceEndPoints[1] = INVALID_VECTOR;
     }

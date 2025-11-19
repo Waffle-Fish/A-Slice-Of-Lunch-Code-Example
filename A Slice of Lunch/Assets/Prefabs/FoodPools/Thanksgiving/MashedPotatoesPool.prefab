@@ -1,0 +1,133 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &2608826931512741878
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1305095547210830081}
+    m_Modifications:
+    - target: {fileID: 1619226388258499495, guid: 83c9526579918cd4e8c3fe915bd7e593, type: 3}
+      propertyPath: m_Name
+      value: MashedPotatoes
+      objectReference: {fileID: 0}
+    - target: {fileID: 5870144744955425865, guid: 83c9526579918cd4e8c3fe915bd7e593, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5870144744955425865, guid: 83c9526579918cd4e8c3fe915bd7e593, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5870144744955425865, guid: 83c9526579918cd4e8c3fe915bd7e593, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5870144744955425865, guid: 83c9526579918cd4e8c3fe915bd7e593, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5870144744955425865, guid: 83c9526579918cd4e8c3fe915bd7e593, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5870144744955425865, guid: 83c9526579918cd4e8c3fe915bd7e593, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5870144744955425865, guid: 83c9526579918cd4e8c3fe915bd7e593, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5870144744955425865, guid: 83c9526579918cd4e8c3fe915bd7e593, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5870144744955425865, guid: 83c9526579918cd4e8c3fe915bd7e593, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5870144744955425865, guid: 83c9526579918cd4e8c3fe915bd7e593, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 83c9526579918cd4e8c3fe915bd7e593, type: 3}
+--- !u!4 &8449487163900017599 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5870144744955425865, guid: 83c9526579918cd4e8c3fe915bd7e593, type: 3}
+  m_PrefabInstance: {fileID: 2608826931512741878}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &8356834820483321874
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1614196456777417417, guid: 705374c965099f744930d3d1655fcaa1, type: 3}
+      propertyPath: m_Name
+      value: MashedPotatoesPool
+      objectReference: {fileID: 0}
+    - target: {fileID: 4614947077837535464, guid: 705374c965099f744930d3d1655fcaa1, type: 3}
+      propertyPath: objectToCopy
+      value: 
+      objectReference: {fileID: 1619226388258499495, guid: 83c9526579918cd4e8c3fe915bd7e593, type: 3}
+    - target: {fileID: 7054274749248307475, guid: 705374c965099f744930d3d1655fcaa1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7054274749248307475, guid: 705374c965099f744930d3d1655fcaa1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7054274749248307475, guid: 705374c965099f744930d3d1655fcaa1, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7054274749248307475, guid: 705374c965099f744930d3d1655fcaa1, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7054274749248307475, guid: 705374c965099f744930d3d1655fcaa1, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7054274749248307475, guid: 705374c965099f744930d3d1655fcaa1, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7054274749248307475, guid: 705374c965099f744930d3d1655fcaa1, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7054274749248307475, guid: 705374c965099f744930d3d1655fcaa1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7054274749248307475, guid: 705374c965099f744930d3d1655fcaa1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7054274749248307475, guid: 705374c965099f744930d3d1655fcaa1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 7054274749248307475, guid: 705374c965099f744930d3d1655fcaa1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8449487163900017599}
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 705374c965099f744930d3d1655fcaa1, type: 3}
+--- !u!4 &1305095547210830081 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7054274749248307475, guid: 705374c965099f744930d3d1655fcaa1, type: 3}
+  m_PrefabInstance: {fileID: 8356834820483321874}
+  m_PrefabAsset: {fileID: 0}

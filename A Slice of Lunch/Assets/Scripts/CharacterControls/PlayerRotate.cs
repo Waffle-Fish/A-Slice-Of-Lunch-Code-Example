@@ -110,7 +110,7 @@ public class PlayerRotate : MonoBehaviour
     private void ReleaseFood(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
         if (!rotating || !foodCol) return;
-        foodSpriteRenderer.color = Color.white;
+        // foodSpriteRenderer.color = Color.white;
         rotating = false;
         OnFoodIsRotating?.Invoke(rotating);
         Transform parentTransform = foodCol.transform.parent;
@@ -224,7 +224,7 @@ public class PlayerRotate : MonoBehaviour
         if (!validPlacementObj || !invalidPlacementObj) return;
         validPlacementObj.SetActive(true);
         invalidPlacementObj.SetActive(false);
-        if (foodSpriteRenderer) foodSpriteRenderer.color = Color.white;
+        // if (foodSpriteRenderer) foodSpriteRenderer.color = Color.white;
     }
 
     private void EnableInvalidObj()
@@ -232,7 +232,7 @@ public class PlayerRotate : MonoBehaviour
         if (!validPlacementObj || !invalidPlacementObj) return;
         validPlacementObj.SetActive(false);
         invalidPlacementObj.SetActive(true);
-        if (foodSpriteRenderer) foodSpriteRenderer.color = Color.red;
+        // if (foodSpriteRenderer) foodSpriteRenderer.color = Color.red;
     }
 
     private bool DetectOverlap()

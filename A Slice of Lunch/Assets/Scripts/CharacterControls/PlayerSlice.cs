@@ -193,7 +193,7 @@ public class PlayerSlice : MonoBehaviour
         // Spawn Mask
         GameObject spriteMaskObj = maskPool.GetPooledObject();
         SpriteMask spriteMask = spriteMaskObj.GetComponent<SpriteMask>();
-        Vector2 maskPos = sliceCenter + spriteMaskObj.transform.localScale.x / 2f * perpendicularSlice;
+        Vector2 maskPos = sliceCenter + spriteMaskObj.transform.lossyScale.x / 2f * perpendicularSlice;
         spriteMaskObj.SetActive(true);
         spriteMaskObj.transform.SetPositionAndRotation(maskPos, Quaternion.Euler(0, 0, rotAng));
         firstSliceData.spriteMaskObj = spriteMaskObj;
@@ -231,7 +231,7 @@ public class PlayerSlice : MonoBehaviour
         }
         GameObject finalSliceMask = otherSliceMaskPool.GetPooledObject();
         finalSliceMask.SetActive(true);
-        Vector2 otherSliceSpawnPos = sliceCenter - spriteMaskObj.transform.localScale.x / 2f * perpendicularSlice;
+        Vector2 otherSliceSpawnPos = sliceCenter - spriteMaskObj.transform.lossyScale.x / 2f * perpendicularSlice;
         finalSliceMask.transform.SetPositionAndRotation(otherSliceSpawnPos, Quaternion.Euler(0, 0, rotAng));
         secondSliceData.spriteMaskObj = finalSliceMask;
 

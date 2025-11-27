@@ -29,6 +29,7 @@ public class LevelSelectManager : MonoBehaviour
     private void Start()
     {
         CheckSerializeFieldVariables();
+        currentBoxInd = 1;
         DisableAllCamerasExceptOne(currentBoxInd);
         Color transparent = new(1, 1, 1, 0);
         if (currentBoxInd == 0)

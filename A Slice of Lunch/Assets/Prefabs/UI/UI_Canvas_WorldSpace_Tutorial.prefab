@@ -1699,8 +1699,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI_Canvas_WorldSpace_Tutorial
       objectReference: {fileID: 0}
+    - target: {fileID: 1749630899484986328, guid: 97063aaa2c68709498e3b26f8f29555d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2067630877699197826, guid: 97063aaa2c68709498e3b26f8f29555d, type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3216462929406649997, guid: 97063aaa2c68709498e3b26f8f29555d, type: 3}
+      propertyPath: m_SortingOrder
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3366204700894158335, guid: 97063aaa2c68709498e3b26f8f29555d, type: 3}
@@ -1709,7 +1717,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3487236493633421689, guid: 97063aaa2c68709498e3b26f8f29555d, type: 3}
       propertyPath: m_PresetInfoIsWorld
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3667700985735001390, guid: 97063aaa2c68709498e3b26f8f29555d, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -160
       objectReference: {fileID: 0}
     - target: {fileID: 4074330664624604540, guid: 97063aaa2c68709498e3b26f8f29555d, type: 3}
       propertyPath: m_IsActive
@@ -1801,6 +1813,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5896103767447927472, guid: 97063aaa2c68709498e3b26f8f29555d, type: 3}
       propertyPath: m_SortingOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6039074777624626505, guid: 97063aaa2c68709498e3b26f8f29555d, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6582925601301117869, guid: 97063aaa2c68709498e3b26f8f29555d, type: 3}

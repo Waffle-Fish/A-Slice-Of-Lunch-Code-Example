@@ -62,6 +62,8 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 60c60bf43eb95924c92d522e79d754da, type: 3}
   - name: DownbeatNoodles
     clip: {fileID: 8300000, guid: 41892a02e8e5d3c448ba49686a234e5b, type: 3}
+  - name: Turkey
+    clip: {fileID: 8300000, guid: b26a10061f8e4f54996c87a0e086f293, type: 3}
   sfxSounds:
   - name: ButtonPop
     clip: {fileID: 8300000, guid: 33cdc0e30d93bd148ae16be850f91346, type: 3}

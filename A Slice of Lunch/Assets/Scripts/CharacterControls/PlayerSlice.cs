@@ -176,6 +176,7 @@ public class PlayerSlice : MonoBehaviour
         // rotate endPoints
         sliceEdgePoints[0] = Physics2D.Raycast(sliceEndPoints[0], sliceEndPoints[1] - sliceEndPoints[0], distance: 100f, layerMask: sliceLayerMask).point;
         sliceEdgePoints[1] = Physics2D.Raycast(sliceEndPoints[1], sliceEndPoints[0] - sliceEndPoints[1], distance: 100f, layerMask: sliceLayerMask).point;
+        
         Vector2 sliceCenter = (sliceEdgePoints[0] + sliceEdgePoints[1]) / 2f;
 
         foodCollider.collider.gameObject.layer = originalLayer;
@@ -193,10 +194,10 @@ public class PlayerSlice : MonoBehaviour
         // Spawn Mask
         GameObject spriteMaskObj = maskPool.GetPooledObject();
         SpriteMask spriteMask = spriteMaskObj.GetComponent<SpriteMask>();
-        Vector2 maskPos = sliceCenter + spriteMaskObj.transform.localScale.x / 2f * perpendicularSlice;
+        Vector2 maskPos = sliceCenter + spriteMaskObj.transform.lossyScale.x / 2f * perpendicularSlice;
         spriteMaskObj.SetActive(true);
         spriteMaskObj.transform.SetPositionAndRotation(maskPos, Quaternion.Euler(0, 0, rotAng));
-        firstSliceData.spriteMaskObj = spriteMaskObj;
+        firstSliceData.SpriteMaskObj = spriteMaskObj;
 
         // ================================================================================================================
         // TODO
@@ -207,8 +208,9 @@ public class PlayerSlice : MonoBehaviour
 
         // Update polygonCollider2D
         PolygonCollider2D originalFoodCollider = (PolygonCollider2D)foodCollider.collider;
-        firstSliceData.originalPolyColPoints = originalFoodCollider.points;
-        firstSliceData.polygonCollider2D = originalFoodCollider;
+        firstSliceData.OriginalPolyColPoints = originalFoodCollider.points;
+        firstSliceData.PolyCol2D = originalFoodCollider;
+        firstSliceData.LossyScale = originalFoodCollider.transform.lossyScale;
         List<Vector2> originalFoodColliderPoints = originalFoodCollider.points.ToList();
         originalFoodCollider.SetPath(0, GenerateNewSlicePoints(originalFoodCollider, sliceEdgePoints, GetSidePointIsOn(maskPos), pivotPoint));
 
@@ -231,9 +233,9 @@ public class PlayerSlice : MonoBehaviour
         }
         GameObject finalSliceMask = otherSliceMaskPool.GetPooledObject();
         finalSliceMask.SetActive(true);
-        Vector2 otherSliceSpawnPos = sliceCenter - spriteMaskObj.transform.localScale.x / 2f * perpendicularSlice;
+        Vector2 otherSliceSpawnPos = sliceCenter - spriteMaskObj.transform.lossyScale.x / 2f * perpendicularSlice;
         finalSliceMask.transform.SetPositionAndRotation(otherSliceSpawnPos, Quaternion.Euler(0, 0, rotAng));
-        secondSliceData.spriteMaskObj = finalSliceMask;
+        secondSliceData.SpriteMaskObj = finalSliceMask;
 
         // ================================================================================================================
         // TODO
@@ -244,14 +246,19 @@ public class PlayerSlice : MonoBehaviour
 
         // Update other slice polygonCollider2D
         PolygonCollider2D otherSliceNewFoodCollider = otherSlicePiece.GetComponentInChildren<PolygonCollider2D>();
-        secondSliceData.originalPolyColPoints = otherSliceNewFoodCollider.points;
-        secondSliceData.polygonCollider2D = otherSliceNewFoodCollider;
+        secondSliceData.OriginalPolyColPoints = otherSliceNewFoodCollider.points;
+        secondSliceData.PolyCol2D = otherSliceNewFoodCollider;
+        secondSliceData.LossyScale = otherSliceNewFoodCollider.transform.lossyScale;
         otherSliceNewFoodCollider.SetPath(0, originalFoodColliderPoints);
         otherSliceNewFoodCollider.SetPath(0, GenerateNewSlicePoints(otherSliceNewFoodCollider, sliceEdgePoints, GetSidePointIsOn(otherSliceSpawnPos), pivotPoint));
 
         // Separate Slices
+        //  Vector2 perpendicularSlice = Vector2.Perpendicular.normalized;
         firstSlicePiece.Translate(-perpendicularSlice * separationSpace);
         otherSlicePiece.transform.Translate(perpendicularSlice * separationSpace);
+        // Vector2 seperateVector = (sliceEndPoints[0] - sliceEndPoints[1]).
+        // firstSlicePiece.Translate()
+        // otherSlicePiece.transform.Translate
         otherSlicePiece.SetActive(true);
 
         movesMadeThisTurn.foodsToDisableThisTurn.Add(otherSlicePiece);
@@ -270,7 +277,7 @@ public class PlayerSlice : MonoBehaviour
         foreach (var sliceData in movesMadeThisTurn.slicesModifiedThisTurn)
         {
             // Debug.Log(sliceData.spriteMaskObj.transform.parent.name + ": " + sliceData.polygonCollider2D.bounds.size.x * sliceData.polygonCollider2D.bounds.size.y);
-            if (FoodIsSmall(sliceData.polygonCollider2D.bounds.size)) return false;
+            if (FoodIsSmall(sliceData.PolyCol2D.bounds.size)) return false;
         }
         return true;
     }
@@ -287,12 +294,12 @@ public class PlayerSlice : MonoBehaviour
             float rotAng = foodCollider.transform.parent.eulerAngles.z;
 
             // points in polycollider are affected by scale, divide by lossyScale to get point in world
-            Vector2 worldPosCurPoint = currentPoint / foodCollider.transform.lossyScale.x + (Vector2)foodCollider.transform.position;
-            worldPosCurPoint = RotatePoint(worldPosCurPoint - (Vector2)foodCollider.transform.position, rotAng) + (Vector2)foodCollider.transform.position;
-            Vector2 worldPosPrevPoint = prevPoint / foodCollider.transform.lossyScale.x + (Vector2)foodCollider.transform.position;
-            worldPosPrevPoint = RotatePoint(worldPosPrevPoint - (Vector2)foodCollider.transform.position, rotAng) + (Vector2)foodCollider.transform.position;
-            Vector2 newEdgePoint1 = sliceEdgePoints[0] - foodCollider.transform.position;
-            Vector2 newEdgePoint2 = sliceEdgePoints[1] - foodCollider.transform.position;
+            Vector2 worldPosCurPoint = (Vector2)foodCollider.transform.TransformPoint(currentPoint);
+            Vector2 worldPosPrevPoint = (Vector2)foodCollider.transform.TransformPoint(prevPoint);
+            // worldPosCurPoint = RotatePoint(worldPosCurPoint - (Vector2)foodCollider.transform.position, rotAng) + (Vector2)foodCollider.transform.position;
+            // worldPosPrevPoint = RotatePoint(worldPosPrevPoint - (Vector2)foodCollider.transform.position, rotAng) + (Vector2)foodCollider.transform.position;
+            Vector2 newEdgePoint1 = (sliceEdgePoints[0] - foodCollider.transform.position) / foodCollider.transform.lossyScale.x;
+            Vector2 newEdgePoint2 = (sliceEdgePoints[1] - foodCollider.transform.position) / foodCollider.transform.lossyScale.x;
 
             // Get intersection in local scale
             Vector2 intersectingPoint = GetTwoLinesIntersectPoint(RotatePoint(currentPoint ,rotAng), RotatePoint(prevPoint, rotAng), newEdgePoint1, newEdgePoint2);

@@ -20,6 +20,7 @@ public class LevelManager : MonoBehaviour
 
         JapaneseBox.GetComponentsInChildren<Button>(JapaneseButtons);
         ItalianBox.GetComponentsInChildren<Button>(ItalianButtons);
+        HolidayBox.GetComponentsInChildren<Button>(HolidayButtons);
 
         DisableAllButtons(JapaneseButtons);
         DisableAllButtons(ItalianButtons);

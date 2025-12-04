@@ -177,6 +177,13 @@ public class AudioManager : MonoBehaviour
             if (!CheckIfTrackIsAlreadyPlaying("UpbeatJapan"))
                 PlayMusic("UpbeatJapan", true);
         }
+        else if (currentScene.StartsWith("Turkey"))
+        {
+            if (!CheckIfTrackIsAlreadyPlaying("Turkey"))
+                PlayMusic("Turkey", true);
+            // if (!CheckIfTrackIsAlreadyPlaying("Turkey"))
+            //     PlayMusic("turkeys!!", true);
+        }
         else
         {
             if (musicSource.clip == null)

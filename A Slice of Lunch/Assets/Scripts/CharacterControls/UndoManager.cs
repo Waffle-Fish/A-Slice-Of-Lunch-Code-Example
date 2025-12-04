@@ -6,10 +6,11 @@ using System.Collections;
 
 public struct SliceObjectData {
     // public GameObject foodObject;
-    public GameObject spriteMaskObj;
-    public PolygonCollider2D polygonCollider2D;
-    public Vector2[] originalPolyColPoints;
-    public float originalSliceZRot;
+    public GameObject SpriteMaskObj;
+    public PolygonCollider2D PolyCol2D;
+    public Vector2[] OriginalPolyColPoints;
+    public Vector3 LossyScale;
+    public float OriginalSliceZRot;
 }
 
 public struct TurnActions
@@ -66,8 +67,8 @@ public class UndoManager : MonoBehaviour
             foreach (SliceObjectData food in TurnToUndo.slicesModifiedThisTurn)
             {
                 // obj = specific spritemask | obj parent = Sprite Masks | obj parent parent = food
-                food.spriteMaskObj.transform.parent.parent.GetComponentInChildren<PolygonCollider2D>().points = food.originalPolyColPoints;
-                food.spriteMaskObj.SetActive(false);
+                food.SpriteMaskObj.transform.parent.parent.GetComponentInChildren<PolygonCollider2D>().points = food.OriginalPolyColPoints;
+                food.SpriteMaskObj.SetActive(false);
             }
             foreach (GameObject foodObj in TurnToUndo.foodsToDisableThisTurn)
             {

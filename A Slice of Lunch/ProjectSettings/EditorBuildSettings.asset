@@ -45,16 +45,16 @@ EditorBuildSettings:
     path: Assets/Scenes/Final Game Scenes/Level Scenes/Italy/Italy_3.unity
     guid: 82d31b3e131d99c47b5d2ea90bfb7a2f
   - enabled: 1
-    path: Assets/Scenes/Final Game Scenes/Level Scenes/Holiday/Turkey_1.unity
+    path: Assets/Scenes/Final Game Scenes/Level Scenes/Holiday/Thanksgiving/Turkey_1.unity
     guid: e0838b68ba0517347a106584427b9dd5
   - enabled: 1
-    path: Assets/Scenes/Final Game Scenes/Level Scenes/Holiday/Turkey_2.unity
+    path: Assets/Scenes/Final Game Scenes/Level Scenes/Holiday/Thanksgiving/Turkey_2.unity
     guid: ce22e3e666528954fb26ff47927dfbf8
   - enabled: 1
-    path: Assets/Scenes/Final Game Scenes/Level Scenes/Holiday/Turkey_3.unity
+    path: Assets/Scenes/Final Game Scenes/Level Scenes/Holiday/Thanksgiving/Turkey_3.unity
     guid: f372ff933a6a86b43bbbb299e8646535
   - enabled: 1
-    path: Assets/Scenes/Final Game Scenes/Level Scenes/Holiday/Turkey_4.unity
+    path: Assets/Scenes/Final Game Scenes/Level Scenes/Holiday/Thanksgiving/Turkey_4.unity
     guid: d53500ccbcf1fae43bfb7bd78ed4fcc9
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: b11723649509e7141af56cabf1532cd4, type: 2}

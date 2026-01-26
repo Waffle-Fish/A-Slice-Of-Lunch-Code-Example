@@ -20,7 +20,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          path: A Slice of Lunch
+          path: "A Slice of Lunch"
           key: Library-${{ matrix.targetPlatform }}
           restore-keys: Library-
           fetch-depth: 0
@@ -38,7 +38,7 @@ jobs:
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
-          projectPath: A Slice of Lunch
+          projectPath: "A Slice of Lunch"
           targetPlatform: ${{ matrix.targetPlatform }}
       - uses: actions/upload-artifact@v4
         with:

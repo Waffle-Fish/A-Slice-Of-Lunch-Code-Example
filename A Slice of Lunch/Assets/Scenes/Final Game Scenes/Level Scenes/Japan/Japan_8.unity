@@ -7429,7 +7429,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 196640532206281438, guid: eabf853503ff1f5419e1d86bd9364ba6, type: 3}
       propertyPath: sceneIndex
-      value: 8
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 1086098543012826262, guid: eabf853503ff1f5419e1d86bd9364ba6, type: 3}
       propertyPath: m_IsActive
@@ -7517,6 +7517,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4607561025613849571, guid: eabf853503ff1f5419e1d86bd9364ba6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6058069942700693860, guid: eabf853503ff1f5419e1d86bd9364ba6, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6846099017282369205, guid: eabf853503ff1f5419e1d86bd9364ba6, type: 3}
